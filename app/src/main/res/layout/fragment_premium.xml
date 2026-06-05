@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_paywall_canvas"
+    android:paddingHorizontal="@dimen/_18sdp"
+    tools:context=".ui.afterlogin.PremiumFragment">
+    >
+
+    <!-- ================= TOP DISMISSAL BAR CONTROL ================= -->
+    <ImageButton
+        android:id="@+id/btn_close_paywall"
+        android:layout_width="@dimen/_28sdp"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/bg_circle_icon_btn"
+        android:backgroundTint="#1AFFFFFF"
+        android:contentDescription="Dismiss Subscription Paywall"
+        android:src="@drawable/ic_close_dismiss"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/paywall_text_primary" />
+
+    <!-- ================= SCROLLABLE CENTER CORE ================= -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue_subscription"
+        app:layout_constraintTop_toBottomOf="@+id/btn_close_paywall">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_16sdp">
+
+            <!-- App Logo Badge Anchor -->
+            <View
+                android:id="@+id/bg_restore_icon_badge"
+                android:layout_width="@dimen/_54sdp"
+                android:layout_height="@dimen/_54sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/ic_history_img"
+                android:backgroundTint="#0D2DC67A" />
+
+
+            <!-- Core Typography Headers Block -->
+            <TextView
+                android:id="@+id/tv_paywall_title_line1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_26sdp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Recover Deleted"
+                android:textColor="@color/paywall_text_primary"
+                android:textSize="@dimen/_24ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_paywall_title_line2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Messages"
+                android:textColor="@color/paywall_text_primary"
+                android:textSize="@dimen/_24ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_paywall_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Reliable Choice for Successful Recovery"
+                android:textColor="@color/paywall_text_secondary"
+                android:textSize="@dimen/_12ssp" />
+
+            <!-- ================= FEATURE LIST Rows VALUE STATEMENTS ================= -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:orientation="vertical">
+
+                <!-- Feature Line 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/bg_paywall_feature_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_14sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:contentDescription="Feature icon"
+                        android:src="@drawable/ic_lightning_bolt"
+                        app:tint="@color/paywall_accent_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Accelerated Recovery Success"
+                        android:textColor="@color/paywall_text_primary"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Feature Line 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/bg_paywall_feature_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_14sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:contentDescription="Feature icon"
+                        android:src="@drawable/ic_database_storage"
+                        app:tint="@color/paywall_accent_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Unlimited Data Recovery"
+                        android:textColor="@color/paywall_text_primary"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Feature Line 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginBottom="@dimen/_18sdp"
+                    android:background="@drawable/bg_paywall_feature_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_14sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:contentDescription="Feature icon"
+                        android:src="@drawable/ic_block_ads"
+                        app:tint="@color/paywall_accent_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Remove Ads"
+                        android:textColor="@color/paywall_text_primary"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ================= INTERACTIVE TIER SUBSCRIPTION MONETIZATION MAPPING ================= -->
+
+            <!-- LIFETIME SUBSCRIPTION CARD CONTAINER -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_plan_lifetime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/bg_paywall_card_selected"
+                android:padding="@dimen/_14sdp">
+
+                <TextView
+                    android:id="@+id/tv_lifetime_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Lifetime"
+                    android:textColor="@color/paywall_text_primary"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_lifetime_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="₹1,100.00"
+                    android:textColor="@color/paywall_accent_green"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lifetime_title" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="/once"
+                    android:textColor="@color/paywall_text_secondary"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_lifetime_price"
+                    app:layout_constraintStart_toEndOf="@+id/tv_lifetime_price"
+                    app:layout_constraintTop_toTopOf="@+id/tv_lifetime_price" />
+
+                <ImageView
+                    android:id="@+id/iv_lifetime_indicator"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="Selected State Loop"
+                    android:src="@drawable/ic_check_circle_filled"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Absolute overlay anchor tag component mapping 'Save 99%' tag -->
+                <TextView
+                    android:id="@+id/badge_save_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:background="@drawable/bg_paywall_badge_save"
+                    android:fontFamily="@font/inter_bold"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_2sdp"
+                    android:text="Save 99%"
+                    android:textColor="@color/paywall_bg_gradient_end"
+                    android:textSize="@dimen/_9ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- MONTHLY SUBSCRIPTION CARD CONTAINER -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_plan_monthly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:background="@drawable/bg_paywall_card_unselected"
+                android:padding="@dimen/_14sdp">
+
+                <TextView
+                    android:id="@+id/tv_monthly_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Monthly"
+                    android:textColor="@color/paywall_text_primary"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_monthly_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="₹1,000.00  /month"
+                    android:textColor="@color/paywall_text_primary"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_monthly_title"/>
+
+                <TextView
+                    android:id="@+id/tv_monthly_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="/month"
+                    android:textColor="@color/paywall_text_secondary"
+                    android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
+                   app:layout_constraintTop_toBottomOf="@+id/tv_monthly_price"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_monthly_price"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_monthly_indicator"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="Unselected State Loop"
+                    android:src="@drawable/ic_radio_unselected"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider_monthly_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@color/paywall_card_unselected_border"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_monthly_price" />
+
+                <!-- Bottom Promo Info Item embedded natively inside the monthly package container container box -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_monthly_card">
+
+                    <ImageView
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:contentDescription="Gift Icon Indicator"
+                        android:src="@drawable/ic_gift_box"
+                        app:tint="@color/paywall_accent_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="3 Days Free Trial – No Payment Now"
+                        android:textColor="@color/paywall_text_secondary"
+                        android:textSize="@dimen/_10ssp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ================= BOTTOM CTAs NAVIGATION ACTIONS REGION ================= -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_continue_subscription"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_46sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:background="@drawable/bg_paywall_btn_continue"
+        android:fontFamily="@font/inter_bold"
+        android:text="Continue $\rightarrow$"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/container_legal_links" />
+
+    <LinearLayout
+        android:id="@+id/container_legal_links"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/btn_legal_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:padding="@dimen/_6sdp"
+            android:text="Terms"
+            android:textColor="@color/paywall_text_secondary"
+            android:textSize="@dimen/_10ssp" />
+
+        <TextView
+            android:id="@+id/btn_legal_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/inter_regular"
+            android:padding="@dimen/_6sdp"
+            android:text="Privacy"
+            android:textColor="@color/paywall_text_secondary"
+            android:textSize="@dimen/_10ssp" />
+
+        <TextView
+            android:id="@+id/btn_purchase_restore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/inter_regular"
+            android:padding="@dimen/_6sdp"
+            android:text="Restore"
+            android:textColor="@color/paywall_text_secondary"
+            android:textSize="@dimen/_10ssp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

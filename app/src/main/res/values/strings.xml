@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Recover Deleted Messages</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="app_splash_title_recover">Recover Deleted</string>
+    <string name="app_splash_title_messages">Messages</string>
+    <string name="app_loading_text">Loading....</string>
+
+</resources>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
+    android:paddingStart="@dimen/_24sdp"
+    android:paddingEnd="@dimen/_24sdp"
+    tools:context=".ui.prelogin.SplashFragment">
+
+    <!-- Defining guidelines for structural layout boundaries -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+
+    <!-- App Icon: Core anchor of the packed chain -->
+    <ImageView
+        android:id="@+id/iv_splash_logo"
+        android:layout_width="@dimen/_96sdp"
+        android:layout_height="@dimen/_96sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/app_logo"
+        app:layout_constraintBottom_toTopOf="@+id/tv_recover"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- First line: "Recover Deleted" -->
+    <TextView
+        android:id="@+id/tv_recover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/inter_bold"
+        android:letterSpacing="-0.02"
+        android:text="@string/app_splash_title_recover"
+        android:textColor="@color/splash_title_color"
+        android:textSize="@dimen/_22ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_messages"
+        app:layout_constraintEnd_toEndOf="@+id/iv_splash_logo"
+        app:layout_constraintStart_toStartOf="@+id/iv_splash_logo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_splash_logo" />
+
+    <!-- Second line: "Messages" -->
+    <TextView
+        android:id="@+id/tv_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:fontFamily="@font/inter_bold"
+        android:letterSpacing="-0.02"
+        android:text="@string/app_splash_title_messages"
+        android:textColor="@color/splash_title_color"
+        android:textSize="@dimen/_22ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_loading"
+        app:layout_constraintEnd_toEndOf="@+id/tv_recover"
+        app:layout_constraintStart_toStartOf="@+id/tv_recover"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recover" />
+
+
+    <!-- ================= BOTTOM LOADING SECTION (Anchored cleanly to parent bottom) ================= -->
+
+    <!-- Linear Progress Bar: Placed explicitly first at the bottom boundary -->
+    <ProgressBar
+        android:id="@+id/pb_splash"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_64sdp"
+        android:progressDrawable="@drawable/splash_progress_horizontal_drawable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        tools:progress="60" />
+
+    <!-- "Loading...." Text: Sits exactly and safely right above the progress bar -->
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/app_loading_text"
+        android:textColor="@color/splash_loading_color"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintBottom_toTopOf="@+id/pb_splash"
+        app:layout_constraintEnd_toEndOf="@+id/pb_splash"
+        app:layout_constraintStart_toStartOf="@+id/pb_splash"
+        app:layout_constraintTop_toBottomOf="@+id/tv_messages"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

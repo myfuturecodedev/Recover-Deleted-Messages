@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- Background Gradient Colors -->
+    <color name="splash_bg_gradient_start">#FFDEF3E6</color> <!-- Light Teal-Green top -->
+    <color name="splash_bg_gradient_end">#FFA6E7C4</color>   <!-- Sightly deeper Teal-Green bottom -->
+
+    <!-- Text Colors -->
+    <color name="splash_title_color">#FF1A1A1A</color>    <!-- Dark charcoal/Black -->
+    <color name="splash_loading_color">#FF70A98F</color> <!-- Darker green, low opacity text -->
+
+    <!-- Icon & Progress Bar Colors -->
+    <color name="splash_accent_green">#FF2DC67A</color>  <!-- Vibrant green in icon -->
+    <color name="splash_progress_track_color">#4D2DC67A</color> <!-- 30% alpha vibrant green for track -->
+    <color name="splash_bg_gradient_center">#FFE1F7EB</color> <!-- Bright center core behind the logo (Lighter radiant spot) -->
+    <color name="g2">#24508C</color>
+    <color name="green">#67B14A</color>
+
+
+
+    <color name="dash_bg_main">#FFFFFFFF</color>
+
+    <color name="dash_text_title">#FF0F172A</color>
+    <color name="dash_text_subtitle">#FF64748B</color>
+    <color name="card_message_bg">#FFF1FAF5</color>
+    <color name="card_message_accent">#FF2DC67A</color>
+    <color name="card_photo_bg">#FFFDF6ED</color>
+    <color name="card_photo_accent">#FFF59E0B</color>
+    <color name="badge_count_bg">#FFEF4444</color>
+    <color name="card_video_bg">#FFF0F7FF</color>
+    <color name="card_video_accent">#FF3B82F6</color>
+    <color name="card_gif_bg">#FFFDF4F2</color>
+    <color name="card_gif_accent">#FFEF5A3E</color>
+    <color name="card_sticker_bg">#FFF0FDFE</color>
+    <color name="card_sticker_accent">#FF06B6D4</color>
+    <color name="card_audio_bg">#FFFDF2F8</color>
+    <color name="card_audio_accent">#FFEC4899</color>
+    <color name="card_voice_bg">#FFF0F9FF</color>
+    <color name="card_voice_accent">#FF0EA5E9</color>
+    <color name="card_docs_bg">#FFFDF2F2</color>
+    <color name="card_docs_accent">#FFF87171</color>
+
+    <color name="dash_pro_banner_bg">#FF0B132B</color>
+    <color name="dash_pro_btn_bg">#FF2DC67A</color>
+    <color name="dash_bottom_nav_bg">#FFF8F9FA</color>
+    <color name="dash_nav_active_pill">#FFE2F6E9</color>
+    <color name="dash_nav_inactive_text">#94A3B8</color>
+
+    <!-- Screen Canvas Canvas Sizing -->
+    <color name="settings_bg_main">#FFF8F9FA</color>
+    <color name="settings_card_bg">#FFFFFFFF</color>
+
+    <!-- Typography Specs -->
+    <color name="settings_text_title">#FF0F172A</color>    <!-- Deep slate black for headers -->
+    <color name="settings_text_section">#FF94A3B8</color>  <!-- Muted slate grey for section labels -->
+    <color name="settings_text_item">#FF1E293B</color>     <!-- Charcoal for settings item labels -->
+    <color name="settings_arrow_tint">#FFE2E8F0</color>    <!-- Soft grey arrow tint -->
+
+    <!-- Icon Circle Shapes Background Tints -->
+    <color name="settings_icon_circle_bg">#FFF1F5F9</color> <!-- Default neutral background loop -->
+    <color name="settings_general_icon_bg">#FFE2F6E9</color> <!-- Soft green tint for general category -->
+    <color name="settings_general_icon_tint">#FF135232</color> <!-- Dark forest green icon tint -->
+
+    <!-- Special Support Banner Component Matrix -->
+    <color name="settings_support_banner_bg">#FFFDF2F2</color> <!-- Soft pastel pink/red block background -->
+    <color name="settings_support_text_sub">#FFEF4444</color>  <!-- Red subtext description alert string -->
+    <color name="settings_support_circle_bg">#FFFFFFFF</color>  <!-- Solid white inner circle -->
+    <color name="settings_support_arrow_bg">#FFFFFFFF</color>   <!-- Solid white arrow background circle -->
+    <color name="settings_support_arrow_tint">#FFEF4444</color> <!-- Red inner arrow accent tint -->
+
+    <!-- Background Canvas and Card Tints -->
+    <color name="guide_bg_main">#FFF8F9FA</color>
+    <color name="guide_card_bg">#FFFFFFFF</color>
+
+    <!-- Custom Accent Greens -->
+    <color name="guide_btn_green">#005F4B</color>         <!-- Deep premium green for "USE THIS FOLDER" -->
+    <color name="guide_light_green_bg">#FFE2F6E9</color>  <!-- Circular folder background tint -->
+    <color name="guide_success_text">#FF135232</color>    <!-- Success check text color -->
+    <color name="guide_success_bg">#FFF0FDF4</color>      <!-- "Access Enabled" chip background -->
+
+    <!-- Typography Matrix -->
+    <color name="guide_text_title">#FF0F172A</color>      <!-- Dark slate for primary card headers -->
+    <color name="guide_text_subtitle">#FF64748B</color>   <!-- Slate for descriptions -->
+    <color name="guide_text_disclaimer">#FFA1A1AA</color> <!-- Light grey for the capital letter disclaimer -->
+    <!-- Paywall Core Canvas Backgrounds -->
+    <color name="paywall_bg_gradient_start">#FF022E1A</color>  <!-- Very dark emerald green top -->
+    <color name="paywall_bg_gradient_end">#FF01140B</color>    <!-- Deep near-black forest green bottom -->
+
+    <!-- Feature Row Sub-containers -->
+    <color name="paywall_feature_row_bg">#14FFFFFF</color>     <!-- 8% White Alpha transparency overlay -->
+    <color name="paywall_feature_icon_bg">#1A2DC67A</color>    <!-- Subtle transparent green for icon circles -->
+    <color name="paywall_accent_green">#FF2DC67A</color>       <!-- Vibrant neon green for icons/borders -->
+
+    <!-- Interactive Plan Card Selection Matrices -->
+    <color name="paywall_card_selected_bg">#0D2DC67A</color>   <!-- Soft translucent selected card overlay -->
+    <color name="paywall_card_unselected_border">#26FFFFFF</color> <!-- 15% White opacity boundary line -->
+    <color name="paywall_badge_save_bg">#FF36D695</color>      <!-- Radiant mint green for "Save 99%" pill -->
+
+    <!-- Primary Action Button Gradients -->
+    <color name="paywall_btn_orange_start">#FFFF7E36</color>   <!-- Vibrant orange left boundary -->
+    <color name="paywall_btn_coral_end">#FFFF6B76</color>      <!-- Soft coral red right boundary -->
+
+    <!-- Typography Text Elements -->
+    <color name="paywall_text_primary">#FFFFFFFF</color>       <!-- High contrast white for main headers -->
+    <color name="paywall_text_secondary">#94A3B8</color>       <!-- Muted slate for helper description strings -->
+</resources>

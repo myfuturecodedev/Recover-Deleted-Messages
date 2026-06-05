@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/guide_bg_main"
+    tools:context=".ui.afterlogin.GuideFragment">
+
+    <!-- ================= TOP TOOLBAR INTERFACE ================= -->
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_56sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:background="@drawable/bg_circle_icon_btn"
+            android:contentDescription="Go Back"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/tv_toolbar_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_bold"
+            android:text="Guide"
+            android:textColor="@color/guide_text_title"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:background="@drawable/bg_circle_icon_btn"
+            android:contentDescription="Settings Option Link"
+            android:src="@drawable/ic_setting" />
+    </LinearLayout>
+
+    <!-- ================= SCROLLABLE REGION FOR CARDS ================= -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_24sdp">
+
+            <!-- CARD 1: ALLOW STORAGE ACCESS MODULE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_allow_access"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/bg_guide_card"
+                android:padding="@dimen/_16sdp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_card1_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Allow Access"
+                    android:textColor="@color/guide_text_title"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_card1_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:text="To recover your deleted media, we need access to the specific folder where backups are stored."
+                    android:textColor="@color/guide_text_subtitle"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_card1_title" />
+
+                <View
+                    android:id="@+id/bg_folder_badge"
+                    android:layout_width="@dimen/_84sdp"
+                    android:layout_height="@dimen/_84sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:background="@drawable/ic_folder_opened"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_card1_desc" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_use_this_folder"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/bg_btn_use_folder"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="USE THIS FOLDER"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/bg_folder_badge" />
+
+                <!-- Success Status Pill Indicator Badge -->
+                <LinearLayout
+                    android:id="@+id/container_access_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_28sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@drawable/bg_chip_access_enabled"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_16sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_use_this_folder">
+
+                    <ImageView
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="12dp"
+                        android:contentDescription="Success Icon Tick Marker"
+                        android:src="@drawable/ic_enable"
+                        app:tint="@color/guide_success_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="Access Enabled"
+                        android:textColor="@color/guide_success_text"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- CARD 2: MEDIA AUTO-DOWNLOAD INSTRUCTION MATRIX -->
+            <LinearLayout
+                android:id="@+id/card_auto_download_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:background="@drawable/bg_guide_card"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:contentDescription="Config Option Header Graphic"
+                        android:src="@drawable/ic_setting" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Enable Media auto-download"
+                        android:textColor="@color/guide_text_title"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Step Item 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/bg_instruction_number"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/guide_success_text"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Open your device settings and navigate to Storage &amp; Data."
+                        android:textColor="@color/guide_text_subtitle"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+
+                <!-- Step Item 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/bg_instruction_number"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/guide_success_text"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Find the Media auto-download section."
+                        android:textColor="@color/guide_text_subtitle"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+
+                <!-- Step Item 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/bg_instruction_number"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/guide_success_text"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Ensure that photos and videos are set to download automatically on Wi-Fi or Cellular."
+                        android:textColor="@color/guide_text_subtitle"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- CARD 3: MANAGE MEDIA NAVIGATION ROW -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_manage_media_recovery"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:background="@drawable/bg_guide_card"
+                android:paddingHorizontal="@dimen/_16sdp">
+
+                <View
+                    android:id="@+id/bg_history_icon"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:background="@drawable/ic_history_backup"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Manage Media Recovery"
+                    android:textColor="@color/guide_text_title"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/bg_history_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:contentDescription="Forward navigation indicator"
+                    android:src="@drawable/ic_arrow_right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/guide_text_subtitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- LEGAL LEGAL DISCLAIMER FOOTER NOTE TEXT -->
+            <TextView
+                android:id="@+id/tv_disclaimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.2"
+                android:text="DISCLAIMER: THIS APP RELIES ON LOCAL DEVICE BACKUPS AND CACHED FILES. RECOVERY OF DELETED MEDIA IS NOT GUARANTEED IF THE FILES HAVE BEEN PERMANENTLY OVERWRITTEN OR IF AUTO-DOWNLOAD WAS DISABLED PRIOR TO DELETION."
+                android:textColor="@color/guide_text_disclaimer"
+                android:textSize="@dimen/_8ssp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
