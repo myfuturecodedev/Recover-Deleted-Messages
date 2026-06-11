@@ -1,60 +1,130 @@
 package com.futurecode.recoverdeletedmessages.ui.afterlogin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.futurecode.recoverdeletedmessages.base.BaseFragment
+import com.futurecode.recoverdeletedmessages.databinding.FragmentPremiumBinding
 
 /**
- * A simple [Fragment] subclass.
- * Use the [PremiumFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment responsible for handling the Premium Subscription Paywall interface.
+ * Extends BaseFragment to inherit core architecture, view bindings, and preferences.
  */
-class PremiumFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class PremiumFragment : BaseFragment<FragmentPremiumBinding>(FragmentPremiumBinding::inflate) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    // Plan selection enumeration for state safety mapping
+    private enum class SubscriptionTier {
+        LIFETIME, MONTHLY
+    }
+
+    // Default configuration track matched identically to the design layout profile
+    private var activePlanSelection = SubscriptionTier.LIFETIME
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // super.onViewCreated automatically tracks checkAndShowInAppBanner() via BaseFragment architecture
+
+        initializePaywallViews()
+        setupClickListeners()
+    }
+
+    /**
+     * Set up default views and ensures visibility flags match the asset specification.
+     */
+    private fun initializePaywallViews() {
+        // Explicitly ensuring the "Save 99%" badge is visible on the default selected Lifetime container
+        binding.badgeSaveDiscount.visibility = View.VISIBLE
+
+        // Refresh structural visual styles instantly
+        updatePlanSelectionVisuals()
+    }
+
+    /**
+     * Configures clean interactive click channel triggers across the paywall interface.
+     */
+    private fun setupClickListeners() {
+        // Close / Dismiss Paywall Action
+        binding.btnClosePaywall.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        // Selection Toggle: Lifetime Plan Card
+        binding.cardPlanLifetime.setOnClickListener {
+            if (activePlanSelection != SubscriptionTier.LIFETIME) {
+                activePlanSelection = SubscriptionTier.LIFETIME
+                updatePlanSelectionVisuals()
+            }
+        }
+
+        // Selection Toggle: Monthly Plan Card
+        binding.cardPlanMonthly.setOnClickListener {
+            if (activePlanSelection != SubscriptionTier.MONTHLY) {
+                activePlanSelection = SubscriptionTier.MONTHLY
+                updatePlanSelectionVisuals()
+            }
+        }
+
+        // Primary Continue Subscription CTA Trigger Action
+        binding.btnContinueSubscription.setOnClickListener {
+            when (activePlanSelection) {
+                SubscriptionTier.LIFETIME -> processSubscriptionPurchasePipeline("sku_lifetime_premium")
+                SubscriptionTier.MONTHLY -> processSubscriptionPurchasePipeline("sku_monthly_premium_trial")
+            }
+        }
+
+        // --- LEGAL WEB REDIRECT CHANNELS ---
+        binding.btnLegalTerms.setOnClickListener {
+            launchExternalLegalDocumentViewer("https://futurecode.com/terms")
+        }
+
+        binding.btnLegalPrivacy.setOnClickListener {
+            launchExternalLegalDocumentViewer("https://futurecode.com/privacy")
+        }
+
+        binding.btnPurchaseRestore.setOnClickListener {
+            triggerBillingRestoreSequence()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_premium, container, false)
+    /**
+     * Mutates structural container background layout shapes and vector assets
+     * in real-time to match the active selected state criteria cleanly.
+     */
+    private fun updatePlanSelectionVisuals() {
+        val context = requireContext()
+
+        if (activePlanSelection == SubscriptionTier.LIFETIME) {
+            // --- FOCUS LIFETIME / DE-EMPHASIZE MONTHLY ---
+            binding.cardPlanLifetime.setBackgroundResource(R.drawable.bg_paywall_card_selected)
+            binding.ivLifetimeIndicator.setImageResource(R.drawable.ic_check_circle_filled)
+            binding.tvLifetimePrice.setTextColor(ContextCompat.getColor(context, R.color.paywall_accent_green))
+
+            binding.cardPlanMonthly.setBackgroundResource(R.drawable.bg_paywall_card_unselected)
+            binding.ivMonthlyIndicator.setImageResource(R.drawable.ic_radio_unselected)
+            binding.tvMonthlyPrice.setTextColor(ContextCompat.getColor(context, R.color.paywall_text_primary))
+        } else {
+            // --- FOCUS MONTHLY / DE-EMPHASIZE LIFETIME ---
+            binding.cardPlanMonthly.setBackgroundResource(R.drawable.bg_paywall_card_selected)
+            binding.ivMonthlyIndicator.setImageResource(R.drawable.ic_check_circle_filled)
+            binding.tvMonthlyPrice.setTextColor(ContextCompat.getColor(context, R.color.paywall_accent_green))
+
+            binding.cardPlanLifetime.setBackgroundResource(R.drawable.bg_paywall_card_unselected)
+            binding.ivLifetimeIndicator.setImageResource(R.drawable.ic_radio_unselected)
+            binding.tvLifetimePrice.setTextColor(ContextCompat.getColor(context, R.color.paywall_text_primary))
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PremiumFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PremiumFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun processSubscriptionPurchasePipeline(productSkuKey: String) {
+        // Integrate your standard BillingClient library initialization launch loop hooks securely here
+    }
+
+    private fun launchExternalLegalDocumentViewer(targetUrl: String) {
+        // Handle web document execution links cleanly here
+    }
+
+    private fun triggerBillingRestoreSequence() {
+        // Query Google Play inventory caches natively to refresh transactional states inside your prefManager
     }
 }

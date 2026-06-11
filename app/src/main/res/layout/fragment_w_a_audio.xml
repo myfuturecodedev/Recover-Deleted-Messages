@@ -1,10 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/chat_bg_main"
     tools:context=".ui.afterlogin.WAAudioFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <!-- ================= TOP TOOLBAR ACTIONS BAR ================= -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_audio_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="@dimen/_3sdp"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_56sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_12sdp">
+
+                <!-- Back Action Trigger Button -->
+                <ImageButton
+                    android:id="@+id/btn_audio_back"
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/bg_circle_icon_btn"
+                    android:contentDescription="Go Back"
+                    android:scaleType="centerInside"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_back_arrow"
+                    app:tint="@color/chat_text_name" />
+
+                <!-- Dynamic Audio Module Header Title String -->
+                <TextView
+                    android:id="@+id/tv_audio_toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="WA Audio"
+                    android:textColor="@color/chat_text_name"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ================= RECYCLERVIEW RECOVERY STREAM LIST ================= -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_audio_history_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_72sdp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_audio_toolbar"
+            tools:listitem="@layout/item_audio_list_row" />
+
+        <!-- ================= FLOATING ACTION SELECTION FOOTER MENU BAR ================= -->
+        <!-- Controls visibility dynamically based on user long-press selection arrays counts -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_audio_select_menu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_54sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/bg_bottom_nav_container"
+            android:elevation="@dimen/_6sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/btn_delete_audio_selection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/ic_trash_bin_red"
+                    app:tint="@color/badge_red"
+                    android:contentDescription="Delete Selected Audio Records" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Delete"
+                    android:textColor="@color/badge_red"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_audio_loading"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:indeterminateTint="@color/card_audio_accent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

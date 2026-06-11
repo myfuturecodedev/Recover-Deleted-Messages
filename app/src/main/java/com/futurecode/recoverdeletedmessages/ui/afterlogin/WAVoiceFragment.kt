@@ -1,60 +1,190 @@
 package com.futurecode.recoverdeletedmessages.ui.afterlogin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import com.futurecode.recoverdeletedmessages.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.futurecode.recoverdeletedmessages.adapter.DocumentListAdapter
+import com.futurecode.recoverdeletedmessages.base.BaseFragment
+import com.futurecode.recoverdeletedmessages.data.MessageEntity
+import com.futurecode.recoverdeletedmessages.databinding.FragmentWAVoiceBinding
+import com.futurecode.recoverdeletedmessages.utils.MediaPermissionHelper
+import com.futurecode.recoverdeletedmessages.utils.UiState
+import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBinding::inflate) {
+    private val TAG = "WAAudioFragment_Log"
+    private val viewModel: RecoveryViewModel by viewModels()
+    private lateinit var audioListAdapter: DocumentListAdapter
 
-/**
- * A simple [Fragment] subclass.
- * Use the [WAVoiceFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class WAVoiceFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val selectedPathsSet = mutableSetOf<String>()
+    private val isBusinessMode = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    // Sets up the unified permission contract helper to target your audio folders
+    private val permissionHelper = MediaPermissionHelper(
+        fragment = this,
+        isBusinessMode = isBusinessMode,
+        onPermissionGranted = {
+            viewModel.loadScannedMediaFiles(categoryType = "AUDIO", isBusinessMode = isBusinessMode)
+        }
+    ).apply {
+        registerLifecycleLauncher()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeRecyclerView()
+        setupActionDeckClickListeners()
+        observeMediaScannerPipeline()
+    }
+
+    private fun initializeRecyclerView() {
+        binding.tvMediaToolbarTitle.text = "WA Audio"
+
+        // Audio files reuse DocumentListAdapter since the item design matches the custom row specification
+        audioListAdapter = DocumentListAdapter(
+            onDocClicked = { audioItem ->
+                if (selectedPathsSet.isNotEmpty()) {
+                    handleSelectionToggle(audioItem.localMediaUri)
+                } else {
+                    Log.d(TAG, "Triggering audio playback listener stream for: ${audioItem.localMediaUri}")
+                }
+            },
+            onDocLongPressed = { audioItem ->
+                handleSelectionToggle(audioItem.localMediaUri)
+            },
+            onInlineShareClicked = { audioItem ->
+                Log.d(TAG, "Inline operational share event triggered for file path: ${audioItem.localMediaUri}")
+            }
+        )
+
+        binding.rvMediaGrid.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = audioListAdapter
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_w_a_voice, container, false)
+    private fun handleSelectionToggle(path: String?) {
+        if (path == null) return
+        if (selectedPathsSet.contains(path)) {
+            selectedPathsSet.remove(path)
+        } else {
+            selectedPathsSet.add(path)
+        }
+
+        binding.cardActionFooterDeck.visibility = if (selectedPathsSet.isNotEmpty()) View.VISIBLE else View.GONE
+        audioListAdapter.updateSelectionCache(selectedPathsSet)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WAVoiceFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WAVoiceFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun setupActionDeckClickListeners() {
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+
+        binding.btnActionDelete.setOnClickListener {
+            viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "AUDIO", isBusinessMode)
+            selectedPathsSet.clear()
+            binding.cardActionFooterDeck.visibility = View.GONE
+        }
+    }
+
+    private fun observeMediaScannerPipeline() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.mediaUiStateFlow.collectLatest { state ->
+                    when (state) {
+                        is UiState.Loading -> binding.rvMediaGrid.visibility = View.GONE
+                        is UiState.Success -> {
+                            binding.rvMediaGrid.visibility = View.VISIBLE
+                            // Automatically maps audio entities under clean chronological headings
+                            val structuredTimelineList = sortAudioIntoTimelineSections(state.data)
+                            audioListAdapter.submitList(structuredTimelineList)
+                        }
+                        is UiState.Error -> binding.rvMediaGrid.visibility = View.VISIBLE
+                    }
                 }
             }
+        }
+    }
+
+    /**
+     * Timeline Sorter Algorithm: Parses raw listings and inserts row group headers
+     * matching your Figma layout precisely (TODAY, YESTERDAY, LAST WEEK).
+     */
+    private fun sortAudioIntoTimelineSections(rawFiles: List<MessageEntity>): List<MessageEntity> {
+        if (rawFiles.isEmpty()) return emptyList()
+
+        val todayList = mutableListOf<MessageEntity>()
+        val yesterdayList = mutableListOf<MessageEntity>()
+        val lastWeekList = mutableListOf<MessageEntity>()
+
+        val calToday = Calendar.getInstance()
+        val calYesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
+
+        rawFiles.forEach { file ->
+            val fileCal = Calendar.getInstance().apply { timeInMillis = file.timestamp }
+
+            if (fileCal.get(Calendar.YEAR) == calToday.get(Calendar.YEAR) &&
+                fileCal.get(Calendar.DAY_OF_YEAR) == calToday.get(Calendar.DAY_OF_YEAR)) {
+                todayList.add(file)
+            } else if (fileCal.get(Calendar.YEAR) == calYesterday.get(Calendar.YEAR) &&
+                fileCal.get(Calendar.DAY_OF_YEAR) == calYesterday.get(Calendar.DAY_OF_YEAR)) {
+                yesterdayList.add(file)
+            } else {
+                lastWeekList.add(file)
+            }
+        }
+
+        val compositeResult = mutableListOf<MessageEntity>()
+
+        if (todayList.isNotEmpty()) {
+            compositeResult.add(
+                MessageEntity(
+                    id = -1L, chatId = "", senderName = "", textContent = "Today",
+                    timestamp = 0L, messageType = "HEADER", localMediaUri = null,
+                    isPackageBusiness = false, isUnread = false
+                )
+            )
+            compositeResult.addAll(todayList.sortedByDescending { it.timestamp })
+        }
+        if (yesterdayList.isNotEmpty()) {
+            compositeResult.add(
+                MessageEntity(
+                    id = -2L, chatId = "", senderName = "", textContent = "Yesterday",
+                    timestamp = 0L, messageType = "HEADER", localMediaUri = null,
+                    isPackageBusiness = false, isUnread = false
+                )
+            )
+            compositeResult.addAll(yesterdayList.sortedByDescending { it.timestamp })
+        }
+        if (lastWeekList.isNotEmpty()) {
+            compositeResult.add(
+                MessageEntity(
+                    id = -3L, chatId = "", senderName = "", textContent = "Last Week",
+                    timestamp = 0L, messageType = "HEADER", localMediaUri = null,
+                    isPackageBusiness = false, isUnread = false
+                )
+            )
+            compositeResult.addAll(lastWeekList.sortedByDescending { it.timestamp })
+        }
+
+        return compositeResult
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.cardActionFooterDeck.visibility = View.GONE
+        permissionHelper.checkAndRequestPermission()
+    }
+
+    override fun onPause() {
+        permissionHelper.dismissPopupSilently()
+        super.onPause()
     }
 }

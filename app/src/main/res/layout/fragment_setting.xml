@@ -19,7 +19,7 @@
             android:id="@+id/btn_back"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
-            android:background="@drawable/bg_circle_icon_btn"
+            android:background="@drawable/bg_circle_icon"
             android:contentDescription="Go back layout channel"
             android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"

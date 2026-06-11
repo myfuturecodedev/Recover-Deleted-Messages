@@ -11,6 +11,10 @@ import com.futurecode.recoverdeletedmessages.activity.MyApplication
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentLanguageBinding
 import com.futurecode.recoverdeletedmessages.viewModel.LanguageViewModel
+import android.Manifest
+import android.os.Build
+
+import androidx.activity.result.contract.ActivityResultContracts
 
 
 //class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -97,20 +101,138 @@ import com.futurecode.recoverdeletedmessages.viewModel.LanguageViewModel
 
 
 
+//class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
+//
+//    private val viewModel: LanguageViewModel by viewModels()
+//    private lateinit var languageAdapter: LanguageAdapter
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        // super.onViewCreated already executes checkAndShowInAppBanner() via BaseFragment configuration setup
+//
+//        setupRecyclerView()
+//        setupSearchPipeline()
+//        observeViewModelData()
+//        setupClickListeners()
+//    }
+//
+//    private fun setupRecyclerView() {
+//        languageAdapter = LanguageAdapter(requireActivity()) { selectedLanguage ->
+//            viewModel.selectLanguage(selectedLanguage)
+//        }
+//
+//        binding.rvLanguageList.apply {
+//            layoutManager = LinearLayoutManager(requireContext())
+//            adapter = languageAdapter
+//            setHasFixedSize(true)
+//        }
+//    }
+//
+//    private fun setupSearchPipeline() {
+//        binding.etSearchLanguage.doAfterTextChanged { text ->
+//            viewModel.filterLanguages(text?.toString() ?: "")
+//        }
+//    }
+//
+//    private fun observeViewModelData() {
+//        viewModel.uiLanguageList.observe(viewLifecycleOwner) { rawLanguages ->
+//            val mixedListWithAds = mutableListOf<Any>()
+//
+//            rawLanguages.forEachIndexed { index, languageModel ->
+//                mixedListWithAds.add(languageModel)
+//                // Intercept data processing index 2 to dynamically slide real-time native ad units in place
+//                if (index == 2) {
+//                    mixedListWithAds.add("AD_UNIT")
+//                }
+//            }
+//            languageAdapter.submitList(mixedListWithAds)
+//        }
+//
+//        binding.btnConfirmSelection.isEnabled = false
+//        viewModel.selectedLanguage.observe(viewLifecycleOwner) { selected ->
+//            binding.btnConfirmSelection.isEnabled = (selected != null)
+//        }
+//    }
+//
+//    private fun setupClickListeners() {
+//        binding.btnBack.setOnClickListener {
+//            requireActivity().onBackPressedDispatcher.onBackPressed()
+//        }
+//
+//        binding.btnConfirmSelection.setOnClickListener {
+//            val confirmedLanguage = viewModel.selectedLanguage.value
+//            confirmedLanguage?.let {
+//
+//                prefManager.selectedLanguage=it.languageCode
+//                prefManager.isLanguageSelectedFirstTime=true
+//
+//
+//                // 2. Refresh application configuration locale context strings
+//                 MyApplication.setLocale(requireContext())
+//                // 3. Force completely clean restart target to apply language mutations globally
+//                val intent = Intent(requireActivity(), MainActivity::class.java).apply {
+//                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                }
+//                startActivity(intent)
+//
+//                // Kill current hosting activity container cleanly
+//                requireActivity().finish()
+//            }
+//        }
+//    }
+//}
+
+
+
+
+
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
 
     private val viewModel: LanguageViewModel by viewModels()
     private lateinit var languageAdapter: LanguageAdapter
 
+    // =========================================================================
+    // CODE PATCH START: NOTIFICATION LAUNCHER REGISTRATION (CRASH PROOF)
+    // =========================================================================
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            android.util.Log.d("LanguageFragment_Log", "POST_NOTIFICATIONS permission granted successfully.")
+        } else {
+            android.util.Log.w("LanguageFragment_Log", "POST_NOTIFICATIONS permission was denied by user.")
+        }
+    }
+    // =========================================================================
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // super.onViewCreated already executes checkAndShowInAppBanner() via BaseFragment configuration setup
 
         setupRecyclerView()
         setupSearchPipeline()
         observeViewModelData()
         setupClickListeners()
+
+        // =========================================================================
+        // CODE PATCH START: TRIGGER VERSION-WISE PERMISSION GATE ON ENTRY
+        // =========================================================================
+        checkAndPromptRuntimeNotificationPermission()
+        // =========================================================================
     }
+
+    // =========================================================================
+    // CODE PATCH START: VERSION CONTROLLER METHOD
+    // =========================================================================
+    private fun checkAndPromptRuntimeNotificationPermission() {
+        // POST_NOTIFICATIONS permission strictly required only on Android 13 (API 33) and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            // Android 12 and below handle notifications automatically without runtime popups
+            android.util.Log.d("LanguageFragment_Log", "Pre-Android 13 device detected. Auto-granted context.")
+        }
+    }
+    // =========================================================================
 
     private fun setupRecyclerView() {
         languageAdapter = LanguageAdapter(requireActivity()) { selectedLanguage ->
@@ -136,7 +258,6 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
 
             rawLanguages.forEachIndexed { index, languageModel ->
                 mixedListWithAds.add(languageModel)
-                // Intercept data processing index 2 to dynamically slide real-time native ad units in place
                 if (index == 2) {
                     mixedListWithAds.add("AD_UNIT")
                 }
@@ -158,18 +279,14 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         binding.btnConfirmSelection.setOnClickListener {
             val confirmedLanguage = viewModel.selectedLanguage.value
             confirmedLanguage?.let {
-                // 1. Save preferences natively within global structures
-//                prefManager.putString("selected_lang", it.languageCode)
-//                prefManager.putBoolean("is_language_selected_first_time", true)
 
+                prefManager.selectedLanguage = it.languageCode
+                prefManager.isLanguageSelectedFirstTime = true
 
-                prefManager.selectedLanguage=it.languageCode
-                prefManager.isLanguageSelectedFirstTime=true
+                // Refresh application configuration locale context strings
+                MyApplication.setLocale(requireContext())
 
-
-                // 2. Refresh application configuration locale context strings
-                 MyApplication.setLocale(requireContext())
-                // 3. Force completely clean restart target to apply language mutations globally
+                // Force completely clean restart target to apply language mutations globally
                 val intent = Intent(requireActivity(), MainActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 }

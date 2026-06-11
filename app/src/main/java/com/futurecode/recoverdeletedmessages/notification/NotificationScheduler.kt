@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 object NotificationScheduler {
 
-    private const val WORK_NAME = "ghost_finder_notification_chain"
+    private const val WORK_NAME = "recover_deleted_message_notification_chain"
 
     fun startNotificationWorker(context: Context): Boolean {
         return try {
@@ -20,7 +20,7 @@ object NotificationScheduler {
 
             val firstWorker = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInitialDelay(0, TimeUnit.MINUTES)
-                .addTag("ghost_finder_notification_worker")
+                .addTag("recover_deleted_message_notification_worker")
                 .build()
 
             workManager.enqueueUniqueWork(

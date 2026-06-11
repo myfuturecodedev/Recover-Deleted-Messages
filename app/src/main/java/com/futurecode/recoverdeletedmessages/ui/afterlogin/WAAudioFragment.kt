@@ -1,60 +1,135 @@
 package com.futurecode.recoverdeletedmessages.ui.afterlogin
 
+import android.media.MediaPlayer
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import com.futurecode.recoverdeletedmessages.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.futurecode.recoverdeletedmessages.adapter.AudioRecoveryAdapter
+import com.futurecode.recoverdeletedmessages.base.BaseFragment
+import com.futurecode.recoverdeletedmessages.databinding.FragmentWAAudioBinding
+import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class WAAudioFragment : BaseFragment<FragmentWAAudioBinding>(FragmentWAAudioBinding::inflate) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [WAAudioFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class WAAudioFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val TAG = "WAAudioFragment_Debug"
+    private val viewModel: RecoveryViewModel by viewModels()
+    private lateinit var audioAdapter: AudioRecoveryAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var appMediaPlayerInstance: MediaPlayer? = null
+    private var progressTrackerJob: Job? = null
+    private var activePlaybackIndexPosition = -1
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeRecyclerView()
+        setupClickListeners()
+        observeFileScanningPipeline()
+    }
+
+    private fun initializeRecyclerView() {
+        binding.tvAudioToolbarTitle.text = "WA Audio"
+        audioAdapter = AudioRecoveryAdapter(
+            onPlayTriggered = { audioEntity, position -> handleAudioPlayback(audioEntity.localMediaUri, position) },
+            onRowLongPressed = { }
+        )
+        binding.rvAudioHistoryList.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = audioAdapter
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_w_a_audio, container, false)
+    private fun setupClickListeners() {
+        binding.btnAudioBack.setOnClickListener { findNavController().navigateUp() }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WAAudioFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WAAudioFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    /**
+     * FIXED: Uses repeatOnLifecycle(Lifecycle.State.STARTED) to ensure the
+     * UI remains open and receptive to the scanner's background thread updates.
+     */
+    private fun observeFileScanningPipeline() {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+//                viewModel.audioUiStateFlow.collectLatest { state ->
+//                    when (state) {
+//                        is UiState.Loading -> {
+//                            Log.d(TAG, "UI State: Scanner is crawling folders... Showing loader.")
+//                            binding.pbAudioLoading.visibility = View.VISIBLE
+//                            binding.rvAudioHistoryList.visibility = View.GONE
+//                        }
+//                        is UiState.Success -> {
+//                            Log.d(TAG, "UI State: Scan completed! Dispatched data records count: ${state.data.size}")
+//                            binding.pbAudioLoading.visibility = View.GONE
+//                            binding.rvAudioHistoryList.visibility = View.VISIBLE
+//                            Log.d("dfghbefrv", "observeFileScanningPipeline: ${state.data}")
+//
+//                            // Deliver clean payload blocks directly to list adapter view layer
+//                            audioAdapter.submitList(state.data)
+//                        }
+//                        is UiState.Error -> {
+//                            Log.e(TAG, "UI State: Scanner encountered failure parameters mapping logs", state.exception)
+//                            binding.pbAudioLoading.visibility = View.GONE
+//                            binding.rvAudioHistoryList.visibility = View.VISIBLE
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Force the scanning engine to crawl folders the exact millisecond the view becomes visible
+        Log.d(TAG, "onResume: Triggering explicit background storage refresh pass.")
+        //viewModel.loadAudioFiles(isBusinessSelected = false)
+    }
+
+    private fun handleAudioPlayback(audioPath: String?, position: Int) {
+        if (activePlaybackIndexPosition == position) { stopAudioEngine(); return }
+        stopAudioEngine()
+        if (audioPath.isNullOrEmpty()) return
+        try {
+            appMediaPlayerInstance = MediaPlayer().apply {
+                setDataSource(audioPath)
+                setAudioStreamType(android.media.AudioManager.STREAM_MUSIC)
+                prepare()
+                start()
             }
+            activePlaybackIndexPosition = position
+            trackProgress(position)
+        } catch (e: Exception) { e.printStackTrace() }
+    }
+
+    private fun trackProgress(position: Int) {
+        progressTrackerJob = viewLifecycleOwner.lifecycleScope.launch {
+            val player = appMediaPlayerInstance ?: return@launch
+            while (player.isPlaying) {
+                val ratio = (player.currentPosition.toFloat() / player.duration.toFloat() * 100).toInt()
+                audioAdapter.setPlaybackProgressUpdate(position, ratio)
+                delay(250)
+            }
+            stopAudioEngine()
+        }
+    }
+
+    private fun stopAudioEngine() {
+        progressTrackerJob?.cancel()
+        appMediaPlayerInstance?.stop()
+        appMediaPlayerInstance?.release()
+        appMediaPlayerInstance = null
+        activePlaybackIndexPosition = -1
+        audioAdapter.clearPlaybackProgressTracking()
+    }
+
+    override fun onDestroyView() {
+        stopAudioEngine()
+        super.onDestroyView()
     }
 }

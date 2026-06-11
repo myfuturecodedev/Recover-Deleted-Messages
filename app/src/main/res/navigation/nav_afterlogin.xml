@@ -10,12 +10,48 @@
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WARecoveryFragment"
         android:label="fragment_w_a_recovery"
         tools:layout="@layout/fragment_w_a_recovery" >
+
+        <argument
+            android:name="isBusinessMode"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
         <action
             android:id="@+id/action_WARecoveryFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
         <action
             android:id="@+id/action_WARecoveryFragment_to_guideFragment"
             app:destination="@id/guideFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_premiumFragment"
+            app:destination="@id/premiumFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAMassageFragment"
+            app:destination="@id/WAMassageFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAAudioFragment"
+            app:destination="@id/WAAudioFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAVideoFragment"
+            app:destination="@id/WAVideoFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAGIFFragment"
+            app:destination="@id/WAGIFFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAStickerFragment"
+            app:destination="@id/WAStickerFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAVoiceFragment"
+            app:destination="@id/WAVoiceFragment" />
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WADocumentFragment"
+            app:destination="@id/WADocumentFragment" />
+
+        <action
+            android:id="@+id/action_WARecoveryFragment_to_WAImageFragment"
+            app:destination="@id/WAImageFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/businessWARecoveryFragment"
@@ -41,5 +77,57 @@
         android:id="@+id/WAMassageFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAMassageFragment"
         android:label="fragment_w_a_massage"
-        tools:layout="@layout/fragment_w_a_massage" />
+        tools:layout="@layout/fragment_w_a_massage" >
+
+        <action
+            android:id="@+id/action_WAMassageFragment_to_MessagePreviewFragment"
+            app:destination="@id/messagePreviewFragment" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.PremiumFragment"
+        android:label="fragment_premium"
+        tools:layout="@layout/fragment_premium" />
+    <fragment
+        android:id="@+id/recoverMessagesFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.RecoverMessagesFragment"
+        android:label="fragment_recover_messages"
+        tools:layout="@layout/fragment_recover_messages" />
+    <fragment
+        android:id="@+id/WAAudioFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAAudioFragment"
+        android:label="fragment_w_a_audio"
+        tools:layout="@layout/fragment_w_a_audio" />
+    <fragment
+        android:id="@+id/WAVideoFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAVideoFragment"
+        android:label="fragment_w_a_video"
+        tools:layout="@layout/fragment_w_a_video" />
+    <fragment
+        android:id="@+id/WAVoiceFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAVoiceFragment"
+        android:label="fragment_w_a_voice"
+        tools:layout="@layout/fragment_w_a_voice" />
+    <fragment
+        android:id="@+id/WAStickerFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAStickerFragment"
+        android:label="fragment_w_a_sticker"
+        tools:layout="@layout/fragment_w_a_sticker" />
+    <fragment
+        android:id="@+id/WADocumentFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WADocumentFragment"
+        android:label="fragment_w_a_document"
+        tools:layout="@layout/fragment_w_a_document" />
+    <fragment
+        android:id="@+id/WAGIFFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAGIFFragment"
+        android:label="fragment_w_a_g_i_f"
+        tools:layout="@layout/fragment_w_a_g_i_f" />
+    <fragment
+        android:id="@+id/messagePreviewFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.review.MessagePreviewFragment"
+        android:label="fragment_message_preview"
+        tools:layout="@layout/fragment_message_preview" />
 </navigation>

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/media_bg_canvas"
+    tools:context=".ui.afterlogin.GuideWhatsappNotificationFragment">
+
+    <!-- ================= TOP TOOLBAR NAVIGATION ================= -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_guide_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_56sdp"
+        android:paddingHorizontal="@dimen/_16sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_guide_back"
+            android:layout_width="@dimen/_37sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/inter_bold"
+            android:text="Guide"
+            android:textColor="@color/figma_dark_text"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_guide_back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_guide_sync"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_refresh"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ================= SCROLLABLE MIDDLE CANVAS ================= -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/layout_bottom_action_deck"
+        app:layout_constraintTop_toBottomOf="@+id/layout_guide_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_16sdp">
+
+            <!-- Central Bell Graphic Header Badge -->
+            <FrameLayout
+                android:layout_width="@dimen/_64sdp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/bg_circle_icon_btn"
+                android:backgroundTint="@color/figma_pastel_green">
+
+                <ImageView
+                    android:layout_width="@dimen/_64sdp"
+                    android:layout_height="@dimen/_64sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification_permission" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="Setup Notifications"
+                android:textColor="@color/figma_dark_text"
+                android:textSize="@dimen/_20ssp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:text="Follow these simple steps to ensure you never miss an important update."
+                android:textColor="#6B7280"
+                android:textSize="@dimen/_12ssp" />
+
+            <!-- ================= STATUS CONTROL CARD ================= -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="@dimen/_1sdp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_14sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!-- Fake WhatsApp App Icon Profile -->
+                        <ImageView
+                            android:id="@+id/iv_wa_logo"
+                            android:layout_width="@dimen/_36sdp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:background="@drawable/bg_nested_callout_box"
+                            android:backgroundTint="@color/whatsapp_brand_green"
+                            android:padding="@dimen/_8sdp"
+                            android:src="@drawable/ic_whatsapp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_app_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/inter_bold"
+                            android:text="WhatsApp"
+                            android:textColor="@color/figma_dark_text"
+                            android:textSize="@dimen/_13ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_app_desc"
+                            app:layout_constraintStart_toEndOf="@+id/iv_wa_logo"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_app_desc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="Notification Access"
+                            android:textColor="@color/figma_sub_text"
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_app_label"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_app_label" />
+
+                        <!-- Active Toggle Control Switch Asset -->
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:thumbTint="@android:color/white"
+                            android:trackTint="@color/figma_selected_blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Green Inline Verified Pill Shape Badge Component -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_34sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/bg_nested_callout_box"
+                        android:backgroundTint="@color/figma_light_green_new"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
+                            android:src="@drawable/ic_checkbox_selected"
+                            app:tint="@color/figma_text_green_new" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:fontFamily="@font/inter_bold"
+                            android:text="Access Enabled"
+                            android:textColor="@color/figma_text_green_new"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ================= TIMELINE INSTRUCTIONS DECK ================= -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardElevation="@dimen/_1sdp"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16sdp">
+
+                    <!-- Content Headline Row Panel -->
+                    <ImageView
+                        android:id="@+id/iv_list_header_icon"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/ic_select_all_list"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_timeline_heading"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_timeline_heading"
+                        app:tint="@color/status_active_text_green" />
+
+                    <TextView
+                        android:id="@+id/tv_timeline_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="How to Unmute"
+                        android:textColor="@color/figma_dark_text"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/iv_list_header_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Structural Vertical Connecting Track Thread Lines -->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:background="@color/guide_step_line"
+                        app:layout_constraintBottom_toTopOf="@+id/layout_step_3_pin"
+                        app:layout_constraintEnd_toEndOf="@+id/layout_step_1_pin"
+                        app:layout_constraintStart_toStartOf="@+id/layout_step_1_pin"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_step_1_pin" />
+
+                    <!-- STEP 1 ITEM BLOCK -->
+                    <FrameLayout
+                        android:id="@+id/layout_step_1_pin"
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:background="@drawable/bg_circle_icon_btn"
+                        android:backgroundTint="@color/figma_light_green_new"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_timeline_heading">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/inter_bold"
+                            android:text="1"
+                            android:textColor="@color/figma_text_green_new"
+                            android:textSize="@dimen/_10ssp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_step_1_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Open WhatsApp Settings"
+                        android:textColor="@color/figma_dark_text"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/layout_step_1_pin"
+                        app:layout_constraintTop_toTopOf="@+id/layout_step_1_pin" />
+
+                    <TextView
+                        android:id="@+id/tv_step_1_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Navigate to your app settings and find the notifications menu."
+                        android:textColor="@color/figma_sub_text"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_step_1_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_step_1_title" />
+
+                    <!-- STEP 2 ITEM BLOCK -->
+                    <FrameLayout
+                        android:id="@+id/layout_step_2_pin"
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_24sdp"
+                        android:background="@drawable/bg_circle_icon_btn"
+                        android:backgroundTint="@color/figma_light_green_new"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_step_1_desc">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/inter_bold"
+                            android:text="2"
+                            android:textColor="@color/figma_text_green_new"
+                            android:textSize="@dimen/_10ssp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_step_2_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Select Notifications"
+                        android:textColor="@color/figma_dark_text"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/layout_step_2_pin"
+                        app:layout_constraintTop_toTopOf="@+id/layout_step_2_pin" />
+
+                    <TextView
+                        android:id="@+id/tv_step_2_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Tap on the notifications option to view detailed preferences."
+                        android:textColor="@color/figma_sub_text"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_step_2_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_step_2_title" />
+
+                    <!-- STEP 3 ITEM BLOCK -->
+                    <FrameLayout
+                        android:id="@+id/layout_step_3_pin"
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_24sdp"
+                        android:background="@drawable/bg_circle_icon_btn"
+                        android:backgroundTint="@color/figma_light_green_new"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_step_2_desc">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/inter_bold"
+                            android:text="3"
+                            android:textColor="@color/figma_text_green_new"
+                            android:textSize="@dimen/_10ssp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_step_3_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Enable Sound &amp; Alerts"
+                        android:textColor="@color/figma_dark_text"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/layout_step_3_pin"
+                        app:layout_constraintTop_toTopOf="@+id/layout_step_3_pin" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Ensure all toggles for sound, vibration, and pop-ups are active."
+                        android:textColor="@color/figma_sub_text"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_step_3_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_step_3_title" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ================= ALERT BANNER REMINDER BLOCK ================= -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:background="@drawable/bg_orange_reminder_banner"
+                android:padding="@dimen/_12sdp">
+
+                <!-- Triangle Alert Notification Vector Accent Icon -->
+                <ImageView
+                    android:id="@+id/iv_alert_sign"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_reminder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_alert_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Important Reminder"
+                    android:textColor="@color/reminder_text_orange"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_alert_sign"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="If your phone is on silent or Do Not Disturb mode, you still might not hear notifications even if these settings are enabled. Please check your system volume settings."
+                    android:textColor="@color/reminder_text_orange"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_alert_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_alert_title" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ================= FLOATING ACTION CONTAINER DECK BASE ================= -->
+    <LinearLayout
+        android:id="@+id/layout_bottom_action_deck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Solid Forest Green Main Process Continue Button Element -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_guide_continue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:background="@drawable/bg_solid_forest_green_btn"
+            android:fontFamily="@font/inter_bold"
+            android:text="Continue  ➔"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <!-- Disclaimer Fine Print Label Description String -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="By continuing, you agree to allow necessary background permissions for optimal app performance."
+            android:textColor="@color/figma_sub_text"
+            android:textSize="@dimen/_9ssp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

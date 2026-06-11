@@ -1,10 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/media_bg_canvas"
+    android:fillViewport="true"
     tools:context=".ui.afterlogin.ManageMediaRecoveryFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_24sdp">
 
+        <!-- ================= TOP TOOLBAR NAVIGATION ================= -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_recovery_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_56sdp"
+            android:paddingHorizontal="@dimen/_16sdp"
+            app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                android:background="@drawable/bg_circle_icon"
+                android:contentDescription="Go back layout channel"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_toolbar_main_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Manage Media Recovery"
+                android:textColor="@color/figma_dark_text"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_back"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ================= CARD 1: RECOVERY STATUS CARD ================= -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_status_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="@dimen/_18sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_recovery_toolbar"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16sdp">
+
+                <!-- Cloud Graphic Circle Wrapper -->
+                <FrameLayout
+                    android:id="@+id/layout_cloud_icon_bg"
+                    android:layout_width="@dimen/_44sdp"
+                    android:layout_height="@dimen/_44sdp"
+                    android:background="@drawable/bg_circle_icon_btn"
+                    android:backgroundTint="@color/figma_pastel_green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/_44sdp"
+                        android:layout_height="@dimen/_44sdp"
+                        android:src="@drawable/recover_service" />
+                </FrameLayout>
+
+                <!-- Status Header Text Segment Block -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/layout_cloud_icon_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layout_cloud_icon_bg"
+                    app:layout_constraintTop_toTopOf="@+id/layout_cloud_icon_bg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Recovery Service"
+                        android:textColor="@color/figma_dark_text"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+
+                    <!-- Active Tracking Status Pill Inline Row -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- Tiny Pulsing Green Status Dot Icon -->
+                        <View
+                            android:id="@+id/view_status_dot"
+                            android:layout_width="@dimen/_6sdp"
+                            android:layout_height="@dimen/_6sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:background="@drawable/bg_circle_status_dot" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_bold"
+                            android:text="ACTIVE &amp; MONITORING"
+                            android:textColor="@color/status_active_text_green"
+                            android:textSize="@dimen/_10ssp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Dark Forest Green Refresh Button Component -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_refresh_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:background="@drawable/bg_solid_forest_green_btn"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="⟳  Refresh Service"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_cloud_icon_bg" />
+
+                <!-- Last Synced String Label Subtitle Footer -->
+                <TextView
+                    android:id="@+id/tv_sync_time_stamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:text="Last synced: Just now"
+                    android:textColor="@color/figma_sub_text"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_refresh_service" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ================= CARD 2: ABOUT DOCUMENTATION CARD ================= -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_about_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="@dimen/_18sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:layout_constraintTop_toBottomOf="@+id/card_status_container"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <!-- Inline Row Header: Info Icon + Text Label -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/about_media" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="About Media Recovery"
+                        android:textColor="@color/figma_dark_text"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Muted Design Horizontal Divider Line Thin String -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/divider_line_color" />
+
+                <!-- Core Description Long-Form Paragraph Subtext Body -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:lineSpacingMultiplier="1.25"
+                    android:text="This service continually monitors your device to ensure that your media files are safely backed up and recoverable in case of accidental deletion or device failure."
+                    android:textColor="@color/figma_sub_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <!-- Inner Callout Banner Box Container Panel Layer -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:background="@drawable/bg_nested_callout_box"
+                    android:padding="@dimen/_12sdp">
+
+                    <!-- Muted Shield Protection Graphic Indicator Node -->
+                    <ImageView
+                        android:id="@+id/iv_inner_shield"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/ic_secqure"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/status_active_text_green" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:fontFamily="@font/inter_regular"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="Keeping this service active guarantees the highest level of protection for your photos, videos, and documents through secure cloud synchronization."
+                        android:textColor="@color/figma_sub_text"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toEndOf="@+id/iv_inner_shield"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ================= BOTTOM BUTTON ACTION: STOP SERVICE ================= -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_stop_recovery_service"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:background="@drawable/bg_stop_service_btn"
+            android:fontFamily="@font/inter_bold"
+            android:text="■  Stop Recovery Service"
+            android:textAllCaps="false"
+            android:textColor="@color/stop_action_red"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/card_about_container" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

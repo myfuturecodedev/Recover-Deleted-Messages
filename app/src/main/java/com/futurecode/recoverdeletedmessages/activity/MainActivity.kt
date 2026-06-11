@@ -2,6 +2,7 @@ package com.futurecode.recoverdeletedmessages.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.futurecode.recoverdeletedmessages.R
@@ -20,6 +21,7 @@ class MainActivity : BaseActivity() {
         navController = navHostFragment!!.navController
 
         navController?.addOnDestinationChangedListener { controller, destination, bundle ->
+            Log.e("TAG", "${destination.displayName}")
             if (destination.id != R.id.splashFragment) {
                 //binding.flBanner.reload()
             }

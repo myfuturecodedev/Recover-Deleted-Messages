@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_audio_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/chat_row_unselected"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Circular Audio/Voice Indicator Container Badge -->
+        <View
+            android:id="@+id/bg_audio_icon_circle"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:background="@drawable/bg_circle_icon_btn"
+            android:backgroundTint="@color/card_audio_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_audio_type_icon"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:contentDescription="Playback asset control trigger"
+            android:src="@drawable/ic_play_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/bg_audio_icon_circle"
+            app:layout_constraintEnd_toEndOf="@+id/bg_audio_icon_circle"
+            app:layout_constraintStart_toStartOf="@+id/bg_audio_icon_circle"
+            app:layout_constraintTop_toTopOf="@+id/bg_audio_icon_circle"
+            app:tint="@color/card_audio_accent" />
+
+        <!-- Meta Text Block Description Fields -->
+        <TextView
+            android:id="@+id/tv_audio_file_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:ellipsize="middle"
+            android:fontFamily="@font/inter_bold"
+            android:maxLines="1"
+            android:textColor="@color/chat_text_name"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_audio_timestamp"
+            app:layout_constraintStart_toEndOf="@+id/bg_audio_icon_circle"
+            app:layout_constraintTop_toTopOf="@+id/bg_audio_icon_circle"
+            tools:text="AUD-20260605-WA0012.opus" />
+
+        <TextView
+            android:id="@+id/tv_audio_file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/chat_text_timestamp"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@+id/tv_audio_file_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_audio_file_name"
+            tools:text="412 KB • 0:18" />
+
+        <!-- Linear Progress Tracker bar synced with media cycle tracks -->
+        <SeekBar
+            android:id="@+id/seekbar_audio_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:max="100"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:progress="0"
+            android:progressBackgroundTint="@color/lang_radio_unselected"
+            android:progressTint="@color/card_audio_accent"
+            android:thumbTint="@color/card_audio_accent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/tv_audio_file_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_audio_file_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_audio_file_size"
+            tools:visibility="visible" />
+
+        <!-- Timestamp Element Info -->
+        <TextView
+            android:id="@+id/tv_audio_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/chat_text_timestamp"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_audio_file_name"
+            tools:text="3:40 PM" />
+
+        <!-- Selection Checkmark Indicator Overlay Pin -->
+        <ImageView
+            android:id="@+id/iv_audio_selection_check"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:contentDescription="Checked marker state view"
+            android:src="@drawable/ic_check_circle_filled"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

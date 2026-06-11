@@ -1,10 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lang_bg_main"
     tools:context=".ui.afterlogin.WAMassageFragment">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_header_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_56sdp"
+            android:paddingHorizontal="@dimen/_12sdp">
+
+            <LinearLayout
+                android:id="@+id/container_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_56sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
 
-</FrameLayout>
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/bg_circle_icon"
+                    android:contentDescription="Go back layout channel"
+                    android:src="@drawable/ic_back_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_toolbar_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="WA Massage"
+                    android:textColor="@color/chat_text_name"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btn_help_guide"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Open Feature Helper Manual"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_help_question" />
+
+                <ImageButton
+                    android:id="@+id/btn_settings"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Settings Access Control"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_menu" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat_threads_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingVertical="@dimen/_6sdp"
+        app:layout_constraintBottom_toTopOf="@+id/container_batch_action_deck"
+        app:layout_constraintTop_toBottomOf="@+id/card_header_bar"
+        tools:listitem="@layout/item_chat_list_row" />
+
+
+    <!-- ================= INJECTED INTERACTIVE EMPTY CONTAINER VIEW ================= -->
+    <include
+        android:id="@+id/layout_empty_guide_state"
+        layout="@layout/layout_empty_chat_guide"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/container_batch_action_deck"
+        app:layout_constraintTop_toBottomOf="@+id/card_header_bar"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_batch_action_deck"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_54sdp"
+        android:background="@android:color/white"
+        android:elevation="@dimen/_8sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/btn_batch_delete_threads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_24sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:src="@drawable/ic_trash_bin_red"
+                app:tint="@color/badge_red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Delete Selected"
+                android:textColor="@color/badge_red"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

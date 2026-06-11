@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10sdp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_bubble_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/_18sdp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_variant_standard_file"
+                android:layout_width="@dimen/_210sdp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <FrameLayout
+                    android:id="@+id/layout_bubble_icon_frame"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/bg_circle_icon_btn"
+                    android:backgroundTint="@color/bubble_tint_photo_blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_bubble_type_icon"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_send_navigation"
+                        app:tint="@color/figma_selected_blue" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_bubble_main_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Sent a photo"
+                    android:textColor="@color/figma_dark_text"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layout_bubble_icon_frame"
+                    app:layout_constraintTop_toTopOf="@+id/layout_bubble_icon_frame" />
+
+                <LinearLayout
+                    android:id="@+id/layout_bubble_sub_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/layout_bubble_icon_frame"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_bubble_main_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_bubble_main_label">
+
+                    <TextView
+                        android:id="@+id/tv_bubble_pill_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:background="@drawable/bg_nested_callout_box"
+                        android:backgroundTint="@color/bubble_tint_video_purple"
+                        android:fontFamily="@font/inter_bold"
+                        android:paddingHorizontal="@dimen/_6sdp"
+                        android:paddingVertical="@dimen/_1sdp"
+                        android:text="0:03"
+                        android:textColor="@color/action_footer_text"
+                        android:textSize="@dimen/_8ssp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_bubble_sub_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Image file"
+                        android:textColor="@color/chat_text_muted_gray"
+                        android:textSize="@dimen/_10ssp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_variant_voice_note"
+                android:layout_width="@dimen/_210sdp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <FrameLayout
+                    android:id="@+id/layout_voice_play_frame"
+                    android:layout_width="@dimen/_38sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:background="@drawable/bg_circle_icon_btn"
+                    android:backgroundTint="@color/player_text_dark_green"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/ic_video_play_overlay"
+                        app:tint="@android:color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_voice_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Voice message"
+                    android:textColor="@color/figma_dark_text"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/layout_voice_play_frame"
+                    app:layout_constraintTop_toTopOf="@+id/layout_voice_play_frame" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:background="@drawable/bg_nested_callout_box"
+                    android:backgroundTint="@color/bubble_tint_voice_teal"
+                    android:fontFamily="@font/inter_bold"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:text="0:02"
+                    android:textColor="@color/status_active_text_green"
+                    android:textSize="@dimen/_8ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_voice_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_voice_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_voice_title" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/layout_voice_play_frame"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_voice_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_voice_title">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="8dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="12dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="6dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_active_green" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_inactive_gray" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="12dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_inactive_gray" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="4dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@color/waveform_inactive_gray" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_variant_plain_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:maxWidth="@dimen/_210sdp"
+                android:textColor="@color/figma_dark_text"
+                android:textSize="@dimen/_13ssp"
+                android:visibility="gone"
+                tools:text="How are You?...." />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_variant_large_media"
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="@dimen/_220sdp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/tv_bubble_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/chat_text_muted_gray"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintEnd_toEndOf="@+id/card_bubble_wrapper"
+        app:layout_constraintTop_toBottomOf="@+id/card_bubble_wrapper"
+        tools:text="10:52 AM" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

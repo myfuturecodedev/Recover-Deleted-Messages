@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#1AFFFFFF"> <!-- Native white touch ripple indicator overlay -->
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Matches the vibrant brand green shade from your reference layouts -->
+            <solid android:color="#00A884" />
+            <!-- Explicit responsive sizing radius control -->
+            <corners android:radius="@dimen/_12sdp" />
+        </shape>
+    </item>
+</ripple>

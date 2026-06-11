@@ -5,23 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_paywall_canvas"
-    android:paddingHorizontal="@dimen/_18sdp"
     tools:context=".ui.afterlogin.PremiumFragment">
-    >
 
-    <!-- ================= TOP DISMISSAL BAR CONTROL ================= -->
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_close_paywall"
-        android:layout_width="@dimen/_28sdp"
-        android:layout_height="@dimen/_28sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/bg_circle_icon_btn"
-        android:backgroundTint="#1AFFFFFF"
-        android:contentDescription="Dismiss Subscription Paywall"
-        android:src="@drawable/ic_close_dismiss"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_cross"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/paywall_text_primary" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/_12sdp"
+        android:layout_margin="@dimen/_12sdp"
+        />
 
     <!-- ================= SCROLLABLE CENTER CORE ================= -->
     <androidx.core.widget.NestedScrollView
@@ -39,16 +35,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:paddingBottom="@dimen/_16sdp">
 
             <!-- App Logo Badge Anchor -->
             <View
                 android:id="@+id/bg_restore_icon_badge"
-                android:layout_width="@dimen/_54sdp"
-                android:layout_height="@dimen/_54sdp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:background="@drawable/ic_history_img"
-                android:backgroundTint="#0D2DC67A" />
+                />
 
 
             <!-- Core Typography Headers Block -->
@@ -363,6 +360,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/container_legal_links" />
 
     <LinearLayout
@@ -372,6 +370,7 @@
         android:layout_marginBottom="@dimen/_14sdp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

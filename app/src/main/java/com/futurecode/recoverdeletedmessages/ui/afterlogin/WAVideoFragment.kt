@@ -1,60 +1,135 @@
 package com.futurecode.recoverdeletedmessages.ui.afterlogin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import com.futurecode.recoverdeletedmessages.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import com.futurecode.recoverdeletedmessages.adapter.MediaGridAdapter
+import com.futurecode.recoverdeletedmessages.base.BaseFragment
+import com.futurecode.recoverdeletedmessages.databinding.FragmentWAVideoBinding
+import com.futurecode.recoverdeletedmessages.utils.MediaPermissionHelper
+import com.futurecode.recoverdeletedmessages.utils.UiState
+import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class WAVideoFragment : BaseFragment<FragmentWAVideoBinding>(FragmentWAVideoBinding::inflate) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [WAVideoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class WAVideoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val TAG = "WAVideoFragment_Log"
+    private val viewModel: RecoveryViewModel by viewModels()
+    private lateinit var mediaGridAdapter: MediaGridAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private val selectedPathsSet = mutableSetOf<String>()
+    private val isBusinessMode = false
+
+    // Handles your unified storage directory scanning permission contract cleanly
+    private val permissionHelper = MediaPermissionHelper(
+        fragment = this,
+        isBusinessMode = isBusinessMode,
+        onPermissionGranted = {
+            // FIXED: Requests your unified viewmodel hub to specifically target video directory trees
+            viewModel.loadScannedMediaFiles(categoryType = "VIDEO", isBusinessMode = isBusinessMode)
+        }
+    ).apply {
+        registerLifecycleLauncher()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeRecyclerView()
+        setupActionDeckClickListeners()
+        observeMediaScannerPipeline()
+    }
+
+    private fun initializeRecyclerView() {
+        binding.tvMediaToolbarTitle.text = "WA Video"
+
+        mediaGridAdapter = MediaGridAdapter(
+            onCardClicked = { mediaItem ->
+                if (selectedPathsSet.isNotEmpty()) {
+                    handleGridSelectionToggle(mediaItem.localMediaUri)
+                } else {
+                    Log.d(TAG, "Open native fullscreen media player for file: ${mediaItem.localMediaUri}")
+                }
+            },
+            onCardLongPressed = { mediaItem ->
+                handleGridSelectionToggle(mediaItem.localMediaUri)
+            }
+        )
+
+        binding.rvMediaGrid.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = mediaGridAdapter
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_w_a_video, container, false)
+    private fun handleGridSelectionToggle(path: String?) {
+        if (path == null) return
+        if (selectedPathsSet.contains(path)) {
+            selectedPathsSet.remove(path)
+        } else {
+            selectedPathsSet.add(path)
+        }
+
+        // Toggles selection visibility on the bottom action deck
+        binding.cardActionFooterDeck.visibility = if (selectedPathsSet.isNotEmpty()) View.VISIBLE else View.GONE
+        mediaGridAdapter.updateSelectionCache(selectedPathsSet)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WAVideoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WAVideoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun setupActionDeckClickListeners() {
+        binding.btnMediaBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+
+        binding.btnActionDelete.setOnClickListener {
+            // FIXED: Hooked up to your unified ViewModel's bulk file deletion routine smoothly
+            viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), categoryType = "VIDEO", isBusinessMode = isBusinessMode)
+            selectedPathsSet.clear()
+            binding.cardActionFooterDeck.visibility = View.GONE
+        }
+
+        binding.btnActionShare.setOnClickListener {
+            Log.d(TAG, "Triggering system send share sheet intent blocks.")
+        }
+    }
+
+    private fun observeMediaScannerPipeline() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // FIXED: Listens to your new multi-media state UI flow stream instead of the old, removed audio channel stream
+                viewModel.mediaUiStateFlow.collectLatest { state ->
+                    when (state) {
+                        is UiState.Loading -> {
+                            Log.d(TAG, "Parsing local storage video directory structures...")
+                            binding.rvMediaGrid.visibility = View.GONE
+                        }
+                        is UiState.Success -> {
+                            val videosList = state.data
+                            Log.d(TAG, "Success state: Found ${videosList.size} recovered videos.")
+                            binding.rvMediaGrid.visibility = View.VISIBLE
+                            mediaGridAdapter.submitList(videosList)
+                        }
+                        is UiState.Error -> {
+                            Log.e(TAG, "Pipeline operation logged internal processing exceptions", state.exception)
+                            binding.rvMediaGrid.visibility = View.VISIBLE
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.cardActionFooterDeck.visibility = View.GONE
+        permissionHelper.checkAndRequestPermission()
+    }
+
+    override fun onPause() {
+        permissionHelper.dismissPopupSilently()
+        super.onPause()
     }
 }

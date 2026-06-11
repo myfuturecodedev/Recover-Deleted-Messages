@@ -47,14 +47,14 @@ class NotificationWorker(appContext: Context, params: WorkerParameters) :
     }
 
     private fun showNotification(icon: String, title: String, message: String) {
-        val channelId = "ff_tools_local_channel"
+        val channelId = "recover_deleted_message_local_channel"
         val manager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "FFTools Local Notifications",
+                "Recover Deleted Message Local Notifications",
                 NotificationManager.IMPORTANCE_HIGH
             )
             manager.createNotificationChannel(channel)
@@ -126,12 +126,12 @@ class NotificationWorker(appContext: Context, params: WorkerParameters) :
     private fun scheduleNextWorker() {
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(5, TimeUnit.MINUTES)
-            .addTag("ghostfinder_notification_worker")
+            .addTag("recover_deleted_message_notification_worker")
             .build()
 
         WorkManager.getInstance(applicationContext)
             .enqueueUniqueWork(
-                "ghostfinder_notification_chain",
+                "recover_deleted_message_notification_chain",
                 ExistingWorkPolicy.REPLACE,
                 workRequest
             )

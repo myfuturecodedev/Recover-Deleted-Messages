@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base Core System Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="g2">#24508C</color>
+    <color name="green">#67B14A</color>
 
     <!-- Background Gradient Colors -->
-    <color name="splash_bg_gradient_start">#FFDEF3E6</color> <!-- Light Teal-Green top -->
-    <color name="splash_bg_gradient_end">#FFA6E7C4
-    </color>   <!-- Sightly deeper Teal-Green bottom -->
+    <color name="splash_bg_gradient_start">#FFDEF3E6</color>
+    <color name="splash_bg_gradient_end">#FFA6E7C4</color>
 
     <!-- Text Colors -->
-    <color name="splash_title_color">#FF1A1A1A</color>    <!-- Dark charcoal/Black -->
-    <color name="splash_loading_color">#FF70A98F</color> <!-- Darker green, low opacity text -->
+    <color name="splash_title_color">#FF1A1A1A</color>
+    <color name="splash_loading_color">#FF70A98F</color>
 
     <!-- Icon & Progress Bar Colors -->
-    <color name="splash_accent_green">#FF2DC67A</color>  <!-- Vibrant green in icon -->
-    <color name="splash_progress_track_color">#4D2DC67A
-    </color> <!-- 30% alpha vibrant green for track -->
+    <color name="splash_accent_green">#FF2DC67A</color>
+    <color name="splash_progress_track_color">#4D2DC67A</color>
 
     <!-- Precise 3-point gradient mapping for Splash Screen Background -->
-    <color name="splash_bg_gradient_top">#FFC7EED6</color>    <!-- Soft, muted mint top -->
-    <color name="splash_bg_gradient_bottom">#FF97DDB8
-    </color>  <!-- Rich, smooth premium teal-green base -->
-    <color name="splash_bg_gradient_center">#FFE1F7EB
-    </color> <!-- Bright center core behind the logo (Lighter radiant spot) -->
+    <color name="splash_bg_gradient_top">#FFC7EED6</color>
+    <color name="splash_bg_gradient_bottom">#FF97DDB8</color>
+    <color name="splash_bg_gradient_center">#FFE1F7EB</color>
 
+    <!-- Language Selection Module Screen Colors -->
     <color name="lang_bg_main">#FFF8F9FA</color>
     <color name="lang_card_unselected">#FFFFFFFF</color>
     <color name="lang_card_selected_bg">#FFE2F6E9</color>
@@ -38,66 +38,32 @@
     <color name="lang_promo_badge">#FFE2E8F0</color>
     <color name="lang_btn_upgrade_bg">#FF0F172A</color>
 
-    <!-- WA Recovery Design Colors -->
-    <color name="bg_main">#F8FAFC</color>
-    <color name="text_title">#1E293B</color>
-    <color name="text_subtitle">#64748B</color>
-
-    <color name="color_message">#2DC67A</color>
-    <color name="bg_message">#E8F5E9</color>
-
-    <color name="color_photo">#F59E0B</color>
-    <color name="bg_photo">#FFF3E0</color>
-
-    <color name="color_video">#3B82F6</color>
-    <color name="bg_video">#E3F2FD</color>
-
-    <color name="color_gif">#F43F5E</color>
-    <color name="bg_gif">#FDF2F2</color>
-
-    <color name="color_sticker">#06B6D4</color>
-    <color name="bg_sticker">#E0F7FA</color>
-
-    <color name="color_audio">#D946EF</color>
-    <color name="bg_audio">#FCE4EC</color>
-
-    <color name="color_voice">#0EA5E9</color>
-    <color name="bg_voice">#E1F5FE</color>
-
-    <color name="color_documents">#EF4444</color>
-    <color name="bg_documents">#FFF0F0</color>
-
-    <color name="deep_scan_bg">#0F172A</color>
-    <color name="upgrade_btn_bg">#58D68D</color>
-
-    <color name="badge_red">#EF4444</color>
-    <color name="bottom_nav_bg">#FFFFFF</color>
-    <color name="bottom_nav_selected_bg">#E2F6E9</color>
-    <color name="bottom_nav_selected_text">#135232</color>
-    <color name="bottom_nav_unselected_text">#94A3B8</color>
-    <color name="g2">#24508C</color>
-    <color name="green">#67B14A</color>
-
-
+    <!-- Unified WA Dashboard Grid and Category Item Canvas Colors -->
     <color name="dash_bg_main">#FFFFFFFF</color>
-
     <color name="dash_text_title">#FF0F172A</color>
     <color name="dash_text_subtitle">#FF64748B</color>
+
     <color name="card_message_bg">#FFF1FAF5</color>
     <color name="card_message_accent">#FF2DC67A</color>
+
     <color name="card_photo_bg">#FFFDF6ED</color>
     <color name="card_photo_accent">#FFF59E0B</color>
-    <color name="badge_count_bg">#FFEF4444</color>
+
     <color name="card_video_bg">#FFF0F7FF</color>
     <color name="card_video_accent">#FF3B82F6</color>
+
     <color name="card_gif_bg">#FFFDF4F2</color>
     <color name="card_gif_accent">#FFEF5A3E</color>
+
     <color name="card_sticker_bg">#FFF0FDFE</color>
     <color name="card_sticker_accent">#FF06B6D4</color>
+
     <color name="card_audio_bg">#FFFDF2F8</color>
     <color name="card_audio_accent">#FFEC4899</color>
+
     <color name="card_voice_bg">#FFF0F9FF</color>
     <color name="card_voice_accent">#FF0EA5E9</color>
+
     <color name="card_docs_bg">#FFFDF2F2</color>
     <color name="card_docs_accent">#FFF87171</color>
 
@@ -106,62 +72,144 @@
     <color name="dash_bottom_nav_bg">#FFF8F9FA</color>
     <color name="dash_nav_active_pill">#FFE2F6E9</color>
     <color name="dash_nav_inactive_text">#94A3B8</color>
+    <color name="badge_count_bg">#FFEF4444</color>
 
-    <!-- Screen Canvas Canvas Sizing -->
+    <!-- Settings Screen Colors -->
     <color name="settings_bg_main">#FFF8F9FA</color>
     <color name="settings_card_bg">#FFFFFFFF</color>
+    <color name="settings_text_title">#FF0F172A</color>
+    <color name="settings_text_section">#FF94A3B8</color>
+    <color name="settings_text_item">#FF1E293B</color>
+    <color name="settings_arrow_tint">#FFE2E8F0</color>
+    <color name="settings_icon_circle_bg">#FFF1F5F9</color>
+    <color name="settings_general_icon_bg">#FFE2F6E9</color>
+    <color name="settings_general_icon_tint">#FF135232</color>
+    <color name="settings_support_banner_bg">#FFFDF2F2</color>
+    <color name="settings_support_text_sub">#FFEF4444</color>
+    <color name="settings_support_circle_bg">#FFFFFFFF</color>
+    <color name="settings_support_arrow_bg">#FFFFFFFF</color>
+    <color name="settings_support_arrow_tint">#FFEF4444</color>
 
-    <!-- Typography Specs -->
-    <color name="settings_text_title">#FF0F172A</color>    <!-- Deep slate black for headers -->
-    <color name="settings_text_section">#FF94A3B8</color>  <!-- Muted slate grey for section labels -->
-    <color name="settings_text_item">#FF1E293B</color>     <!-- Charcoal for settings item labels -->
-    <color name="settings_arrow_tint">#FFE2E8F0</color>    <!-- Soft grey arrow tint -->
-
-    <!-- Icon Circle Shapes Background Tints -->
-    <color name="settings_icon_circle_bg">#FFF1F5F9</color> <!-- Default neutral background loop -->
-    <color name="settings_general_icon_bg">#FFE2F6E9</color> <!-- Soft green tint for general category -->
-    <color name="settings_general_icon_tint">#FF135232</color> <!-- Dark forest green icon tint -->
-
-    <!-- Special Support Banner Component Matrix -->
-    <color name="settings_support_banner_bg">#FFFDF2F2</color> <!-- Soft pastel pink/red block background -->
-    <color name="settings_support_text_sub">#FFEF4444</color>  <!-- Red subtext description alert string -->
-    <color name="settings_support_circle_bg">#FFFFFFFF</color>  <!-- Solid white inner circle -->
-    <color name="settings_support_arrow_bg">#FFFFFFFF</color>   <!-- Solid white arrow background circle -->
-    <color name="settings_support_arrow_tint">#FFEF4444</color> <!-- Red inner arrow accent tint -->
-
-    <!-- Background Canvas and Card Tints -->
+    <!-- Instruction Guide Screen Colors -->
     <color name="guide_bg_main">#FFF8F9FA</color>
     <color name="guide_card_bg">#FFFFFFFF</color>
+    <color name="guide_btn_green">#005F4B</color>
+    <color name="guide_light_green_bg">#FFE2F6E9</color>
+    <color name="guide_success_text">#FF135232</color>
+    <color name="guide_success_bg">#FFF0FDF4</color>
+    <color name="guide_text_title">#FF0F172A</color>
+    <color name="guide_text_subtitle">#FF64748B</color>
+    <color name="guide_text_disclaimer">#FFA1A1AA</color>
 
-    <!-- Custom Accent Greens -->
-    <color name="guide_btn_green">#005F4B</color>         <!-- Deep premium green for "USE THIS FOLDER" -->
-    <color name="guide_light_green_bg">#FFE2F6E9</color>  <!-- Circular folder background tint -->
-    <color name="guide_success_text">#FF135232</color>    <!-- Success check text color -->
-    <color name="guide_success_bg">#FFF0FDF4</color>      <!-- "Access Enabled" chip background -->
+    <!-- Interactive Paywall Core Subscription Colors -->
+    <color name="paywall_bg_gradient_start">#FF022E1A</color>
+    <color name="paywall_bg_gradient_end">#FF01140B</color>
+    <color name="paywall_feature_row_bg">#14FFFFFF</color>
+    <color name="paywall_feature_icon_bg">#1A2DC67A</color>
+    <color name="paywall_accent_green">#FF2DC67A</color>
+    <color name="paywall_card_selected_bg">#0D2DC67A</color>
+    <color name="paywall_card_unselected_border">#26FFFFFF</color>
+    <color name="paywall_badge_save_bg">#FF36D695</color>
+    <color name="paywall_btn_orange_start">#FFFF7E36</color>
+    <color name="paywall_btn_coral_end">#FFFF6B76</color>
+    <color name="paywall_text_primary">#FFFFFFFF</color>
+    <color name="paywall_text_secondary">#94A3B8</color>
 
-    <!-- Typography Matrix -->
-    <color name="guide_text_title">#FF0F172A</color>      <!-- Dark slate for primary card headers -->
-    <color name="guide_text_subtitle">#FF64748B</color>   <!-- Slate for descriptions -->
-    <color name="guide_text_disclaimer">#FFA1A1AA</color> <!-- Light grey for the capital letter disclaimer -->
-    <!-- Paywall Core Canvas Backgrounds -->
-    <color name="paywall_bg_gradient_start">#FF022E1A</color>  <!-- Very dark emerald green top -->
-    <color name="paywall_bg_gradient_end">#FF01140B</color>    <!-- Deep near-black forest green bottom -->
+    <!-- Chat Conversation and Stream List Colors -->
+    <color name="chat_bg_main">#FFF8F9FA</color>
+    <color name="chat_row_unselected">#FFFFFFFF</color>
+    <color name="chat_row_selected_bg">#FFE2F6E9</color>
+    <color name="chat_unread_badge">#FF2DC67A</color>
+    <color name="bubble_received_bg">#FFFFFFFF</color>
+    <color name="bubble_media_icon_blue_bg">#FFEBF3FF</color>
+    <color name="bubble_media_icon_blue">#FF3B82F6</color>
 
-    <!-- Feature Row Sub-containers -->
-    <color name="paywall_feature_row_bg">#14FFFFFF</color>     <!-- 8% White Alpha transparency overlay -->
-    <color name="paywall_feature_icon_bg">#1A2DC67A</color>    <!-- Subtle transparent green for icon circles -->
-    <color name="paywall_accent_green">#FF2DC67A</color>       <!-- Vibrant neon green for icons/borders -->
+    <!-- FIXED: Extended color value to full 8-character hex spacing safely -->
+    <color name="bubble_media_icon_purple_bg">#FFF3EBFD</color>
 
-    <!-- Interactive Plan Card Selection Matrices -->
-    <color name="paywall_card_selected_bg">#0D2DC67A</color>   <!-- Soft translucent selected card overlay -->
-    <color name="paywall_card_unselected_border">#26FFFFFF</color> <!-- 15% White opacity boundary line -->
-    <color name="paywall_badge_save_bg">#FF36D695</color>      <!-- Radiant mint green for "Save 99%" pill -->
+    <color name="bubble_media_icon_purple">#FF8B5CF6</color>
+    <color name="bubble_waveform_active">#FF475569</color>
+    <color name="chat_text_name">#FF0F172A</color>
+    <color name="chat_text_message">#FF475569</color>
+    <color name="chat_text_timestamp">#FF94A3B8</color>
+    <color name="chat_online_green">#FF2DC67A</color>
+    <color name="badge_red">#FFEF4444</color>
+    <color name="deep_scan_bg">#FF0B132B</color>
+    <color name="upgrade_btn_bg">#FF2DC67A</color>
+    <color name="text_title">#FF0F172A</color>
+    <color name="text_subtitle">#FF64748B</color>
 
-    <!-- Primary Action Button Gradients -->
-    <color name="paywall_btn_orange_start">#FFFF7E36</color>   <!-- Vibrant orange left boundary -->
-    <color name="paywall_btn_coral_end">#FFFF6B76</color>      <!-- Soft coral red right boundary -->
+    <color name="wa_brand_green">#00A884</color>
+    <color name="neon_active_green">#2DC67A</color>
+    <color name="selected_row_green_tint">#1A2DC67A</color>
 
-    <!-- Typography Text Elements -->
-    <color name="paywall_text_primary">#FFFFFFFF</color>       <!-- High contrast white for main headers -->
-    <color name="paywall_text_secondary">#94A3B8</color>       <!-- Muted slate for helper description strings -->
+    <color name="chat_text_snippet">#667781</color>
+
+    <color name="figma_dark_text">#1A2530</color>
+    <color name="figma_sub_text">#707E94</color>
+    <color name="figma_forest_green">#265D52</color>
+    <color name="figma_pastel_green">#E2F6D6</color>
+    <color name="figma_close_btn_bg">#F1F3F6</color>
+
+
+    <color name="media_bg_canvas">#FDFDFD</color>
+
+    <color name="figma_orange_badge">#FF825C</color>
+    <color name="figma_selected_blue">#00A884</color>
+    <color name="video_timestamp_bg">#B3000000</color>
+    <color name="action_footer_text">#707E94</color>
+    <color name="action_delete_red">#EA0038</color>
+
+    <color name="bg_ext_pdf">#FFEBEB</color>
+    <color name="bg_ext_xls">#EBF9F1</color>
+    <color name="bg_ext_zip">#F3EBF9</color>
+    <color name="bg_ext_audio">#FFF4EB</color>
+    <color name="bg_ext_image">#EBF3F9</color>
+    <color name="accent_ext_pdf">#E53935</color>
+    <color name="accent_ext_xls">#107C41</color>
+    <color name="accent_ext_zip">#8E24AA</color>
+    <color name="accent_ext_audio">#F57C00</color>
+    <color name="accent_ext_image">#1E88E5</color>
+
+    <color name="timeline_header_grey">#9EAAB7</color>
+    <color name="figma_light_green_new">#E2F7E9</color>
+    <color name="figma_text_green_new">#27AE60</color>
+
+    <!-- Screen Specific Theme Accents -->
+    <color name="status_active_text_green">#0C6B58</color>  <!-- Deep teal monitoring text -->
+    <color name="status_dot_green">#27AE60</color>          <!-- Vibrant indicator dot -->
+    <color name="callout_bg_gray">#F6F8FA</color>           <!-- Light callout tint background -->
+    <color name="stop_action_red">#D92D20</color>           <!-- Warning action label color -->
+    <color name="stop_action_bg_tint">#FFF4F3</color>       <!-- Very soft red button border background tint -->
+    <color name="divider_line_color">#EAEFF4</color>        <!-- Ultra thin separator card line -->
+
+    <!-- Guide Screen Color Palette -->
+    <color name="guide_step_line">#EAEFF4</color>          <!-- Timeline connecting vertical thread track -->
+    <color name="whatsapp_brand_green">#25D366</color>     <!-- WhatsApp application logo accent background -->
+    <color name="reminder_bg_yellow">#FFF9E6</color>        <!-- Warning yellow reminder banner tint -->
+    <color name="reminder_border_yellow">#FFE0B2</color>    <!-- Warning border outline shade -->
+    <color name="reminder_text_orange">#B25E00</color>      <!-- Alert message body description typography color -->
+
+    <color name="player_translucent_black">#CC000000</color> <!-- Letterbox backing canvas -->
+    <color name="player_track_inactive">#4DFFFFFF</color>      <!-- Dim white seekbar background -->
+    <color name="player_text_timestamp">#D2D2D2</color>       <!-- Clean overlay runtime time labels -->
+    <color name="player_expand_btn_green">#E2F6D6</color>
+
+    <color name="player_text_dark_green">#074D40</color>
+    <color name="speed_btn_bg_unselected">#F8F9FA</color>
+    <color name="speed_btn_text_dark">#1A2530</color>
+
+    <!-- Chat Card Specific Tones -->
+    <color name="chat_unread_bg_tint">#E4F7E8</color>    <!-- Light green background tint for unread rows -->
+    <color name="chat_unread_indicator">#1F6A52</color> <!-- Deep teal green for unread badge and status dot -->
+    <color name="chat_text_muted_gray">#707E94</color>   <!-- Muted description copy color -->
+
+    <color name="bubble_tint_photo_blue">#EDF4FF</color>
+    <color name="bubble_tint_video_purple">#F5EEFF</color>
+    <color name="bubble_tint_voice_teal">#E1F3EE</color>
+    <color name="bubble_tint_gif_pink">#FFEBF1</color>
+    <color name="bubble_tint_sticker_blue">#EEF0FF</color>
+    <color name="waveform_active_green">#3B8A75</color>
+    <color name="waveform_inactive_gray">#E2E8F0</color>
+
 </resources>

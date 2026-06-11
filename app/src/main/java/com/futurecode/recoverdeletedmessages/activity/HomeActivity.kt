@@ -1,6 +1,7 @@
 package com.futurecode.recoverdeletedmessages.activity
 
 import android.os.Bundle
+import android.util.Log
 
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -28,5 +29,10 @@ class HomeActivity : BaseActivity() {
         // 2. Initialize Jetpack Navigation
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        navController?.addOnDestinationChangedListener { controller, destination, bundle ->
+            Log.e("TAG", "${destination.displayName.toString()}")
+
+        }
     }
 }

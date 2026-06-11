@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+val admobAppId = project.findProperty("ADMOB_APP_ID") as? String ?: ""
 android {
     namespace = "com.futurecode.recoverdeletedmessages"
     compileSdk {
@@ -15,9 +16,12 @@ android {
         minSdk = 24
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
+
     }
 
     buildTypes {
@@ -88,4 +92,7 @@ dependencies {
     //firebase analytics
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+
+
+
 }

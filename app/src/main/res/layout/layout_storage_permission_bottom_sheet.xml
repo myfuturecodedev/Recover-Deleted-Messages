@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_top_rounded"
+    android:paddingHorizontal="@dimen/_20sdp"
+    android:paddingBottom="@dimen/_24sdp">
+
+    <View
+        android:id="@+id/view_top_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_close_sheet"
+        android:layout_width="@dimen/_28sdp"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:contentDescription="Close Dialogue Panel"
+        android:src="@drawable/ic_cross_permission"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_top_spacer"
+        />
+
+    <TextView
+        android:id="@+id/tv_sheet_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="Allow Access"
+        android:textColor="@color/figma_dark_text"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close_sheet" />
+
+    <TextView
+        android:id="@+id/tv_sheet_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:fontFamily="@font/inter_regular"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:text="To recover media messages, please allow\nthe app USE THIS FOLDER."
+        android:textColor="@color/figma_sub_text"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sheet_title" />
+
+    <FrameLayout
+        android:id="@+id/container_folder_icon"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sheet_subtitle">
+
+        <ImageView
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:src="@drawable/ic_use_this_folder"
+            />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_use_this_folder_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="USE THIS FOLDER"
+        android:textColor="@color/figma_forest_green"
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/container_folder_icon" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_allow_permission"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:background="@drawable/bg_solid_forest_green_btn"
+        android:fontFamily="@font/inter_bold"
+        android:text="Allow"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tv_use_this_folder_hint" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

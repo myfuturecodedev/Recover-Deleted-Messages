@@ -7,19 +7,18 @@
     android:background="@color/lang_bg_main"
     tools:context=".ui.prelogin.LanguageFragment">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
+        android:layout_width="@dimen/_37sdp"
+        android:layout_height="@dimen/_37sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/bg_circle_icon_btn"
         android:contentDescription="Back"
         android:src="@drawable/ic_back_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_confirm_selection"
         android:layout_width="@dimen/_32sdp"
         android:layout_height="@dimen/_32sdp"

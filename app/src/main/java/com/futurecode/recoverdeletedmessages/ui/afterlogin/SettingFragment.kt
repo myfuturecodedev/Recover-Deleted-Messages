@@ -10,6 +10,7 @@ import com.futurecode.recoverdeletedmessages.databinding.FragmentSettingBinding
  * Fragment responsible for displaying the user settings panel.
  * Extends BaseFragment to inherit core architecture, view bindings, and preference frameworks.
  */
+
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
