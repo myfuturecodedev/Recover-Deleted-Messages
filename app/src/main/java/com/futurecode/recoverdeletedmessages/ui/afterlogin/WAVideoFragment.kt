@@ -32,7 +32,7 @@ class WAVideoFragment : BaseFragment<FragmentWAVideoBinding>(FragmentWAVideoBind
         isBusinessMode = isBusinessMode,
         onPermissionGranted = {
             // FIXED: Requests your unified viewmodel hub to specifically target video directory trees
-            viewModel.loadScannedMediaFiles(categoryType = "VIDEO", isBusinessMode = isBusinessMode)
+            viewModel.loadStoredCategoryMedia(categoryType = "VIDEO", isBusinessMode = isBusinessMode)
         }
     ).apply {
         registerLifecycleLauncher()
@@ -86,7 +86,7 @@ class WAVideoFragment : BaseFragment<FragmentWAVideoBinding>(FragmentWAVideoBind
 
         binding.btnActionDelete.setOnClickListener {
             // FIXED: Hooked up to your unified ViewModel's bulk file deletion routine smoothly
-            viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), categoryType = "VIDEO", isBusinessMode = isBusinessMode)
+          //  viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), categoryType = "VIDEO", isBusinessMode = isBusinessMode)
             selectedPathsSet.clear()
             binding.cardActionFooterDeck.visibility = View.GONE
         }

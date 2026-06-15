@@ -1,5 +1,6 @@
 package com.futurecode.recoverdeletedmessages.activity
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 
@@ -17,7 +18,10 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+// Inside your main activity launcher flow setup:
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+        }
         // 1. Initialize View Binding layout node graph tree
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)

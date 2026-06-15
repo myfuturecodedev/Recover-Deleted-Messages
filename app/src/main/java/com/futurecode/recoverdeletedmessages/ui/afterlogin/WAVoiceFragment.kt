@@ -13,6 +13,7 @@ import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.data.MessageEntity
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAVoiceBinding
 import com.futurecode.recoverdeletedmessages.utils.MediaPermissionHelper
+import com.futurecode.recoverdeletedmessages.utils.StoragePermissionManager
 import com.futurecode.recoverdeletedmessages.utils.UiState
 import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -25,14 +26,16 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
     private lateinit var audioListAdapter: DocumentListAdapter
 
     private val selectedPathsSet = mutableSetOf<String>()
-    private val isBusinessMode = false
+    private var isBusinessMode = false
+    private var isWaitingForStorageCallback = false
 
     // Sets up the unified permission contract helper to target your audio folders
     private val permissionHelper = MediaPermissionHelper(
         fragment = this,
         isBusinessMode = isBusinessMode,
         onPermissionGranted = {
-            viewModel.loadScannedMediaFiles(categoryType = "AUDIO", isBusinessMode = isBusinessMode)
+            this@WAVoiceFragment.isWaitingForStorageCallback = false
+            viewModel.loadStoredCategoryMedia(categoryType = "AUDIO", isBusinessMode = this@WAVoiceFragment.isBusinessMode)
         }
     ).apply {
         registerLifecycleLauncher()
@@ -40,6 +43,12 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Dynamic string parsing verification pass to handle WhatsApp vs Business channel triggers
+        val selectedApp = arguments?.getString("isBusinessMode") ?: "false"
+        isBusinessMode = selectedApp.uppercase() == "BUSINESS" || selectedApp.toBoolean()
+        permissionHelper.isBusinessMode = isBusinessMode
+
         initializeRecyclerView()
         setupActionDeckClickListeners()
         observeMediaScannerPipeline()
@@ -51,17 +60,20 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
         // Audio files reuse DocumentListAdapter since the item design matches the custom row specification
         audioListAdapter = DocumentListAdapter(
             onDocClicked = { audioItem ->
+                val path = audioItem.localMediaUri ?: audioItem.messageText
                 if (selectedPathsSet.isNotEmpty()) {
-                    handleSelectionToggle(audioItem.localMediaUri)
+                    handleSelectionToggle(path)
                 } else {
-                    Log.d(TAG, "Triggering audio playback listener stream for: ${audioItem.localMediaUri}")
+                    Log.d(TAG, "Triggering audio playback listener stream for: $path")
                 }
             },
             onDocLongPressed = { audioItem ->
-                handleSelectionToggle(audioItem.localMediaUri)
+                val path = audioItem.localMediaUri ?: audioItem.messageText
+                handleSelectionToggle(path)
             },
             onInlineShareClicked = { audioItem ->
-                Log.d(TAG, "Inline operational share event triggered for file path: ${audioItem.localMediaUri}")
+                val path = audioItem.localMediaUri ?: audioItem.messageText
+                Log.d(TAG, "Inline operational share event triggered for file path: $path")
             }
         )
 
@@ -88,7 +100,7 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
         binding.btnActionDelete.setOnClickListener {
-            viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "AUDIO", isBusinessMode)
+            //viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "AUDIO", isBusinessMode)
             selectedPathsSet.clear()
             binding.cardActionFooterDeck.visibility = View.GONE
         }
@@ -100,10 +112,12 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
                 viewModel.mediaUiStateFlow.collectLatest { state ->
                     when (state) {
                         is UiState.Loading -> binding.rvMediaGrid.visibility = View.GONE
-                        is UiState.Success -> {
+                        is UiState.Success<*> -> {
                             binding.rvMediaGrid.visibility = View.VISIBLE
+                            @Suppress("UNCHECKED_CAST")
+                            val rawList = state.data as? List<MessageEntity> ?: emptyList()
                             // Automatically maps audio entities under clean chronological headings
-                            val structuredTimelineList = sortAudioIntoTimelineSections(state.data)
+                            val structuredTimelineList = sortAudioIntoTimelineSections(rawList)
                             audioListAdapter.submitList(structuredTimelineList)
                         }
                         is UiState.Error -> binding.rvMediaGrid.visibility = View.VISIBLE
@@ -143,12 +157,20 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
 
         val compositeResult = mutableListOf<MessageEntity>()
 
+        // =========================================================================
+        // FIXED HEADER INITIALIZATION BLOCKS: REMOVED TYPE MISMATCH & UNRESOLVED FIELDS
+        // =========================================================================
         if (todayList.isNotEmpty()) {
             compositeResult.add(
                 MessageEntity(
-                    id = -1L, chatId = "", senderName = "", textContent = "Today",
-                    timestamp = 0L, messageType = "HEADER", localMediaUri = null,
-                    isPackageBusiness = false, isUnread = false
+                    id = -1, // FIXED: Int instead of Long (-1L)
+                    messageId = "HEADER_TODAY",
+                    senderName = "",
+                    messageText = "Today", // FIXED: textContent remapped to messageText
+                    timestamp = 0L,
+                    isBusiness = false,
+                    isDeleted = 0,
+                    localMediaUri = null
                 )
             )
             compositeResult.addAll(todayList.sortedByDescending { it.timestamp })
@@ -156,9 +178,14 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
         if (yesterdayList.isNotEmpty()) {
             compositeResult.add(
                 MessageEntity(
-                    id = -2L, chatId = "", senderName = "", textContent = "Yesterday",
-                    timestamp = 0L, messageType = "HEADER", localMediaUri = null,
-                    isPackageBusiness = false, isUnread = false
+                    id = -2, // FIXED: Int instead of Long (-2L)
+                    messageId = "HEADER_YESTERDAY",
+                    senderName = "",
+                    messageText = "Yesterday", // FIXED: textContent remapped to messageText
+                    timestamp = 0L,
+                    isBusiness = false,
+                    isDeleted = 0,
+                    localMediaUri = null
                 )
             )
             compositeResult.addAll(yesterdayList.sortedByDescending { it.timestamp })
@@ -166,9 +193,14 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
         if (lastWeekList.isNotEmpty()) {
             compositeResult.add(
                 MessageEntity(
-                    id = -3L, chatId = "", senderName = "", textContent = "Last Week",
-                    timestamp = 0L, messageType = "HEADER", localMediaUri = null,
-                    isPackageBusiness = false, isUnread = false
+                    id = -3, // FIXED: Int instead of Long (-3L)
+                    messageId = "HEADER_LAST_WEEK",
+                    senderName = "",
+                    messageText = "Last Week", // FIXED: textContent remapped to messageText
+                    timestamp = 0L,
+                    isBusiness = false,
+                    isDeleted = 0,
+                    localMediaUri = null
                 )
             )
             compositeResult.addAll(lastWeekList.sortedByDescending { it.timestamp })
@@ -180,7 +212,26 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
     override fun onResume() {
         super.onResume()
         binding.cardActionFooterDeck.visibility = View.GONE
-        permissionHelper.checkAndRequestPermission()
+
+        val selectedApp = arguments?.getString("isBusinessMode") ?: "false"
+        isBusinessMode = selectedApp.uppercase() == "BUSINESS" || selectedApp.toBoolean()
+        permissionHelper.isBusinessMode = isBusinessMode
+
+        // Master Fast Preference checking matrix pass
+        val isAllowed = StoragePermissionManager.isMediaDirectoryAccessGranted(requireContext(), isBusinessMode)
+        Log.e("TAGppppppppp", "Audio Screen onResume | Is Allowed: $isAllowed")
+
+        if (isAllowed) {
+            isWaitingForStorageCallback = false
+            viewModel.loadStoredCategoryMedia(categoryType = "AUDIO", isBusinessMode = isBusinessMode)
+            return
+        }
+
+        if (!isWaitingForStorageCallback) {
+            permissionHelper.checkAndRequestPermission {
+                isWaitingForStorageCallback = true
+            }
+        }
     }
 
     override fun onPause() {

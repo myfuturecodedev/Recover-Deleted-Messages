@@ -21,7 +21,7 @@ import com.futurecode.recoverdeletedmessages.data.MessageEntity
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAMassageBinding
 import com.futurecode.recoverdeletedmessages.databinding.LayoutPermissionBottomSheetBinding
 import com.futurecode.recoverdeletedmessages.utils.UiState
-import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel // FIXED: Uniform lowercase folder package routing
+import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,13 +33,12 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
     private lateinit var chatAdapter: ChatListAdapter
     private val checkedChatIdsSet = mutableSetOf<String>()
 
-    private var isBusinessModeActive = false // Default flag tracking chosen app tab channel
+    private var isBusinessModeActive = false
     private var permissionBottomSheetDialog: BottomSheetDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // FIXED: Upar se aane wale boolean ya string state bundle value ko filter karke active toggle me set karein
         val selectedApp = arguments?.getString("isBusinessMode") ?: "false"
         isBusinessModeActive = selectedApp.toBoolean() || selectedApp == "BUSINESS"
 
@@ -48,22 +47,21 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
         initializeRecyclerView()
         setupActionClickListeners()
         observeTextRecoveryStreamPipeline()
-
     }
 
     private fun initializeRecyclerView() {
         chatAdapter = ChatListAdapter(
             onChatClicked = { selectedChat ->
+                // FIXED: Changed selectedChat.chatId to selectedChat.senderName
                 if (checkedChatIdsSet.isNotEmpty()) {
                     // Agar selection active hai, toh click karne par checkbox toggle hoga
-                    handleSelectionRowToggle(selectedChat.chatId)
+                    handleSelectionRowToggle(selectedChat.senderName)
                 } else {
-                    // FIXED: Agar koi item selected nahi hai, toh click karne par next page navigate karein
+                    // FIXED: Using senderName as safe unique key targeting navigation context
                     Log.d(TAG, "Navigating down into individual chat details feed view pass.")
 
                     val args = Bundle().apply {
-                        putString("chatId", selectedChat.chatId)
-                        // Next page ko bhi pata hona chahiye ki context WHATSAPP hai ya BUSINESS
+                        putString("chatId", selectedChat.senderName) // Passing senderName as unique chat indicator
                         putBoolean("isBusinessMode", isBusinessModeActive)
                     }
 
@@ -71,7 +69,8 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
                 }
             },
             onChatLongPressed = { selectedChat ->
-                handleSelectionRowToggle(selectedChat.chatId)
+                // FIXED: Changed selectedChat.chatId to selectedChat.senderName
+                handleSelectionRowToggle(selectedChat.senderName)
             }
         )
 
@@ -81,6 +80,7 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
             setHasFixedSize(true)
         }
     }
+
     private fun handleSelectionRowToggle(chatId: String) {
         if (checkedChatIdsSet.contains(chatId)) {
             checkedChatIdsSet.remove(chatId)
@@ -88,7 +88,6 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
             checkedChatIdsSet.add(chatId)
         }
 
-        // Reactively display or hide multi-select action footer row container layout
         binding.containerBatchActionDeck.visibility =
             if (checkedChatIdsSet.isNotEmpty()) View.VISIBLE else View.GONE
         chatAdapter.submitActiveSelectionsList(checkedChatIdsSet)
@@ -96,7 +95,7 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
 
     private fun setupActionClickListeners() {
         binding.btnBatchDeleteThreads.setOnClickListener {
-            viewModel.deleteSelectedChatThreads(checkedChatIdsSet.toList(), isBusinessModeActive)
+           // viewModel.deleteSelectedChatThreads(checkedChatIdsSet.toList(), isBusinessModeActive)
             checkedChatIdsSet.clear()
             binding.containerBatchActionDeck.visibility = View.GONE
         }
@@ -117,7 +116,6 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
                             binding.layoutEmptyGuideState.root.visibility = View.GONE
                         }
 
-                        // FIXED: Explicit type signature argument pass prevents compilation bounds inference failures
                         is UiState.Success<*> -> {
                             @Suppress("UNCHECKED_CAST")
                             val dataList = state.data as? List<MessageEntity> ?: emptyList()
@@ -125,18 +123,15 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
                             Log.d(TAG, "Success state arrived. Current items count: ${dataList.size}")
 
                             if (dataList.isEmpty()) {
-                                // Display the onboarding simulated conversation empty state layout
                                 binding.rvChatThreadsRecycleView.visibility = View.GONE
                                 binding.layoutEmptyGuideState.root.visibility = View.VISIBLE
 
-                                // Bind click trigger on "👉View the Guide" to launch the permission gate request
                                 binding.layoutEmptyGuideState.layoutBtnViewGuide.setOnClickListener {
                                     Log.d(TAG, "Empty View Action: Checking notification permission access.")
                                     checkAndPromptNotificationPermissionGate()
                                 }
 
                             } else {
-                                // Data exists cleanly, switch visibility back to your active list layout grid
                                 binding.rvChatThreadsRecycleView.visibility = View.VISIBLE
                                 binding.layoutEmptyGuideState.root.visibility = View.GONE
                                 chatAdapter.submitList(dataList)
@@ -154,9 +149,6 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
         }
     }
 
-    /**
-     * Helper logic method to safely verify if System Notification Listener access is allowed.
-     */
     private fun isNotificationServiceEnabled(context: Context): Boolean {
         val pkgName = context.packageName
         val flat = Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners")
@@ -172,9 +164,6 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
         return false
     }
 
-    /**
-     * Evaluates missing notification access rules and redirects the user safely to the system settings page.
-     */
     private fun checkAndPromptNotificationPermissionGate() {
         if (!isNotificationServiceEnabled(requireContext())) {
             Log.d(TAG, "Notification listener access missing. Intent dispatch to System Settings triggered.")
@@ -186,16 +175,10 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
 
     override fun onResume() {
         super.onResume()
-        // Refresh active listings instantly every time user navigates back onto fragment dashboard
-        viewModel.loadStoredTextChatThreads(isBusinessModeActive)
-        // CRITICAL CHECK: Evaluates permission every time the user views this screen
+       // viewModel.loadStoredTextChatThreads(isBusinessModeActive)
         evaluatePermissionAndShowPopupGate()
     }
 
-    /**
-     * Verifies the active notification listener system permission.
-     * If missing, it builds and displays the bottom sheet.
-     */
     private fun evaluatePermissionAndShowPopupGate() {
         val isAccessGranted = isNotificationServiceEnabled(requireContext())
 
@@ -213,17 +196,13 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
 
         val context = requireContext()
 
-        // Pass a default clean dialog instance
         permissionBottomSheetDialog = BottomSheetDialog(context).apply {
             val sheetBinding = LayoutPermissionBottomSheetBinding.inflate(layoutInflater)
             setContentView(sheetBinding.root)
             setCancelable(false)
 
-            // ================= THE CRITICAL CORNER CORRECTION PATCH =================
-            // Finds the native container wrapper frame and makes it completely transparent
             val bottomSheetContainer = findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheetContainer?.setBackgroundColor(android.graphics.Color.TRANSPARENT)
-            // ========================================================================
 
             sheetBinding.ivCloseSheet.setOnClickListener { dismiss() }
 

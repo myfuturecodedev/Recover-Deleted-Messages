@@ -32,7 +32,7 @@ class WADocumentFragment : BaseFragment<FragmentWADocumentBinding>(FragmentWADoc
         fragment = this,
         isBusinessMode = isBusinessMode,
         onPermissionGranted = {
-            viewModel.loadScannedMediaFiles(
+            viewModel.loadStoredCategoryMedia(
                 categoryType = "DOCUMENT",
                 isBusinessMode = isBusinessMode
             )
@@ -97,13 +97,13 @@ class WADocumentFragment : BaseFragment<FragmentWADocumentBinding>(FragmentWADoc
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
         binding.btnActionDelete.setOnClickListener {
-            viewModel.deletePhysicalMediaFiles(
-                selectedPathsSet.toList(),
-                "DOCUMENT",
-                isBusinessMode
-            )
-            selectedPathsSet.clear()
-            binding.cardActionFooterDeck.visibility = View.GONE
+//            viewModel.deletePhysicalMediaFiles(
+//                selectedPathsSet.toList(),
+//                "DOCUMENT",
+//                isBusinessMode
+//            )
+//            selectedPathsSet.clear()
+//            binding.cardActionFooterDeck.visibility = View.GONE
         }
     }
 
@@ -157,56 +157,52 @@ class WADocumentFragment : BaseFragment<FragmentWADocumentBinding>(FragmentWADoc
             }
         }
         val compositeResult = mutableListOf<MessageEntity>()
-
         if (todayList.isNotEmpty()) {
-            // FIXED: Provided explicit argument mappings, setting localMediaUri to null for text group dividers
+            // FIXED: Mapped variable fields matching Room SQLite table layout schemas
             compositeResult.add(
                 MessageEntity(
-                    id = -1L,
-                    chatId = "",
+                    id = -1, // Maintained negative token value to trigger HeaderViewHolder inside Adapter
+                    messageId = "HEADER_TODAY",
                     senderName = "",
-                    textContent = "Today",
+                    messageText = "Today", // FIXED: textContent changed to messageText
                     timestamp = 0L,
-                    messageType = "HEADER",
-                    localMediaUri = null,
-                    isPackageBusiness = false,
-                    isUnread = false
+                    isBusiness = false, // FIXED: isPackageBusiness changed to isBusiness
+                    isDeleted = 0,
+                    localMediaUri = null
                 )
             )
             compositeResult.addAll(todayList.sortedByDescending { it.timestamp })
         }
 
         if (yesterdayList.isNotEmpty()) {
-            // FIXED: Provided explicit argument mappings
+            // FIXED: Mapped variable fields cleanly
             compositeResult.add(
                 MessageEntity(
-                    id = -2L,
-                    chatId = "",
+                    id = -2, // Maintained negative token value for Timeline headers
+                    messageId = "HEADER_YESTERDAY",
                     senderName = "",
-                    textContent = "Yesterday",
+                    messageText = "Yesterday", // FIXED: textContent changed to messageText
                     timestamp = 0L,
-                    messageType = "HEADER",
-                    localMediaUri = null,
-                    isPackageBusiness = false,
-                    isUnread = false
+                    isBusiness = false, // FIXED: isPackageBusiness changed to isBusiness
+                    isDeleted = 0,
+                    localMediaUri = null
                 )
             )
             compositeResult.addAll(yesterdayList.sortedByDescending { it.timestamp })
         }
 
         if (lastWeekList.isNotEmpty()) {
-            // FIXED: Provided explicit argument mappings
+            // FIXED: Mapped variable fields cleanly
             compositeResult.add(
                 MessageEntity(
-                    id = -3L,
-                    chatId = "",
+                    id = -3, // Maintained negative token value for Timeline headers
+                    messageId = "HEADER_LAST_WEEK",
                     senderName = "",
-                    textContent = "Last Week",
+                    messageText = "Last Week", // FIXED: textContent changed to messageText
                     timestamp = 0L,
-                    messageType = "HEADER",
-                    localMediaUri = null,
-                    isPackageBusiness = false,
-                    isUnread = false
+                    isBusiness = false, // FIXED: isPackageBusiness changed to isBusiness
+                    isDeleted = 0,
+                    localMediaUri = null
                 )
             )
             compositeResult.addAll(lastWeekList.sortedByDescending { it.timestamp })

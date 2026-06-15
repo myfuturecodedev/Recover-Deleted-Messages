@@ -1,17 +1,20 @@
 package com.futurecode.recoverdeletedmessages.data
 
-/**
- * Universal data token mapping both intercepted text messages and
- * local device media attachments cleanly across the app profile.
- */
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "messages_table")
 data class MessageEntity(
-    val id: Long,                     // Unique hash identity calculated from file paths or notification keys
-    val chatId: String,               // Unique thread bucket key (e.g., sender name hash or folder group)
-    val senderName: String,           // Display name or structural filename string (e.g., "AUD-20260605.opus")
-    val textContent: String,          // The intercepted chat text content or calculated size string (e.g., "412 KB")
-    val timestamp: Long,              // Epoch millisecond tracking for list sorting passes
-    val messageType: String,          // Categorization tag matrix: TEXT, PHOTO, VIDEO, AUDIO, GIF, STICKER
-    val localMediaUri: String? = null, // Direct on-device file storage link path string
-    val isPackageBusiness: Boolean = false, // Toggle flag separating standard WA from WA Business structures
-    val isUnread: Boolean = false     // Notification highlight badge flag controller
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val messageId: String,
+    val senderName: String,
+    val messageText: String,       // Text content ya file size metadata
+    val timestamp: Long,
+    val isBusiness: Boolean,       // WhatsApp (false) vs Business (true)
+    val isDeleted: Int = 0,        // 0 = Active, 1 = Deleted for Everyone
+    val localMediaUri: String? = null, // Physical device par file ka actual path
+
+    // NEW FIELD: Dynamic filtering ke liye (MESSAGE, PHOTO, VIDEO, AUDIO, VOICE, GIF, STICKER, DOCUMENT)
+    val mediaCategory: String = "MESSAGE"
 )

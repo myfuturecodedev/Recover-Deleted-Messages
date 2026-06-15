@@ -43,30 +43,46 @@ class DetailChatFeedAdapter : ListAdapter<MessageEntity, DetailChatFeedAdapter.B
             binding.tvBubblePillBadge.visibility = View.GONE
             binding.tvBubbleTimestamp.visibility = View.VISIBLE
 
-            // Evaluate view variants based on the dynamic incoming messageType
-            when (message.messageType.uppercase()) {
-                "PHOTO" -> {
+            // =========================================================================
+            // FIXED: DYNAMIC CONDITION BASED ON ROOM ENTITY FIELDS
+            // =========================================================================
+            val rawText = message.messageText
+
+            // 1. First priority condition: Check if the message was deleted for everyone
+            if (message.isDeleted == 1) {
+                binding.tvVariantPlainText.visibility = View.VISIBLE
+                binding.tvVariantPlainText.text = "🚫 This message was deleted"
+                binding.tvVariantPlainText.setTextColor(ContextCompat.getColor(context, R.color.action_delete_red))
+                return
+            }
+
+            // Reset default text color for active normal messages
+            binding.tvVariantPlainText.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+
+            // 2. Evaluate view types layout variants based on text rules signature keywords
+            when {
+                rawText.contains("📷 Photo") || rawText.equals("Photo", ignoreCase = true) -> {
                     binding.layoutVariantStandardFile.visibility = View.VISIBLE
                     binding.tvBubbleMainLabel.text = "Sent a photo"
                     binding.tvBubbleSubLabel.text = "Image file"
-                    binding.ivBubbleTypeIcon.setImageResource(R.drawable.ic_send_navigation) // Camera/Gallery vector link
+                    binding.ivBubbleTypeIcon.setImageResource(R.drawable.ic_send_navigation)
                     binding.layoutBubbleIconFrame.backgroundTintList = ContextCompat.getColorStateList(context, R.color.bubble_tint_photo_blue)
                     binding.ivBubbleTypeIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.figma_selected_blue)
                 }
-                "VIDEO" -> {
+                rawText.contains("🎥 Video") || rawText.equals("Video", ignoreCase = true) -> {
                     binding.layoutVariantStandardFile.visibility = View.VISIBLE
                     binding.tvBubbleMainLabel.text = "Sent a video"
                     binding.tvBubbleSubLabel.text = "MP4 Video"
                     binding.tvBubblePillBadge.visibility = View.VISIBLE
-                    binding.tvBubblePillBadge.text = "0:03" // Runtime mock placeholder
+                    binding.tvBubblePillBadge.text = "0:03"
                     binding.ivBubbleTypeIcon.setImageResource(R.drawable.ic_video_play_overlay)
                     binding.layoutBubbleIconFrame.backgroundTintList = ContextCompat.getColorStateList(context, R.color.bubble_tint_video_purple)
                     binding.ivBubbleTypeIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.action_footer_text)
                 }
-                "VOICE", "AUDIO" -> {
+                rawText.contains("🎙️ Voice message") || rawText.contains("Voice note", ignoreCase = true) || rawText.equals("Audio", ignoreCase = true) -> {
                     binding.layoutVariantVoiceNote.visibility = View.VISIBLE
                 }
-                "GIF" -> {
+                rawText.contains("GIF", ignoreCase = true) -> {
                     binding.layoutVariantStandardFile.visibility = View.VISIBLE
                     binding.tvBubbleMainLabel.text = "Sent a GIF"
                     binding.tvBubbleSubLabel.text = "Animation"
@@ -74,32 +90,18 @@ class DetailChatFeedAdapter : ListAdapter<MessageEntity, DetailChatFeedAdapter.B
                     binding.layoutBubbleIconFrame.backgroundTintList = ContextCompat.getColorStateList(context, R.color.bubble_tint_gif_pink)
                     binding.ivBubbleTypeIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.action_delete_red)
                 }
-                "STICKER" -> {
+                rawText.contains("Sticker", ignoreCase = true) -> {
                     binding.layoutVariantStandardFile.visibility = View.VISIBLE
                     binding.tvBubbleMainLabel.text = "Sent a sticker"
                     binding.tvBubbleSubLabel.text = "Sticker pack"
-                    binding.ivBubbleTypeIcon.setImageResource(R.drawable.ic_help_question) // Smiley face asset
+                    binding.ivBubbleTypeIcon.setImageResource(R.drawable.ic_help_question)
                     binding.layoutBubbleIconFrame.backgroundTintList = ContextCompat.getColorStateList(context, R.color.bubble_tint_sticker_blue)
                     binding.ivBubbleTypeIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.chat_unread_indicator)
                 }
-                "TEXT" -> {
-                    binding.tvVariantPlainText.visibility = View.VISIBLE
-                    binding.tvVariantPlainText.text = message.textContent
-                }
-                "LARGE_IMAGE" -> {
-                    // Variant 7: Direct Full Image Card Rendering layer seen at the bottom edge of screenshot
-                    binding.cardBubbleWrapper.visibility = View.GONE
-                    binding.tvBubbleTimestamp.visibility = View.GONE // Timestamp hidden or embedded inside image edge bounds
-                    binding.ivVariantLargeMedia.visibility = View.VISIBLE
-
-                    com.bumptech.glide.Glide.with(context)
-                        .load(message.localMediaUri)
-                        .placeholder(R.drawable.ic_wa_group_fallback)
-                        .into(binding.ivVariantLargeMedia)
-                }
                 else -> {
+                    // Default Fallback: Renders plain regular incoming text string messages cleanly
                     binding.tvVariantPlainText.visibility = View.VISIBLE
-                    binding.tvVariantPlainText.text = message.textContent
+                    binding.tvVariantPlainText.text = message.messageText
                 }
             }
         }

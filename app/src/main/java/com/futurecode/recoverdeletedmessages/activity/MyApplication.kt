@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import com.facebook.ads.AudienceNetworkAds
 import com.futurecode.recoverdeletedmessages.ads.app_open_ad.AppOpenHelperNew
+import com.futurecode.recoverdeletedmessages.database.AppDatabase
+import com.futurecode.recoverdeletedmessages.database.MessageRepository
 import com.futurecode.recoverdeletedmessages.utils.JsonReadUtils
 import com.futurecode.recoverdeletedmessages.utils.NetworkMonitor
 import com.futurecode.recoverdeletedmessages.utils.PrefManager
@@ -22,6 +24,13 @@ class MyApplication : Application() {
     var appOpenHelper: AppOpenHelperNew? = null
     private lateinit var networkMonitor: NetworkMonitor
     private var currentActivity: Activity? = null
+
+    // =========================================================================
+    // ADDED LAZY INITIALIZERS: Thread-safe injection models
+    // =========================================================================
+    private val database by lazy { AppDatabase.getDatabase(this) }
+    val repository by lazy { MessageRepository(database.messageRecoveryDao()) }
+    // =========================================================================
 
     override fun attachBaseContext(base: Context) {
         // Safe locale initialization for Application context
@@ -48,6 +57,7 @@ class MyApplication : Application() {
         // 1. Setup Activity Tracker FIRST
         // This is required because NetworkMonitor needs getCurrentActivity() to show the dialog
         setupActivityTracker()
+
 
         // 2. Initialize and Start Network Monitoring
         networkMonitor = NetworkMonitor(this)

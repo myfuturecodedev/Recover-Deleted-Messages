@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("androidx.room")
+    id("com.google.devtools.ksp")
 }
 
 val admobAppId = project.findProperty("ADMOB_APP_ID") as? String ?: ""
@@ -43,6 +45,10 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
@@ -94,5 +100,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
 
 
+    implementation("androidx.room:room-ktx:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
 
 }

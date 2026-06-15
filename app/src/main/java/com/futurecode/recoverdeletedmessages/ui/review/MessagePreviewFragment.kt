@@ -24,7 +24,7 @@ class MessagePreviewFragment : BaseFragment<FragmentMessagePreviewBinding>(Fragm
     private val viewModel: RecoveryViewModel by viewModels()
     private lateinit var detailFeedAdapter: DetailChatFeedAdapter
 
-    private var activeChatThreadId: String = ""
+    private var activeChatSenderName: String = "" // FIXED: Changed from activeChatThreadId to track sender profile
     private var isBusinessContext: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,15 +34,23 @@ class MessagePreviewFragment : BaseFragment<FragmentMessagePreviewBinding>(Fragm
         setupToolbarListeners()
         observeConversationPipeline()
 
-        // Trigger data fetch matching target thread identification keys
-        viewModel.loadStoredTextChatThreads(isBusinessMode = isBusinessContext)
+        // FIXED: Trigger the core live reactive database observation stream pipe
+        //viewModel.startLiveDatabaseObservation()
+
+        // Inside your MessagePreviewFragment.kt onviewCreated section:
+// Replace old loadStoredTextChatThreads with this precise method:
+//        viewModel.loadStoredCategoryMedia(
+//            targetSenderName = activeChatSenderName,
+//            isBusinessMode = isBusinessContext
+//        )
     }
 
     private fun extractNavigationArguments() {
-        activeChatThreadId = arguments?.getString("chatId") ?: ""
+        // FIXED: Pull out unique identity strings via the forwarded bundle arguments pass
+        activeChatSenderName = arguments?.getString("chatId") ?: ""
         isBusinessContext = arguments?.getBoolean("isBusinessMode") ?: false
 
-        Log.d(TAG, "Opened thread viewport for ChatId: $activeChatThreadId | Business Mode: $isBusinessContext")
+        Log.d(TAG, "Opened thread viewport for Sender: $activeChatSenderName | Business Mode: $isBusinessContext")
     }
 
     private fun initializeChatRecyclerView() {
@@ -66,7 +74,7 @@ class MessagePreviewFragment : BaseFragment<FragmentMessagePreviewBinding>(Fragm
     private fun observeConversationPipeline() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.messagesUiStateFlow.collectLatest { state ->
+                viewModel.mediaUiStateFlow.collectLatest { state -> // FIXED: Pointed directly onto the core flow pipeline container
                     when (state) {
                         is UiState.Loading -> binding.rvChatHistoryFeed.visibility = View.GONE
                         is UiState.Success<*> -> {
@@ -75,16 +83,22 @@ class MessagePreviewFragment : BaseFragment<FragmentMessagePreviewBinding>(Fragm
                             @Suppress("UNCHECKED_CAST")
                             val rawMessages = state.data as? List<MessageEntity> ?: emptyList()
 
-                            // Filter data to display only conversations belonging to this specific chatId thread
-                            // In a full production app, you would fetch this sub-list directly via a query in your ViewModel/DB
-                            val filteredConversationThread = rawMessages.filter { it.chatId == activeChatThreadId }
+                            // FIXED: Filtering data thread entries using senderName mapping matches instead of missing chatId
+                            val filteredConversationThread = rawMessages.filter {
+                                it.senderName == activeChatSenderName && it.isBusiness == isBusinessContext
+                            }
 
                             if (filteredConversationThread.isNotEmpty()) {
                                 // Set toolbar text dynamically based on sender identity strings
-                                binding.tvDetailUserName.text = filteredConversationThread.first().senderName
+                                binding.tvDetailUserName.text = activeChatSenderName
+                            } else {
+                                binding.tvDetailUserName.text = activeChatSenderName
                             }
 
-                            detailFeedAdapter.submitList(filteredConversationThread)
+                            // Submits the cleanly filtered user stream array.
+                            // Note: We reverse the collection mapping list back if your database query sorts logs DESC,
+                            // ensuring standard natural chat behavior inside stackFromEnd Recyclerview frameworks.
+                            detailFeedAdapter.submitList(filteredConversationThread.reversed())
                         }
                         is UiState.Error -> binding.rvChatHistoryFeed.visibility = View.VISIBLE
                     }

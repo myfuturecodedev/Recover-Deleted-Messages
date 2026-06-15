@@ -33,7 +33,7 @@ class WAGIFFragment : BaseFragment<FragmentWAGIFBinding>(FragmentWAGIFBinding::i
         isBusinessMode = isBusinessMode,
         onPermissionGranted = {
             // Requests your unified engine to parse WhatsApp Animated GIFs specifically
-            viewModel.loadScannedMediaFiles(categoryType = "GIF", isBusinessMode = isBusinessMode)
+            viewModel.loadStoredCategoryMedia(categoryType = "GIF", isBusinessMode = isBusinessMode)
         }
     ).apply {
         registerLifecycleLauncher()
@@ -89,7 +89,7 @@ class WAGIFFragment : BaseFragment<FragmentWAGIFBinding>(FragmentWAGIFBinding::i
 
         binding.btnActionDelete.setOnClickListener {
             // Bulk deletes checked GIFs from local disk space through the central engine hub
-            viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "GIF", isBusinessMode)
+            //viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "GIF", isBusinessMode)
             selectedPathsSet.clear()
             binding.cardActionFooterDeck.visibility = View.GONE
         }

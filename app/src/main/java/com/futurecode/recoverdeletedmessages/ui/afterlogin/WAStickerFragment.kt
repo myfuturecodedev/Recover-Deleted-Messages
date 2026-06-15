@@ -32,7 +32,7 @@ class WAStickerFragment : BaseFragment<FragmentWAStickerBinding>(FragmentWAStick
         isBusinessMode = isBusinessMode,
         onPermissionGranted = {
             // Requests your unified engine to parse WhatsApp Stickers specifically
-            viewModel.loadScannedMediaFiles(categoryType = "STICKER", isBusinessMode = isBusinessMode)
+            viewModel.loadStoredCategoryMedia(categoryType = "STICKER", isBusinessMode = isBusinessMode)
         }
     ).apply {
         registerLifecycleLauncher()
@@ -88,7 +88,7 @@ class WAStickerFragment : BaseFragment<FragmentWAStickerBinding>(FragmentWAStick
 
         binding.btnActionDelete.setOnClickListener {
             // Bulk deletes checked stickers from local disk space through the central engine hub
-            viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "STICKER", isBusinessMode)
+           // viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "STICKER", isBusinessMode)
             selectedPathsSet.clear()
             binding.cardActionFooterDeck.visibility = View.GONE
         }

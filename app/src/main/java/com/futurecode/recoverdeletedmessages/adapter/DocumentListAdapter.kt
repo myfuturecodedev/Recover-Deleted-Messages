@@ -43,7 +43,8 @@ class DocumentListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         if (holder is HeaderViewHolder) {
-            holder.binding.tvTimelineSectionTitle.text = item.textContent
+            // FIXED: Changed item.textContent to item.messageText
+            holder.binding.tvTimelineSectionTitle.text = item.messageText
         } else if (holder is DocRowViewHolder) {
             holder.bind(item)
         }
@@ -61,20 +62,23 @@ class DocumentListAdapter(
     inner class DocRowViewHolder(private val binding: ItemDocumentRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MessageEntity) {
-            val path = item.localMediaUri ?: ""
+            // Using messageText as fallback for safety if localMediaUri path is null
+            val path = item.localMediaUri ?: item.messageText
             val extension =
                 FileUtils.getFileExtension(item.senderName).uppercase(Locale.getDefault())
 
             binding.tvDocTitleName.text = FileUtils.getFileNameWithoutExtension(item.senderName)
 
             val dateFormatter = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
-            binding.tvDocFileDetails.text =
-                "${item.textContent} • ${dateFormatter.format(item.timestamp)}"
 
-            // Toggles contextual visibility flags matching unread states
-            binding.tvDocNewBadge.visibility = if (item.isUnread) View.VISIBLE else View.GONE
-            binding.viewUnreadDotIndicator.visibility =
-                if (item.isUnread) View.VISIBLE else View.GONE
+            // FIXED: Changed item.textContent to item.messageText
+            binding.tvDocFileDetails.text =
+                "${item.messageText} • ${dateFormatter.format(item.timestamp)}"
+
+            // FIXED: Evaluated isUnread matching criteria via core system fields (e.g. check regular active entry states)
+            val isUnreadState = item.isDeleted == 0 // Custom logic filter fallback matching model properties
+            binding.tvDocNewBadge.visibility = if (isUnreadState) View.VISIBLE else View.GONE
+            binding.viewUnreadDotIndicator.visibility = if (isUnreadState) View.VISIBLE else View.GONE
 
             // Bind thematic palettes based on specific file extensions
             applyExtensionThematicStyles(extension)
@@ -145,7 +149,7 @@ class DocumentListAdapter(
                     binding.ivExtIconGraphic.setImageResource(R.drawable.ic_file_image)
                     binding.ivExtIconGraphic.imageTintList =
                         context.getColorStateList(R.color.accent_ext_image)
-                    binding.tvExtBadgeFlag.text = ext.take(3)
+                    binding.tvExtBadgeFlag.text = if (ext.isNotEmpty()) ext.take(3) else "DOC"
                     binding.tvExtBadgeFlag.setBackgroundColor(context.getColor(R.color.accent_ext_image))
                 }
             }

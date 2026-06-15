@@ -35,15 +35,30 @@ object MediaScanner {
                 files?.forEach { file ->
                     recoveredList.add(
                         MessageEntity(
-                            id = file.hashCode().toLong(),
-                            chatId = file.parentFile?.name ?: "Unknown Thread",
+                            // Primary key 'id' autoGenerate=true hai, isliye hum isko 0 bhejenge
+                            // taaki Room ise SQLite tables mein unique handle kare bina duplicates crash ke.
+                            id = 0,
+
+                            // File ka hashcode messageId string ban jayega unique track ke liye
+                            messageId = file.hashCode().toString(),
+
+                            // File name text mapping parameter (e.g., "AUD-2026.mp3")
                             senderName = file.name,
-                            textContent = "${file.length() / 1024} KB",
+
+                            // FIXED: textContent badal kar messageText kiya (Stores file size calculation)
+                            messageText = "${file.length() / 1024} KB",
+
+                            // File ka actual creation/modification timestamp
                             timestamp = file.lastModified(),
-                            messageType = "AUDIO",
-                            localMediaUri = file.absolutePath,
-                            isPackageBusiness = isBusiness,
-                            isUnread = false
+
+                            // FIXED: isPackageBusiness badal kar isBusiness kiya
+                            isBusiness = isBusiness,
+
+                            // 0 = Normal active storage file asset mapping pass
+                            isDeleted = 0,
+
+                            // Storage local device internal structural absolute file path directory identity
+                            localMediaUri = file.absolutePath
                         )
                     )
                 }

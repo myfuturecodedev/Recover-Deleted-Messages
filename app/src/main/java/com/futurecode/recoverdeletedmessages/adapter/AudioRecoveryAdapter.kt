@@ -53,7 +53,8 @@ class AudioRecoveryAdapter(
             binding.tvAudioFileName.text = item.senderName
             binding.tvAudioTimestamp.text = "10:52 AM"
 
-            val isSelected = checkedAudioIdsSet.contains(item.id)
+            //val isSelected = checkedAudioIdsSet.contains(item.id)
+            val isSelected = checkedAudioIdsSet.contains(item.id.toLong()) // Safely converted token types if required
             if (isSelected) {
                 binding.layoutAudioCard.setBackgroundResource(R.drawable.bg_chat_row_selected)
                 binding.ivAudioSelectionCheck.visibility = View.VISIBLE
