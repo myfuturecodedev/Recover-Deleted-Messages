@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_6sdp"
+    android:layout_marginBottom="@dimen/_6sdp"
+    android:background="@drawable/bg_audio_item_card"
+    android:padding="@dimen/_12sdp">
+
+    <!-- Left Section: Audio Artwork Thumbnail Box (Kept ID: ivPlayStop) -->
+    <FrameLayout
+        android:id="@+id/layout_artwork_frame"
+        android:layout_width="@dimen/_46sdp"
+        android:layout_height="@dimen/_46sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Soft tinted squircle background matching screenshot exactly -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="#FFF3E0" />
+
+        <!-- Interactive play/artwork thumbnail node -->
+        <ImageView
+            android:id="@+id/ivPlayStop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Play Audio"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/mp3" />
+    </FrameLayout>
+
+    <!-- Center Section: Audio File Metadata Information Layout -->
+    <LinearLayout
+        android:id="@+id/layout_meta_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_share_frame"
+        app:layout_constraintStart_toEndOf="@+id/layout_artwork_frame"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- File Name Header (ID Kept: tvFileName) -->
+        <TextView
+            android:id="@+id/tvFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_bold"
+            android:maxLines="1"
+            android:textColor="@color/figma_dark_text"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            tools:text="Voice_Note_Rec_00..." />
+
+        <!-- Attribute specifications subtitle grid -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- File Size Tracker Metadata Node (ID Kept: tvDuration) -->
+            <TextView
+                android:id="@+id/tvDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/action_footer_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="856 KB" />
+
+            <!-- Separation indicator token character -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" • "
+                android:textColor="@color/guide_step_line"
+                android:textSize="@dimen/_11ssp" />
+
+            <!-- Timestamp Metric Display Node (ID Kept: tvDate) -->
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/action_footer_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="09:45 AM" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Right Section: Soft Circular Share Action Wrapper -->
+    <FrameLayout
+        android:id="@+id/layout_share_frame"
+        android:layout_width="@dimen/_28sdp"
+        android:layout_height="@dimen/_28sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Gray rounded background matching the share button circle in the mockup -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="#F5F6F8" />
+
+        <!-- Actual Context Action Anchor (ID Kept: ivShare) -->
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Share Audio Payload"
+            android:focusable="true"
+            android:padding="@dimen/_6sdp"
+            android:src="@drawable/ic_share"
+            app:tint="@color/figma_dark_text" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

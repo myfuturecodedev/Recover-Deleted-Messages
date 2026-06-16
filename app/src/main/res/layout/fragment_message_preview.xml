@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="Online"
+                    android:text="@string/online"
                     android:textColor="@color/status_active_text_green"
                     android:textSize="@dimen/_9ssp" />
             </LinearLayout>
@@ -83,7 +83,7 @@
         android:fontFamily="@font/inter_regular"
         android:paddingHorizontal="@dimen/_12sdp"
         android:paddingVertical="@dimen/_4sdp"
-        android:text="Today"
+        android:text="@string/today"
         android:textColor="@color/figma_sub_text"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="parent"

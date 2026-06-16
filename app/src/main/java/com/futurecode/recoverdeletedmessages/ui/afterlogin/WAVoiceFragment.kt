@@ -3,239 +3,77 @@ package com.futurecode.recoverdeletedmessages.ui.afterlogin
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.activity.MyApplication
+import com.futurecode.recoverdeletedmessages.adapter.AudioAdapter
 import com.futurecode.recoverdeletedmessages.adapter.DocumentListAdapter
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.data.MessageEntity
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAVoiceBinding
+import com.futurecode.recoverdeletedmessages.ui.dialogs.FolderAccessDialog
+import com.futurecode.recoverdeletedmessages.utils.Constants
 import com.futurecode.recoverdeletedmessages.utils.MediaPermissionHelper
+import com.futurecode.recoverdeletedmessages.utils.SafManager
 import com.futurecode.recoverdeletedmessages.utils.StoragePermissionManager
 import com.futurecode.recoverdeletedmessages.utils.UiState
-import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
+import com.futurecode.recoverdeletedmessages.viewModel.MediaViewModel
+import com.futurecode.recoverdeletedmessages.viewModel.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBinding::inflate) {
-    private val TAG = "WAAudioFragment_Log"
-    private val viewModel: RecoveryViewModel by viewModels()
-    private lateinit var audioListAdapter: DocumentListAdapter
 
-    private val selectedPathsSet = mutableSetOf<String>()
-    private var isBusinessMode = false
-    private var isWaitingForStorageCallback = false
+    private val viewModel: MediaViewModel by viewModels { ViewModelFactory(MyApplication.app.repository) }
+    private lateinit var adapter: AudioAdapter
 
-    // Sets up the unified permission contract helper to target your audio folders
-    private val permissionHelper = MediaPermissionHelper(
-        fragment = this,
-        isBusinessMode = isBusinessMode,
-        onPermissionGranted = {
-            this@WAVoiceFragment.isWaitingForStorageCallback = false
-            viewModel.loadStoredCategoryMedia(categoryType = "AUDIO", isBusinessMode = this@WAVoiceFragment.isBusinessMode)
-        }
-    ).apply {
-        registerLifecycleLauncher()
+    private val safLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if (uri != null) SafManager.saveUri(requireContext(), uri)
+        viewModel.scanVoice(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
 
-        // Dynamic string parsing verification pass to handle WhatsApp vs Business channel triggers
-        val selectedApp = arguments?.getString("isBusinessMode") ?: "false"
-        isBusinessMode = selectedApp.uppercase() == "BUSINESS" || selectedApp.toBoolean()
-        permissionHelper.isBusinessMode = isBusinessMode
+        childFragmentManager.setFragmentResultListener(FolderAccessDialog.REQUEST_KEY, viewLifecycleOwner) { _, _ ->
+            safLauncher.launch(SafManager.getInitialUri())
+        }
 
-        initializeRecyclerView()
-        setupActionDeckClickListeners()
-        observeMediaScannerPipeline()
-    }
-
-    private fun initializeRecyclerView() {
-        binding.tvMediaToolbarTitle.text = "WA Audio"
-
-        // Audio files reuse DocumentListAdapter since the item design matches the custom row specification
-        audioListAdapter = DocumentListAdapter(
-            onDocClicked = { audioItem ->
-                val path = audioItem.localMediaUri ?: audioItem.messageText
-                if (selectedPathsSet.isNotEmpty()) {
-                    handleSelectionToggle(path)
-                } else {
-                    Log.d(TAG, "Triggering audio playback listener stream for: $path")
-                }
-            },
-            onDocLongPressed = { audioItem ->
-                val path = audioItem.localMediaUri ?: audioItem.messageText
-                handleSelectionToggle(path)
-            },
-            onInlineShareClicked = { audioItem ->
-                val path = audioItem.localMediaUri ?: audioItem.messageText
-                Log.d(TAG, "Inline operational share event triggered for file path: $path")
+        adapter = AudioAdapter { item ->
+            val bundle = Bundle().apply {
+                putString(Constants.ARG_AUDIO_PATH, item.filePath)
+                putString(Constants.ARG_AUDIO_TYPE, Constants.MEDIA_TYPE_VOICE)
             }
-        )
-
-        binding.rvMediaGrid.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = audioListAdapter
-            setHasFixedSize(true)
+           findNavController().navigate(R.id.action_WAAudioFragment_to_AudioPlayerFragment, bundle)
         }
-    }
+        binding.rvMediaGrid.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvMediaGrid.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.rvMediaGrid.adapter = adapter
 
-    private fun handleSelectionToggle(path: String?) {
-        if (path == null) return
-        if (selectedPathsSet.contains(path)) {
-            selectedPathsSet.remove(path)
-        } else {
-            selectedPathsSet.add(path)
+        if (!SafManager.hasSafPermission(requireContext())) {
+            FolderAccessDialog.show(childFragmentManager)
         }
+        viewModel.scanVoice(requireContext())
 
-        binding.cardActionFooterDeck.visibility = if (selectedPathsSet.isNotEmpty()) View.VISIBLE else View.GONE
-        audioListAdapter.updateSelectionCache(selectedPathsSet)
-    }
-
-    private fun setupActionDeckClickListeners() {
-        binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-
-        binding.btnActionDelete.setOnClickListener {
-            //viewModel.deletePhysicalMediaFiles(selectedPathsSet.toList(), "AUDIO", isBusinessMode)
-            selectedPathsSet.clear()
-            binding.cardActionFooterDeck.visibility = View.GONE
-        }
-    }
-
-    private fun observeMediaScannerPipeline() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.mediaUiStateFlow.collectLatest { state ->
-                    when (state) {
-                        is UiState.Loading -> binding.rvMediaGrid.visibility = View.GONE
-                        is UiState.Success<*> -> {
-                            binding.rvMediaGrid.visibility = View.VISIBLE
-                            @Suppress("UNCHECKED_CAST")
-                            val rawList = state.data as? List<MessageEntity> ?: emptyList()
-                            // Automatically maps audio entities under clean chronological headings
-                            val structuredTimelineList = sortAudioIntoTimelineSections(rawList)
-                            audioListAdapter.submitList(structuredTimelineList)
-                        }
-                        is UiState.Error -> binding.rvMediaGrid.visibility = View.VISIBLE
-                    }
-                }
+        lifecycleScope.launch {
+            viewModel.voiceNotes.collectLatest { items ->
+                adapter.submitList(items)
+                binding.cardActionFooterDeck.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
             }
         }
     }
 
-    /**
-     * Timeline Sorter Algorithm: Parses raw listings and inserts row group headers
-     * matching your Figma layout precisely (TODAY, YESTERDAY, LAST WEEK).
-     */
-    private fun sortAudioIntoTimelineSections(rawFiles: List<MessageEntity>): List<MessageEntity> {
-        if (rawFiles.isEmpty()) return emptyList()
-
-        val todayList = mutableListOf<MessageEntity>()
-        val yesterdayList = mutableListOf<MessageEntity>()
-        val lastWeekList = mutableListOf<MessageEntity>()
-
-        val calToday = Calendar.getInstance()
-        val calYesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
-
-        rawFiles.forEach { file ->
-            val fileCal = Calendar.getInstance().apply { timeInMillis = file.timestamp }
-
-            if (fileCal.get(Calendar.YEAR) == calToday.get(Calendar.YEAR) &&
-                fileCal.get(Calendar.DAY_OF_YEAR) == calToday.get(Calendar.DAY_OF_YEAR)) {
-                todayList.add(file)
-            } else if (fileCal.get(Calendar.YEAR) == calYesterday.get(Calendar.YEAR) &&
-                fileCal.get(Calendar.DAY_OF_YEAR) == calYesterday.get(Calendar.DAY_OF_YEAR)) {
-                yesterdayList.add(file)
-            } else {
-                lastWeekList.add(file)
-            }
-        }
-
-        val compositeResult = mutableListOf<MessageEntity>()
-
-        // =========================================================================
-        // FIXED HEADER INITIALIZATION BLOCKS: REMOVED TYPE MISMATCH & UNRESOLVED FIELDS
-        // =========================================================================
-        if (todayList.isNotEmpty()) {
-            compositeResult.add(
-                MessageEntity(
-                    id = -1, // FIXED: Int instead of Long (-1L)
-                    messageId = "HEADER_TODAY",
-                    senderName = "",
-                    messageText = "Today", // FIXED: textContent remapped to messageText
-                    timestamp = 0L,
-                    isBusiness = false,
-                    isDeleted = 0,
-                    localMediaUri = null
-                )
-            )
-            compositeResult.addAll(todayList.sortedByDescending { it.timestamp })
-        }
-        if (yesterdayList.isNotEmpty()) {
-            compositeResult.add(
-                MessageEntity(
-                    id = -2, // FIXED: Int instead of Long (-2L)
-                    messageId = "HEADER_YESTERDAY",
-                    senderName = "",
-                    messageText = "Yesterday", // FIXED: textContent remapped to messageText
-                    timestamp = 0L,
-                    isBusiness = false,
-                    isDeleted = 0,
-                    localMediaUri = null
-                )
-            )
-            compositeResult.addAll(yesterdayList.sortedByDescending { it.timestamp })
-        }
-        if (lastWeekList.isNotEmpty()) {
-            compositeResult.add(
-                MessageEntity(
-                    id = -3, // FIXED: Int instead of Long (-3L)
-                    messageId = "HEADER_LAST_WEEK",
-                    senderName = "",
-                    messageText = "Last Week", // FIXED: textContent remapped to messageText
-                    timestamp = 0L,
-                    isBusiness = false,
-                    isDeleted = 0,
-                    localMediaUri = null
-                )
-            )
-            compositeResult.addAll(lastWeekList.sortedByDescending { it.timestamp })
-        }
-
-        return compositeResult
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.cardActionFooterDeck.visibility = View.GONE
-
-        val selectedApp = arguments?.getString("isBusinessMode") ?: "false"
-        isBusinessMode = selectedApp.uppercase() == "BUSINESS" || selectedApp.toBoolean()
-        permissionHelper.isBusinessMode = isBusinessMode
-
-        // Master Fast Preference checking matrix pass
-        val isAllowed = StoragePermissionManager.isMediaDirectoryAccessGranted(requireContext(), isBusinessMode)
-        Log.e("TAGppppppppp", "Audio Screen onResume | Is Allowed: $isAllowed")
-
-        if (isAllowed) {
-            isWaitingForStorageCallback = false
-            viewModel.loadStoredCategoryMedia(categoryType = "AUDIO", isBusinessMode = isBusinessMode)
-            return
-        }
-
-        if (!isWaitingForStorageCallback) {
-            permissionHelper.checkAndRequestPermission {
-                isWaitingForStorageCallback = true
-            }
-        }
-    }
-
-    override fun onPause() {
-        permissionHelper.dismissPopupSilently()
-        super.onPause()
+    override fun onDestroyView() {
+        adapter.releasePlayer()
+        super.onDestroyView()
     }
 }

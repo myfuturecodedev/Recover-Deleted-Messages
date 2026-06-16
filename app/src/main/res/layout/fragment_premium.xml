@@ -11,13 +11,12 @@
         android:id="@+id/btn_close_paywall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/ic_cross"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="@dimen/_12sdp"
         android:layout_margin="@dimen/_12sdp"
-        />
+        android:layout_marginTop="@dimen/_16sdp"
+        android:padding="@dimen/_12sdp"
+        android:src="@drawable/ic_cross"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- ================= SCROLLABLE CENTER CORE ================= -->
     <androidx.core.widget.NestedScrollView
@@ -33,9 +32,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/_10sdp"
             android:paddingBottom="@dimen/_16sdp">
 
             <!-- App Logo Badge Anchor -->
@@ -44,8 +43,7 @@
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/ic_history_img"
-                />
+                android:background="@drawable/ic_history_img" />
 
 
             <!-- Core Typography Headers Block -->
@@ -55,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_26sdp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Recover Deleted"
+                android:text="@string/recover_deleted"
                 android:textColor="@color/paywall_text_primary"
                 android:textSize="@dimen/_24ssp"
                 android:textStyle="bold" />
@@ -66,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Messages"
+                android:text="@string/messages"
                 android:textColor="@color/paywall_text_primary"
                 android:textSize="@dimen/_24ssp"
                 android:textStyle="bold" />
@@ -77,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/inter_medium"
-                android:text="Reliable Choice for Successful Recovery"
+                android:text="@string/reliable_choice_for_successful_recovery"
                 android:textColor="@color/paywall_text_secondary"
                 android:textSize="@dimen/_12ssp" />
 
@@ -110,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Accelerated Recovery Success"
+                        android:text="@string/accelerated_recovery_success"
                         android:textColor="@color/paywall_text_primary"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold" />
@@ -138,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Unlimited Data Recovery"
+                        android:text="@string/unlimited_data_recovery"
                         android:textColor="@color/paywall_text_primary"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold" />
@@ -166,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_12sdp"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Remove Ads"
+                        android:text="@string/remove_ads"
                         android:textColor="@color/paywall_text_primary"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold" />
@@ -177,7 +175,7 @@
 
             <!-- LIFETIME SUBSCRIPTION CARD CONTAINER -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/card_plan_lifetime"
+                android:id="@+id/card_plan_weekly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
@@ -185,11 +183,11 @@
                 android:padding="@dimen/_14sdp">
 
                 <TextView
-                    android:id="@+id/tv_lifetime_title"
+                    android:id="@+id/tv_weekly_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Lifetime"
+                    android:text="@string/weekly"
                     android:textColor="@color/paywall_text_primary"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold"
@@ -197,33 +195,33 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_lifetime_price"
+                    android:id="@+id/tv_weekly_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="₹1,100.00"
+                    android:text="₹99.00"
                     android:textColor="@color/paywall_accent_green"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_lifetime_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_weekly_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:fontFamily="@font/inter_regular"
-                    android:text="/once"
+                    android:text="@string/once"
                     android:textColor="@color/paywall_text_secondary"
                     android:textSize="@dimen/_11ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_lifetime_price"
-                    app:layout_constraintStart_toEndOf="@+id/tv_lifetime_price"
-                    app:layout_constraintTop_toTopOf="@+id/tv_lifetime_price" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_weekly_price"
+                    app:layout_constraintStart_toEndOf="@+id/tv_weekly_price"
+                    app:layout_constraintTop_toTopOf="@+id/tv_weekly_price" />
 
                 <ImageView
-                    android:id="@+id/iv_lifetime_indicator"
+                    android:id="@+id/iv_weekly_indicator"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:contentDescription="Selected State Loop"
@@ -233,32 +231,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Absolute overlay anchor tag component mapping 'Save 99%' tag -->
-                <TextView
-                    android:id="@+id/badge_save_discount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:background="@drawable/bg_paywall_badge_save"
-                    android:fontFamily="@font/inter_bold"
-                    android:paddingHorizontal="@dimen/_8sdp"
-                    android:paddingVertical="@dimen/_2sdp"
-                    android:text="Save 99%"
-                    android:textColor="@color/paywall_bg_gradient_end"
-                    android:textSize="@dimen/_9ssp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- MONTHLY SUBSCRIPTION CARD CONTAINER -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card_plan_monthly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:background="@drawable/bg_paywall_card_unselected"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/bg_paywall_card_selected"
                 android:padding="@dimen/_14sdp">
 
                 <TextView
@@ -266,9 +247,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Monthly"
+                    android:text="@string/monthly"
                     android:textColor="@color/paywall_text_primary"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="@dimen/_16ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -278,71 +259,98 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="₹1,000.00  /month"
-                    android:textColor="@color/paywall_text_primary"
-                    android:textSize="@dimen/_13ssp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_monthly_title"/>
+                    android:fontFamily="@font/inter_bold"
+                    android:text="₹500.00"
+                    android:textColor="@color/paywall_accent_green"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_monthly_title" />
 
                 <TextView
-                    android:id="@+id/tv_monthly_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:fontFamily="@font/inter_regular"
-                    android:text="/month"
+                    android:text="@string/month"
                     android:textColor="@color/paywall_text_secondary"
                     android:textSize="@dimen/_11ssp"
-                    android:visibility="gone"
-                   app:layout_constraintTop_toBottomOf="@+id/tv_monthly_price"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_monthly_price"
-                    />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_monthly_price"
+                    app:layout_constraintStart_toEndOf="@+id/tv_monthly_price"
+                    app:layout_constraintTop_toTopOf="@+id/tv_monthly_price" />
 
                 <ImageView
                     android:id="@+id/iv_monthly_indicator"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:contentDescription="Unselected State Loop"
-                    android:src="@drawable/ic_radio_unselected"
+                    android:contentDescription="Selected State Loop"
+                    android:src="@drawable/ic_check_circle_filled"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/divider_monthly_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:background="@color/paywall_card_unselected_border"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_monthly_price" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Bottom Promo Info Item embedded natively inside the monthly package container container box -->
-                <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_plan_quartly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/bg_paywall_card_selected"
+                android:padding="@dimen/_14sdp">
+
+                <TextView
+                    android:id="@+id/tv_quarterly_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/quarterly"
+                    android:textColor="@color/paywall_text_primary"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider_monthly_card">
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
-                        android:contentDescription="Gift Icon Indicator"
-                        android:src="@drawable/ic_gift_box"
-                        app:tint="@color/paywall_accent_green" />
+                <TextView
+                    android:id="@+id/tv_quarterly_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="₹500.00"
+                    android:textColor="@color/paywall_accent_green"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_quarterly_title" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_6sdp"
-                        android:fontFamily="@font/inter_regular"
-                        android:text="3 Days Free Trial – No Payment Now"
-                        android:textColor="@color/paywall_text_secondary"
-                        android:textSize="@dimen/_10ssp" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/_12_month"
+                    android:textColor="@color/paywall_text_secondary"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_quarterly_price"
+                    app:layout_constraintStart_toEndOf="@+id/tv_quarterly_price"
+                    app:layout_constraintTop_toTopOf="@+id/tv_quarterly_price" />
+
+                <ImageView
+                    android:id="@+id/iv_quarterly_indicator"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="Selected State Loop"
+                    android:src="@drawable/ic_check_circle_filled"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- MONTHLY SUBSCRIPTION CARD CONTAINER -->
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -352,25 +360,25 @@
         android:id="@+id/btn_continue_subscription"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_46sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:background="@drawable/bg_paywall_btn_continue"
         android:fontFamily="@font/inter_bold"
-        android:text="Continue $\rightarrow$"
+        android:text="@string/continue_rightarrow"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/container_legal_links" />
 
     <LinearLayout
         android:id="@+id/container_legal_links"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_14sdp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -381,7 +389,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
             android:padding="@dimen/_6sdp"
-            android:text="Terms"
+            android:text="@string/terms"
             android:textColor="@color/paywall_text_secondary"
             android:textSize="@dimen/_10ssp" />
 
@@ -392,7 +400,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:fontFamily="@font/inter_regular"
             android:padding="@dimen/_6sdp"
-            android:text="Privacy"
+            android:text="@string/privacy"
             android:textColor="@color/paywall_text_secondary"
             android:textSize="@dimen/_10ssp" />
 
@@ -403,7 +411,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:fontFamily="@font/inter_regular"
             android:padding="@dimen/_6sdp"
-            android:text="Restore"
+            android:text="@string/restore"
             android:textColor="@color/paywall_text_secondary"
             android:textSize="@dimen/_10ssp" />
     </LinearLayout>

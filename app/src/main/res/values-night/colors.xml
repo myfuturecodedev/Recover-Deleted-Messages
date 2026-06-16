@@ -133,7 +133,6 @@
     <color name="chat_text_message">#FF475569</color>
     <color name="chat_text_timestamp">#FF94A3B8</color>
     <color name="chat_online_green">#FF2DC67A</color>
-    <color name="badge_red">#FFEF4444</color>
     <color name="deep_scan_bg">#FF0B132B</color>
     <color name="upgrade_btn_bg">#FF2DC67A</color>
     <color name="text_title">#FF0F172A</color>
@@ -211,5 +210,90 @@
     <color name="bubble_tint_sticker_blue">#EEF0FF</color>
     <color name="waveform_active_green">#3B8A75</color>
     <color name="waveform_inactive_gray">#E2E8F0</color>
+
+
+    <!-- Primary Brand Colors -->
+    <color name="primary_dark_green">#1B4332</color>
+    <color name="whatsapp_green">#25D366</color>
+    <color name="light_green_tint">#E8F5E9</color>
+    <color name="medium_green">#2D6A4F</color>
+    <color name="accent_green">#52B788</color>
+
+    <!-- Backgrounds -->
+    <color name="background_white">#FFFFFF</color>
+    <color name="surface_light">#F8F8F8</color>
+    <color name="surface_card">#F0F0F0</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1C1C1E</color>
+    <color name="text_secondary">#8A8A8E</color>
+    <color name="text_hint">#C7C7CC</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_on_green">#FFFFFF</color>
+
+    <!-- Category Colors -->
+    <color name="color_message_blue">#4A90D9</color>
+    <color name="color_photo_pink">#E91E8C</color>
+    <color name="color_video_orange">#FF6B35</color>
+    <color name="color_gif_yellow">#FFC107</color>
+    <color name="color_sticker_purple">#9C27B0</color>
+    <color name="color_audio_pink">#E91E63</color>
+    <color name="color_voice_green">#4CAF50</color>
+    <color name="color_documents_red">#F44336</color>
+
+    <!-- Category Light Tints -->
+    <color name="color_message_blue_tint">#E3F0FB</color>
+    <color name="color_photo_pink_tint">#FCE4F3</color>
+    <color name="color_video_orange_tint">#FFF0EA</color>
+    <color name="color_gif_yellow_tint">#FFF8E1</color>
+    <color name="color_sticker_purple_tint">#F3E5F5</color>
+    <color name="color_audio_pink_tint">#FCE4EC</color>
+    <color name="color_voice_green_tint">#E8F5E9</color>
+    <color name="color_documents_red_tint">#FFEBEE</color>
+
+    <!-- UI Elements -->
+    <color name="divider_color">#EBEBEB</color>
+    <color name="overlay_dark">#80000000</color>
+    <color name="badge_red">#FF3B30</color>
+    <color name="badge_new">#FF3B30</color>
+    <color name="bottom_nav_bg">#1B4332</color>
+    <color name="bottom_nav_selected">#25D366</color>
+    <color name="bottom_nav_unselected">#80FFFFFF</color>
+
+    <!-- Status Bar -->
+    <color name="status_bar_color">#1B4332</color>
+
+    <!-- Splash Background -->
+    <color name="splash_bg_start">#1B4332</color>
+    <color name="splash_bg_end">#25D366</color>
+
+    <!-- Premium Screen -->
+    <color name="premium_bg_start">#0D3B2E</color>
+    <color name="premium_bg_end">#1B6349</color>
+    <color name="premium_card_bg">#FFFFFF1A</color>
+    <color name="premium_gold">#FFD700</color>
+
+    <!-- Monitoring Banner -->
+    <color name="monitoring_banner_bg">#1B4332</color>
+    <color name="monitoring_active_green">#25D366</color>
+
+    <!-- Transparent -->
+    <color name="transparent">#00000000</color>
+
+    <!-- Shadow -->
+    <color name="shadow_color">#1A000000</color>
+
+    <!-- Material Design Defaults -->
+    <color name="colorPrimary">#1B4332</color>
+    <color name="colorPrimaryVariant">#0D3B2E</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#25D366</color>
+    <color name="colorSecondaryVariant">#128C7E</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#1C1C1E</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorError">#F44336</color>
+    <color name="colorOnError">#FFFFFF</color>
 
 </resources>

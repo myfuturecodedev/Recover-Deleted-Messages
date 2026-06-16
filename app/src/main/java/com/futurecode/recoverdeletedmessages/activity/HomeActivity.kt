@@ -3,6 +3,7 @@ package com.futurecode.recoverdeletedmessages.activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -25,18 +26,26 @@ class HomeActivity : BaseActivity() {
         // 1. Initialize View Binding layout node graph tree
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setStatusBarColor(R.color.primary_blue, isLightStatusIcons = true)
-
-        // Example: Red status bar background with light text icons
-        //setStatusBarColorWithVersionHandling(R.color.bnv_active, isLightStatusIcon = true)
 
         // 2. Initialize Jetpack Navigation
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        navController?.addOnDestinationChangedListener { controller, destination, bundle ->
-            Log.e("TAG", "${destination.displayName.toString()}")
+        // 🔥 MASTER VISIBILITY CONTROLLER GATE
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            Log.d("Navigation_Log", "Active Destination Changed Context: ${destination.label}")
 
+            // Check if the current visible screen matches the dashboard main landing fragment
+            if (destination.id == R.id.WARecoveryFragment) {
+                // Hide the banner container tightly to free layout canvas pixels
+                binding.flBanner.visibility = View.GONE
+                Log.d("Navigation_Log", "Dashboard Detected. Banner ad wrapper collapsed (GONE).")
+            } else {
+                // Restore visibility for inner secondary preview screens cleanly
+                binding.flBanner.visibility = View.VISIBLE
+                Log.d("Navigation_Log", "Secondary Viewer Active. Banner ad wrapper visible.")
+            }
         }
+
     }
 }

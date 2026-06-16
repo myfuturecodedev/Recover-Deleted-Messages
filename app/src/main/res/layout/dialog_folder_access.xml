@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_rounded"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="28dp"
+    android:paddingBottom="20dp"
+    android:gravity="center_horizontal">
+
+    <!-- Folder icon inside green circle -->
+    <FrameLayout
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/bg_icon_circle_light_green"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_folder_open"
+            android:contentDescription="Folder" />
+    </FrameLayout>
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/allow_access"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_recover_media_messages_please_allow_nthe_app_use_this_folder"
+        android:textSize="13sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:layout_marginBottom="20dp" />
+
+    <!-- USE THIS FOLDER text action -->
+    <TextView
+        android:id="@+id/tvUseFolder"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/use_this_folder"
+        android:textColor="@color/whatsapp_green"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Allow button -->
+    <Button
+        android:id="@+id/btnAllow"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/allow"
+        android:textColor="@color/text_white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_green_button" />
+
+</LinearLayout>

@@ -29,8 +29,8 @@ android {
     buildTypes {
         debug { isMinifyEnabled = false }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = true // FIXED: Turned on code shrinking and obfuscation
+            isShrinkResources = true // ADDED: Turns on automatic unused asset removal
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -102,5 +102,10 @@ dependencies {
 
     implementation("androidx.room:room-ktx:2.8.4")
     ksp("androidx.room:room-compiler:2.8.4")
+
+
+    // Media3 ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:1.5.0")
+    implementation("androidx.media3:media3-ui:1.5.0")
 
 }

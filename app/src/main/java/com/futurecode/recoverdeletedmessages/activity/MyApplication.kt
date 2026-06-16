@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import com.facebook.ads.AudienceNetworkAds
 import com.futurecode.recoverdeletedmessages.ads.app_open_ad.AppOpenHelperNew
+import com.futurecode.recoverdeletedmessages.data.repository.MediaRepository
 import com.futurecode.recoverdeletedmessages.database.AppDatabase
 import com.futurecode.recoverdeletedmessages.database.MessageRepository
 import com.futurecode.recoverdeletedmessages.utils.JsonReadUtils
@@ -25,12 +26,8 @@ class MyApplication : Application() {
     private lateinit var networkMonitor: NetworkMonitor
     private var currentActivity: Activity? = null
 
-    // =========================================================================
-    // ADDED LAZY INITIALIZERS: Thread-safe injection models
-    // =========================================================================
-    private val database by lazy { AppDatabase.getDatabase(this) }
-    val repository by lazy { MessageRepository(database.messageRecoveryDao()) }
-    // =========================================================================
+    val database by lazy { AppDatabase.getInstance(this) }
+    val repository by lazy { MediaRepository(database) }
 
     override fun attachBaseContext(base: Context) {
         // Safe locale initialization for Application context

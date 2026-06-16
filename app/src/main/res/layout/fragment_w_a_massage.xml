@@ -50,7 +50,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:fontFamily="@font/inter_bold"
-                    android:text="WA Massage"
+                    android:text="@string/wa_massage"
                     android:textColor="@color/chat_text_name"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Delete Selected"
+                android:text="@string/delete_selected"
                 android:textColor="@color/badge_red"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />

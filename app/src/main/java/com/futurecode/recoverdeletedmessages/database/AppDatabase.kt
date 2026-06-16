@@ -1,33 +1,32 @@
 package com.futurecode.recoverdeletedmessages.database
 
-
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.futurecode.recoverdeletedmessages.data.MessageEntity
+import com.futurecode.recoverdeletedmessages.data.db.MediaDao
+import com.futurecode.recoverdeletedmessages.data.db.MessageDao
+import com.futurecode.recoverdeletedmessages.model.MediaItem
+import com.futurecode.recoverdeletedmessages.model.MessageItem
 
-@Database(entities = [MessageEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [MediaItem::class, MessageItem::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun messageRecoveryDao(): MessageRecoveryDao
+    abstract fun mediaDao(): MediaDao
+    abstract fun messageDao(): MessageDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+        @Volatile private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "message_recovery_database"
-                )
-                    .fallbackToDestructiveMigration() // Wipes out legacy schemas safely during upgrades
+        fun getInstance(context: Context): AppDatabase =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "rdm_database")
+                    .fallbackToDestructiveMigration()
                     .build()
-                INSTANCE = instance
-                instance
+                    .also { INSTANCE = it }
             }
-        }
     }
 }

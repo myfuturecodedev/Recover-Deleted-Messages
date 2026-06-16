@@ -1,8 +1,12 @@
 package com.futurecode.recoverdeletedmessages.ui.afterlogin
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
+import com.futurecode.recoverdeletedmessages.ads.native_ad.NativeAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentSettingBinding
 
@@ -12,6 +16,8 @@ import com.futurecode.recoverdeletedmessages.databinding.FragmentSettingBinding
  */
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
+    private lateinit var nativeAdsHelper: NativeAdsHelper
+    lateinit var fullScreenAdsHelper: FullScreenAdsHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,6 +25,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 
         initViews()
         setupClickListeners()
+
+        val packageName: String = requireContext().packageName
+
+        Log.d(TAG, "onViewCreated: $packageName")
+
+        nativeAdsHelper= NativeAdsHelper(requireActivity())
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
+        loadNativeAds()
     }
 
     /**
@@ -36,6 +50,15 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
 
+
+    fun loadNativeAds(){
+        nativeAdsHelper = NativeAdsHelper(requireActivity())
+        nativeAdsHelper?.showNativeAd(
+            nativeBannerAdView = binding.nativeAds3.frame,
+            mainLayout = binding.nativeAds3.mainLayout,
+            placeholder = binding.nativeAds3.placeholder
+        )
     }
 }

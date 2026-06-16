@@ -1,6 +1,4 @@
 package com.futurecode.recoverdeletedmessages.model
-
-
 sealed interface MessageBubbleItem {
     val messageId: String
     val timestamp: String

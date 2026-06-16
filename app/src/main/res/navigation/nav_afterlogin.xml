@@ -83,6 +83,10 @@
             android:id="@+id/action_WAMassageFragment_to_MessagePreviewFragment"
             app:destination="@id/messagePreviewFragment" />
 
+        <action
+            android:id="@+id/action_WAMassageFragment_to_ChatDetailFragment"
+            app:destination="@id/messagePreviewFragment" />
+
 
     </fragment>
     <fragment
@@ -99,12 +103,29 @@
         android:id="@+id/WAAudioFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAAudioFragment"
         android:label="fragment_w_a_audio"
-        tools:layout="@layout/fragment_w_a_audio" />
+        tools:layout="@layout/fragment_w_a_audio" >
+
+        <action
+            android:id="@+id/action_WAAudioFragment_to_AudioPlayerFragment"
+            app:destination="@id/audioPlayerFragment" />
+
+
+    </fragment>
     <fragment
         android:id="@+id/WAVideoFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAVideoFragment"
         android:label="fragment_w_a_video"
-        tools:layout="@layout/fragment_w_a_video" />
+        tools:layout="@layout/fragment_w_a_video" >
+
+        <action
+            android:id="@+id/action_videos_to_viewer"
+            app:destination="@id/mediaViewerFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
     <fragment
         android:id="@+id/WAVoiceFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAVoiceFragment"
@@ -114,7 +135,15 @@
         android:id="@+id/WAStickerFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAStickerFragment"
         android:label="fragment_w_a_sticker"
-        tools:layout="@layout/fragment_w_a_sticker" />
+        tools:layout="@layout/fragment_w_a_sticker" >
+
+        <action
+            android:id="@+id/action_stickers_to_viewer"
+            app:destination="@id/mediaViewerFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+
+    </fragment>
     <fragment
         android:id="@+id/WADocumentFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WADocumentFragment"
@@ -124,10 +153,102 @@
         android:id="@+id/WAGIFFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAGIFFragment"
         android:label="fragment_w_a_g_i_f"
-        tools:layout="@layout/fragment_w_a_g_i_f" />
+        tools:layout="@layout/fragment_w_a_g_i_f" >
+<!--        <action-->
+<!--            android:id="@+id/action_WAGIFFragment_to_WAGifsPreviewFragment"-->
+<!--            app:destination="@id/WAGifsPreviewFragment" />-->
+
+        <action
+            android:id="@+id/action_gifs_to_viewer"
+            app:destination="@id/mediaViewerFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/messagePreviewFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.review.MessagePreviewFragment"
         android:label="fragment_message_preview"
         tools:layout="@layout/fragment_message_preview" />
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.ChatDetailFragment"
+        android:label="ChatDetailFragment" >
+
+        <argument
+            android:name="contactName"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_chatDetailFragment_to_mediaViewerFragment"
+            app:destination="@id/mediaViewerFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
+
+        <action
+            android:id="@+id/action_chat_detail_to_audio_player"
+            app:destination="@id/audioPlayerFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mediaViewerFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.MediaViewerFragment"
+        android:label="MediaViewerFragment" >
+        <argument
+            android:name="mediaPath"
+            app:argType="string" />
+        <argument
+            android:name="mediaType"
+            app:argType="string"
+            android:defaultValue="image" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/audioPlayerFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.AudioPlayerFragment"
+        android:label="AudioPlayerFragment" >
+
+        <argument
+            android:name="audioPath"
+            app:argType="string" />
+        <argument
+            android:name="audioType"
+            app:argType="string"
+            android:defaultValue="audio" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/WAStickerPreviewFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.review.WAStickerPreviewFragment"
+        android:label="fragment_w_a_sticker_preview"
+        tools:layout="@layout/fragment_w_a_sticker_preview" >
+
+        <argument
+            android:name="stickerPath"
+            app:argType="string" />
+        <argument
+            android:name="stickerType"
+            app:argType="string"
+            android:defaultValue="sticker" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/WAGifsPreviewFragment"
+        android:name="com.futurecode.recoverdeletedmessages.ui.review.WAGifsPreviewFragment"
+        android:label="fragment_w_a_gifs_preview"
+        tools:layout="@layout/fragment_w_a_gifs_preview" >
+
+
+        <!-- ADDED: Arguments block to receive bundle strings cleanly without type errors -->
+        <argument
+            android:name="gifPath"
+            app:argType="string" />
+        <argument
+            android:name="gifType"
+            app:argType="string"
+            android:defaultValue="gif" />
+
+    </fragment>
 </navigation>

@@ -173,68 +173,68 @@ import com.futurecode.recoverdeletedmessages.R
 //}
 
 
-class NotificationRecoveryService : NotificationListenerService() {
-
-    private val TAG = "NotificationService_Log"
-
-    override fun onNotificationPosted(sbn: StatusBarNotification) {
-        super.onNotificationPosted(sbn)
-
-        val packageName = sbn.packageName
-        if (packageName != "com.whatsapp" && packageName != "com.whatsapp.w4b") return
-
-        val extras: Bundle = sbn.notification.extras
-        val title = extras.getString(Notification.EXTRA_TITLE) ?: return
-        val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString() ?: return
-
-        if (text.contains("new messages") || title == "WhatsApp" || text.isEmpty()) return
-
-        val isBusiness = packageName == "com.whatsapp.w4b"
-
-        // Handle Deletion Trigger
-        if (text.contains("this message was deleted", ignoreCase = true) ||
-            text.contains("message deleted", ignoreCase = true)) {
-
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    (application as MyApplication).repository.updateAsDeleted(title)
-                } catch (e: Exception) { Log.e(TAG, "DB Update failed", e) }
-            }
-            return
-        }
-
-        // Determine Category dynamically from incoming notification text signature
-        val category = when {
-            text.contains("📷 Photo") || text.equals("Photo", ignoreCase = true) -> "PHOTO"
-            text.contains("🎥 Video") || text.equals("Video", ignoreCase = true) -> "VIDEO"
-            text.contains("🎙️ Voice message") || text.contains("Voice note", ignoreCase = true) -> "VOICE"
-            text.contains("🎵 Audio") || text.equals("Audio", ignoreCase = true) -> "AUDIO"
-            text.contains("GIF", ignoreCase = true) -> "GIF"
-            text.contains("Sticker", ignoreCase = true) -> "STICKER"
-            text.contains("📄 Document") || text.contains("Document", ignoreCase = true) -> "DOCUMENT"
-            else -> "MESSAGE" // Regular plain conversation text thread
-        }
-
-        val uniqueMsgId = "${sbn.id}_${sbn.postTime}"
-
-        val liveMessage = MessageEntity(
-            id = 0,
-            messageId = uniqueMsgId,
-            senderName = title,
-            messageText = text,
-            timestamp = sbn.postTime,
-            isBusiness = isBusiness,
-            isDeleted = 0,
-            localMediaUri = null, // Will be updated when file observer saves attachment onto internal storage
-            mediaCategory = category
-        )
-
-        // Stream into Room DB instantly
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                (application as MyApplication).repository.saveMessage(liveMessage)
-                Log.d(TAG, "Successfully captured & categorized $category into Room Database.")
-            } catch (e: Exception) { Log.e(TAG, "Failed inserting entity into Room", e) }
-        }
-    }
-}
+//class NotificationRecoveryService : NotificationListenerService() {
+//
+//    private val TAG = "NotificationService_Log"
+//
+//    override fun onNotificationPosted(sbn: StatusBarNotification) {
+//        super.onNotificationPosted(sbn)
+//
+//        val packageName = sbn.packageName
+//        if (packageName != "com.whatsapp" && packageName != "com.whatsapp.w4b") return
+//
+//        val extras: Bundle = sbn.notification.extras
+//        val title = extras.getString(Notification.EXTRA_TITLE) ?: return
+//        val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString() ?: return
+//
+//        if (text.contains("new messages") || title == "WhatsApp" || text.isEmpty()) return
+//
+//        val isBusiness = packageName == "com.whatsapp.w4b"
+//
+//        // Handle Deletion Trigger
+//        if (text.contains("this message was deleted", ignoreCase = true) ||
+//            text.contains("message deleted", ignoreCase = true)) {
+//
+//            CoroutineScope(Dispatchers.IO).launch {
+//                try {
+//                    (application as MyApplication).repository.updateAsDeleted(title)
+//                } catch (e: Exception) { Log.e(TAG, "DB Update failed", e) }
+//            }
+//            return
+//        }
+//
+//        // Determine Category dynamically from incoming notification text signature
+//        val category = when {
+//            text.contains("📷 Photo") || text.equals("Photo", ignoreCase = true) -> "PHOTO"
+//            text.contains("🎥 Video") || text.equals("Video", ignoreCase = true) -> "VIDEO"
+//            text.contains("🎙️ Voice message") || text.contains("Voice note", ignoreCase = true) -> "VOICE"
+//            text.contains("🎵 Audio") || text.equals("Audio", ignoreCase = true) -> "AUDIO"
+//            text.contains("GIF", ignoreCase = true) -> "GIF"
+//            text.contains("Sticker", ignoreCase = true) -> "STICKER"
+//            text.contains("📄 Document") || text.contains("Document", ignoreCase = true) -> "DOCUMENT"
+//            else -> "MESSAGE" // Regular plain conversation text thread
+//        }
+//
+//        val uniqueMsgId = "${sbn.id}_${sbn.postTime}"
+//
+//        val liveMessage = MessageEntity(
+//            id = 0,
+//            messageId = uniqueMsgId,
+//            senderName = title,
+//            messageText = text,
+//            timestamp = sbn.postTime,
+//            isBusiness = isBusiness,
+//            isDeleted = 0,
+//            localMediaUri = null, // Will be updated when file observer saves attachment onto internal storage
+//            mediaCategory = category
+//        )
+//
+//        // Stream into Room DB instantly
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                (application as MyApplication).repository.saveMessage(liveMessage)
+//                Log.d(TAG, "Successfully captured & categorized $category into Room Database.")
+//            } catch (e: Exception) { Log.e(TAG, "Failed inserting entity into Room", e) }
+//        }
+//    }
+//}

@@ -14,14 +14,13 @@ import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.data.MessageEntity
 import com.futurecode.recoverdeletedmessages.databinding.FragmentMessagePreviewBinding
 import com.futurecode.recoverdeletedmessages.utils.UiState
-import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MessagePreviewFragment : BaseFragment<FragmentMessagePreviewBinding>(FragmentMessagePreviewBinding::inflate) {
 
     private val TAG = "MsgPreviewFragment_Log"
-    private val viewModel: RecoveryViewModel by viewModels()
+  //  private val viewModel: RecoveryViewModel by viewModels()
     private lateinit var detailFeedAdapter: DetailChatFeedAdapter
 
     private var activeChatSenderName: String = "" // FIXED: Changed from activeChatThreadId to track sender profile
@@ -74,35 +73,37 @@ class MessagePreviewFragment : BaseFragment<FragmentMessagePreviewBinding>(Fragm
     private fun observeConversationPipeline() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.mediaUiStateFlow.collectLatest { state -> // FIXED: Pointed directly onto the core flow pipeline container
-                    when (state) {
-                        is UiState.Loading -> binding.rvChatHistoryFeed.visibility = View.GONE
-                        is UiState.Success<*> -> {
-                            binding.rvChatHistoryFeed.visibility = View.VISIBLE
+//                viewModel.mediaUiStateFlow.collectLatest { state -> // FIXED: Pointed directly onto the core flow pipeline container
+//                    when (state) {
+//                        is UiState.Loading -> binding.rvChatHistoryFeed.visibility = View.GONE
+//                        is UiState.Success<*> -> {
+//                            binding.rvChatHistoryFeed.visibility = View.VISIBLE
+//
+//                            @Suppress("UNCHECKED_CAST")
+//                            val rawMessages = state.data as? List<MessageEntity> ?: emptyList()
+//
+//                            // FIXED: Filtering data thread entries using senderName mapping matches instead of missing chatId
+//                            val filteredConversationThread = rawMessages.filter {
+//                                it.senderName == activeChatSenderName && it.isBusiness == isBusinessContext
+//                            }
+//
+//                            if (filteredConversationThread.isNotEmpty()) {
+//                                // Set toolbar text dynamically based on sender identity strings
+//                                binding.tvDetailUserName.text = activeChatSenderName
+//                            } else {
+//                                binding.tvDetailUserName.text = activeChatSenderName
+//                            }
+//
+//                            // Submits the cleanly filtered user stream array.
+//                            // Note: We reverse the collection mapping list back if your database query sorts logs DESC,
+//                            // ensuring standard natural chat behavior inside stackFromEnd Recyclerview frameworks.
+//                            detailFeedAdapter.submitList(filteredConversationThread.reversed())
+//                        }
+//                        is UiState.Error -> binding.rvChatHistoryFeed.visibility = View.VISIBLE
+//                    }
+//                }
 
-                            @Suppress("UNCHECKED_CAST")
-                            val rawMessages = state.data as? List<MessageEntity> ?: emptyList()
 
-                            // FIXED: Filtering data thread entries using senderName mapping matches instead of missing chatId
-                            val filteredConversationThread = rawMessages.filter {
-                                it.senderName == activeChatSenderName && it.isBusiness == isBusinessContext
-                            }
-
-                            if (filteredConversationThread.isNotEmpty()) {
-                                // Set toolbar text dynamically based on sender identity strings
-                                binding.tvDetailUserName.text = activeChatSenderName
-                            } else {
-                                binding.tvDetailUserName.text = activeChatSenderName
-                            }
-
-                            // Submits the cleanly filtered user stream array.
-                            // Note: We reverse the collection mapping list back if your database query sorts logs DESC,
-                            // ensuring standard natural chat behavior inside stackFromEnd Recyclerview frameworks.
-                            detailFeedAdapter.submitList(filteredConversationThread.reversed())
-                        }
-                        is UiState.Error -> binding.rvChatHistoryFeed.visibility = View.VISIBLE
-                    }
-                }
             }
         }
     }

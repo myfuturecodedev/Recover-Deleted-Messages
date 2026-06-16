@@ -221,81 +221,81 @@ import java.io.FileWriter
 
 
 
-class RecoveryViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val TAG = "RecoveryViewModel_Log"
-
-    // --- PIPELINE 1: Text Chats Conversations State Streams ---
-    private val _messagesUiStateFlow = MutableStateFlow<UiState<List<MessageEntity>>>(UiState.Loading)
-    val messagesUiStateFlow: StateFlow<UiState<List<MessageEntity>>> = _messagesUiStateFlow
-
-    // --- PIPELINE 2: Document / File System Scanned Media Streams ---
-    private val _mediaUiStateFlow = MutableStateFlow<UiState<List<MessageEntity>>>(UiState.Loading)
-    val mediaUiStateFlow: StateFlow<UiState<List<MessageEntity>>> = _mediaUiStateFlow
-
-    // --- PIPELINE 3: Dashboard Real-time Badge Counters Map Matrix State ---
-    private val _dashboardBadgesFlow = MutableStateFlow<Map<String, Int>>(emptyMap())
-    val dashboardBadgesFlow: StateFlow<Map<String, Int>> = _dashboardBadgesFlow
-
-    // Reference pointer targeting the clean master data repository layer
-    private val repository = (application as MyApplication).repository
-
-    // FIXED: Accessing the database access objects safely via repository instance mapping channel
-    private val dao = repository.dao
-
-    /**
-     * CORE COMPONENT: Starts the live real-time Room Database observation engine loop.
-     */
-    fun startLiveDatabaseObservation() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _mediaUiStateFlow.value = UiState.Loading
-            try {
-                repository.allMessagesStream.collectLatest { databaseItems ->
-                    _mediaUiStateFlow.value = UiState.Success(databaseItems)
-                }
-            } catch (e: Exception) {
-                _mediaUiStateFlow.value = UiState.Error(e)
-            }
-        }
-    }
-
-    /**
-     * NEW METHOD: Fetch live dynamic category specific entries for grids (Images, Documents, etc.)
-     */
-    fun loadStoredCategoryMedia(categoryType: String, isBusinessMode: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _messagesUiStateFlow.value = UiState.Loading
-            try {
-                dao.getMessagesByCategoryFlow(categoryType, isBusinessMode).collectLatest { items ->
-                    _messagesUiStateFlow.value = UiState.Success(items)
-                }
-            } catch (e: Exception) {
-                _messagesUiStateFlow.value = UiState.Error(e)
-            }
-        }
-    }
-
-    /**
-     * UPDATED DASHBOARD LOGIC: Pure database count maps matrix
-     */
-    fun calculateDashboardBadgeCounters(isBusinessMode: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val countMap = mutableMapOf<String, Int>()
-            try {
-                // Fetch dynamic counts for each element badge natively inside database matching your UI blocks
-                countMap["MESSAGE"] = dao.getCategoryCount("MESSAGE", isBusinessMode)
-                countMap["PHOTO"] = dao.getCategoryCount("PHOTO", isBusinessMode)
-                countMap["VIDEO"] = dao.getCategoryCount("VIDEO", isBusinessMode)
-                countMap["GIF"] = dao.getCategoryCount("GIF", isBusinessMode)
-                countMap["STICKER"] = dao.getCategoryCount("STICKER", isBusinessMode)
-                countMap["AUDIO"] = dao.getCategoryCount("AUDIO", isBusinessMode)
-                countMap["VOICE"] = dao.getCategoryCount("VOICE", isBusinessMode)
-                countMap["DOCUMENT"] = dao.getCategoryCount("DOCUMENT", isBusinessMode)
-
-                _dashboardBadgesFlow.value = countMap
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-}
+//class RecoveryViewModel(application: Application) : AndroidViewModel(application) {
+//
+//    private val TAG = "RecoveryViewModel_Log"
+//
+//    // --- PIPELINE 1: Text Chats Conversations State Streams ---
+//    private val _messagesUiStateFlow = MutableStateFlow<UiState<List<MessageEntity>>>(UiState.Loading)
+//    val messagesUiStateFlow: StateFlow<UiState<List<MessageEntity>>> = _messagesUiStateFlow
+//
+//    // --- PIPELINE 2: Document / File System Scanned Media Streams ---
+//    private val _mediaUiStateFlow = MutableStateFlow<UiState<List<MessageEntity>>>(UiState.Loading)
+//    val mediaUiStateFlow: StateFlow<UiState<List<MessageEntity>>> = _mediaUiStateFlow
+//
+//    // --- PIPELINE 3: Dashboard Real-time Badge Counters Map Matrix State ---
+//    private val _dashboardBadgesFlow = MutableStateFlow<Map<String, Int>>(emptyMap())
+//    val dashboardBadgesFlow: StateFlow<Map<String, Int>> = _dashboardBadgesFlow
+//
+//    // Reference pointer targeting the clean master data repository layer
+//    private val repository = (application as MyApplication).repository
+//
+//    // FIXED: Accessing the database access objects safely via repository instance mapping channel
+//    private val dao = repository.dao
+//
+//    /**
+//     * CORE COMPONENT: Starts the live real-time Room Database observation engine loop.
+//     */
+//    fun startLiveDatabaseObservation() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            _mediaUiStateFlow.value = UiState.Loading
+//            try {
+//                repository.allMessagesStream.collectLatest { databaseItems ->
+//                    _mediaUiStateFlow.value = UiState.Success(databaseItems)
+//                }
+//            } catch (e: Exception) {
+//                _mediaUiStateFlow.value = UiState.Error(e)
+//            }
+//        }
+//    }
+//
+//    /**
+//     * NEW METHOD: Fetch live dynamic category specific entries for grids (Images, Documents, etc.)
+//     */
+//    fun loadStoredCategoryMedia(categoryType: String, isBusinessMode: Boolean) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            _messagesUiStateFlow.value = UiState.Loading
+//            try {
+//                dao.getMessagesByCategoryFlow(categoryType, isBusinessMode).collectLatest { items ->
+//                    _messagesUiStateFlow.value = UiState.Success(items)
+//                }
+//            } catch (e: Exception) {
+//                _messagesUiStateFlow.value = UiState.Error(e)
+//            }
+//        }
+//    }
+//
+//    /**
+//     * UPDATED DASHBOARD LOGIC: Pure database count maps matrix
+//     */
+//    fun calculateDashboardBadgeCounters(isBusinessMode: Boolean) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val countMap = mutableMapOf<String, Int>()
+//            try {
+//                // Fetch dynamic counts for each element badge natively inside database matching your UI blocks
+//                countMap["MESSAGE"] = dao.getCategoryCount("MESSAGE", isBusinessMode)
+//                countMap["PHOTO"] = dao.getCategoryCount("PHOTO", isBusinessMode)
+//                countMap["VIDEO"] = dao.getCategoryCount("VIDEO", isBusinessMode)
+//                countMap["GIF"] = dao.getCategoryCount("GIF", isBusinessMode)
+//                countMap["STICKER"] = dao.getCategoryCount("STICKER", isBusinessMode)
+//                countMap["AUDIO"] = dao.getCategoryCount("AUDIO", isBusinessMode)
+//                countMap["VOICE"] = dao.getCategoryCount("VOICE", isBusinessMode)
+//                countMap["DOCUMENT"] = dao.getCategoryCount("DOCUMENT", isBusinessMode)
+//
+//                _dashboardBadgesFlow.value = countMap
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+//    }
+//}

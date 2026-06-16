@@ -8,9 +8,11 @@ import androidx.work.WorkManager
 import com.futurecode.recoverdeletedmessages.activity.MyApplication
 import java.util.concurrent.TimeUnit
 
+
+
 object NotificationScheduler {
 
-    private const val WORK_NAME = "recover_deleted_message_notification_chain"
+    private const val WORK_NAME = "speaker_cleaner_notification_chain"
 
     fun startNotificationWorker(context: Context): Boolean {
         return try {
@@ -20,7 +22,7 @@ object NotificationScheduler {
 
             val firstWorker = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInitialDelay(0, TimeUnit.MINUTES)
-                .addTag("recover_deleted_message_notification_worker")
+                .addTag("speaker_cleaner_notification_worker")
                 .build()
 
             workManager.enqueueUniqueWork(

@@ -65,6 +65,7 @@ class PrefManager private constructor(private val context: Context) {
         }
 
 
+
     var isFolderAccessGranted: Boolean
         get() = sharedPref.getBoolean(AppConstants.ISFOLDERACCESSGRANTED.name, false)
         set(value) {
@@ -220,6 +221,12 @@ class PrefManager private constructor(private val context: Context) {
         return currentIndex
     }
 
+
+    var isUserHasPremium: Boolean
+        get() = sharedPref.getBoolean(AppConstants.IsUserHasPremium.name, false)
+        set(value) {
+            editor.putBoolean(AppConstants.IsUserHasPremium.name, value).apply()
+        }
 
     fun clearPreferences() {
         editor.clear().apply()

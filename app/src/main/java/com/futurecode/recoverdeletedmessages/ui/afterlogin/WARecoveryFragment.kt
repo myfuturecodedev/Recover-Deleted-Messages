@@ -10,8 +10,12 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
+import com.futurecode.recoverdeletedmessages.ads.native_ad.NativeAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWARecoveryBinding
+import com.futurecode.recoverdeletedmessages.utils.NotificationPermissionHelper
+
 class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARecoveryBinding::inflate) {
 
     // 1. Define a type-safe Enum to represent the selected application target
@@ -21,15 +25,33 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
 
     // 2. State variable storing the currently active platform selection
     private var currentSelectedApp = RecoveryTargetApp.WHATSAPP
+    private val notificationPermissionHelper = NotificationPermissionHelper(this)
+    // =========================================================================
+    // ✅ MASTER FIX: Keep state instance alive to detect screen navigation returns
+    // =========================================================================
+    private var isScreenRefreshed = false
+
+    private lateinit var nativeAdsHelper: NativeAdsHelper
+    lateinit var fullScreenAdsHelper: FullScreenAdsHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupCards()
+        nativeAdsHelper= NativeAdsHelper(requireActivity())
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
+
 
         val packageName: String = requireContext().packageName
+        Log.d("WARecoveryFragment", "onViewCreated initialization context targeting package: $packageName")
 
-        Log.d("TAG", "onViewCreated: $packageName")
+        // Pass the state check flag: true if returning from another screen, false if first app initialization
+        notificationPermissionHelper.checkAndRequestPermission(isRefresh = isScreenRefreshed)
+
+        // Lock the flag to true so any subsequent back navigation triggers don't fire duplicate notifications
+        isScreenRefreshed = true
+        loadNativeAds()
+
     }
 
     private fun setupCards() {
@@ -240,6 +262,15 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
                 // TODO: Load WhatsApp Business local message files/notifications from database
             }
         }
+    }
+
+    fun loadNativeAds(){
+        nativeAdsHelper = NativeAdsHelper(requireActivity())
+        nativeAdsHelper?.showNativeAd(
+            nativeBannerAdView = binding.nativeAds3.frame,
+            mainLayout = binding.nativeAds3.mainLayout,
+            placeholder = binding.nativeAds3.placeholder
+        )
     }
 
     override fun onDestroyView() {

@@ -35,7 +35,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_media_back"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="WA Sticker" />
+            android:text="@string/wa_sticker"
+            />
 
         <ImageView
             android:id="@+id/btn_media_help"
@@ -60,6 +61,7 @@
 
 
     <ImageView
+        android:id="@+id/image_sticker"
         android:layout_width="@dimen/_255sdp"
         android:layout_height="@dimen/_289sdp"
         android:layout_marginTop="@dimen/_70sdp"
@@ -112,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Resend"
+                    android:text="@string/resend"
                     android:textColor="@color/action_footer_text"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />
@@ -141,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="@color/action_footer_text"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />
@@ -170,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Delete"
+                    android:text="@string/delete"
                     android:textColor="@color/action_delete_red"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />

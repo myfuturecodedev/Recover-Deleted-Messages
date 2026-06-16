@@ -4,132 +4,82 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.activity.MyApplication
+import com.futurecode.recoverdeletedmessages.adapter.AudioAdapter
 import com.futurecode.recoverdeletedmessages.adapter.AudioRecoveryAdapter
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAAudioBinding
-import com.futurecode.recoverdeletedmessages.viewModel.RecoveryViewModel
+import com.futurecode.recoverdeletedmessages.ui.dialogs.FolderAccessDialog
+import com.futurecode.recoverdeletedmessages.utils.Constants
+import com.futurecode.recoverdeletedmessages.utils.SafManager
+import com.futurecode.recoverdeletedmessages.viewModel.MediaViewModel
+import com.futurecode.recoverdeletedmessages.viewModel.ViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class WAAudioFragment : BaseFragment<FragmentWAAudioBinding>(FragmentWAAudioBinding::inflate) {
 
     private val TAG = "WAAudioFragment_Debug"
-    private val viewModel: RecoveryViewModel by viewModels()
+    //private val viewModel: RecoveryViewModel by viewModels()
     private lateinit var audioAdapter: AudioRecoveryAdapter
 
     private var appMediaPlayerInstance: MediaPlayer? = null
     private var progressTrackerJob: Job? = null
     private var activePlaybackIndexPosition = -1
 
+
+    private val viewModel: MediaViewModel by viewModels { ViewModelFactory(MyApplication.app.repository) }
+    private lateinit var adapter: AudioAdapter
+
+    private val safLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if (uri != null) SafManager.saveUri(requireContext(), uri)
+        viewModel.scanAudios(requireContext())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeRecyclerView()
-        setupClickListeners()
-        observeFileScanningPipeline()
-    }
+        binding.btnAudioBack.setOnClickListener { findNavController().popBackStack() }
 
-    private fun initializeRecyclerView() {
-        binding.tvAudioToolbarTitle.text = "WA Audio"
-        audioAdapter = AudioRecoveryAdapter(
-            onPlayTriggered = { audioEntity, position -> handleAudioPlayback(audioEntity.localMediaUri, position) },
-            onRowLongPressed = { }
-        )
-        binding.rvAudioHistoryList.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = audioAdapter
-            setHasFixedSize(true)
+        childFragmentManager.setFragmentResultListener(FolderAccessDialog.REQUEST_KEY, viewLifecycleOwner) { _, _ ->
+            safLauncher.launch(SafManager.getInitialUri())
         }
-    }
 
-    private fun setupClickListeners() {
-        binding.btnAudioBack.setOnClickListener { findNavController().navigateUp() }
-    }
-
-    /**
-     * FIXED: Uses repeatOnLifecycle(Lifecycle.State.STARTED) to ensure the
-     * UI remains open and receptive to the scanner's background thread updates.
-     */
-    private fun observeFileScanningPipeline() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
-//                viewModel.audioUiStateFlow.collectLatest { state ->
-//                    when (state) {
-//                        is UiState.Loading -> {
-//                            Log.d(TAG, "UI State: Scanner is crawling folders... Showing loader.")
-//                            binding.pbAudioLoading.visibility = View.VISIBLE
-//                            binding.rvAudioHistoryList.visibility = View.GONE
-//                        }
-//                        is UiState.Success -> {
-//                            Log.d(TAG, "UI State: Scan completed! Dispatched data records count: ${state.data.size}")
-//                            binding.pbAudioLoading.visibility = View.GONE
-//                            binding.rvAudioHistoryList.visibility = View.VISIBLE
-//                            Log.d("dfghbefrv", "observeFileScanningPipeline: ${state.data}")
-//
-//                            // Deliver clean payload blocks directly to list adapter view layer
-//                            audioAdapter.submitList(state.data)
-//                        }
-//                        is UiState.Error -> {
-//                            Log.e(TAG, "UI State: Scanner encountered failure parameters mapping logs", state.exception)
-//                            binding.pbAudioLoading.visibility = View.GONE
-//                            binding.rvAudioHistoryList.visibility = View.VISIBLE
-//                        }
-//                    }
-//                }
-//            }
-//        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Force the scanning engine to crawl folders the exact millisecond the view becomes visible
-        Log.d(TAG, "onResume: Triggering explicit background storage refresh pass.")
-        //viewModel.loadAudioFiles(isBusinessSelected = false)
-    }
-
-    private fun handleAudioPlayback(audioPath: String?, position: Int) {
-        if (activePlaybackIndexPosition == position) { stopAudioEngine(); return }
-        stopAudioEngine()
-        if (audioPath.isNullOrEmpty()) return
-        try {
-            appMediaPlayerInstance = MediaPlayer().apply {
-                setDataSource(audioPath)
-                setAudioStreamType(android.media.AudioManager.STREAM_MUSIC)
-                prepare()
-                start()
+        adapter = AudioAdapter { item ->
+            val bundle = Bundle().apply {
+                putString(Constants.ARG_AUDIO_PATH, item.filePath)
+                putString(Constants.ARG_AUDIO_TYPE, Constants.MEDIA_TYPE_AUDIO)
             }
-            activePlaybackIndexPosition = position
-            trackProgress(position)
-        } catch (e: Exception) { e.printStackTrace() }
-    }
-
-    private fun trackProgress(position: Int) {
-        progressTrackerJob = viewLifecycleOwner.lifecycleScope.launch {
-            val player = appMediaPlayerInstance ?: return@launch
-            while (player.isPlaying) {
-                val ratio = (player.currentPosition.toFloat() / player.duration.toFloat() * 100).toInt()
-                audioAdapter.setPlaybackProgressUpdate(position, ratio)
-                delay(250)
-            }
-            stopAudioEngine()
+            findNavController().navigate(R.id.action_WAAudioFragment_to_AudioPlayerFragment, bundle)
         }
-    }
+        binding.rvAudioHistoryList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAudioHistoryList.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.rvAudioHistoryList.adapter = adapter
 
-    private fun stopAudioEngine() {
-        progressTrackerJob?.cancel()
-        appMediaPlayerInstance?.stop()
-        appMediaPlayerInstance?.release()
-        appMediaPlayerInstance = null
-        activePlaybackIndexPosition = -1
-        audioAdapter.clearPlaybackProgressTracking()
+        if (!SafManager.hasSafPermission(requireContext())) {
+            FolderAccessDialog.show(childFragmentManager)
+        }
+        viewModel.scanAudios(requireContext())
+
+        lifecycleScope.launch {
+            viewModel.audios.collectLatest { items ->
+                adapter.submitList(items)
+                binding.pbAudioLoading.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+            }
+        }
     }
 
     override fun onDestroyView() {
-        stopAudioEngine()
+        adapter.releasePlayer()
         super.onDestroyView()
     }
 }
+

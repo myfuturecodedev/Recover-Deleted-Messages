@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
         android:fontFamily="@font/inter_bold"
-        android:text="Select Language"
+        android:text="@string/select_language"
         android:textColor="@color/lang_text_title"
         android:textSize="@dimen/_26ssp"
         android:textStyle="bold"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4sdp"
         android:fontFamily="@font/inter_regular"
-        android:text="Choose your preferred language"
+        android:text="@string/choose_your_preferred_language"
         android:textColor="@color/lang_text_subtitle"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="@+id/tv_title"
@@ -64,7 +64,7 @@
         android:layout_marginTop="@dimen/_12sdp"
         android:background="@drawable/bg_lang_card_unselected"
         android:drawablePadding="@dimen/_8sdp"
-        android:hint="Search language..."
+        android:hint="@string/search_language"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:paddingStart="@dimen/_12sdp"
@@ -89,90 +89,5 @@
         app:layout_constraintTop_toBottomOf="@+id/et_search_language"
         tools:listitem="@layout/item_language_card" />
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/container_premium_promo"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="@dimen/_16sdp"-->
-<!--        android:background="@drawable/bg_promo_banner"-->
-<!--        android:padding="@dimen/_12sdp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/btn_confirm_selection"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/btn_back">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_promo_icon"-->
-<!--            android:layout_width="@dimen/_36sdp"-->
-<!--            android:layout_height="@dimen/_36sdp"-->
-<!--            android:src="@drawable/ic_premium_crown"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_promo_title"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/_10sdp"-->
-<!--            android:layout_marginEnd="@dimen/_8sdp"-->
-<!--            android:fontFamily="@font/inter_bold"-->
-<!--            android:text="Unlock Premium"-->
-<!--            android:textColor="@color/lang_text_title"-->
-<!--            android:textSize="@dimen/_13ssp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/tv_promo_desc"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/btn_upgrade"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/iv_promo_icon"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_chainStyle="packed" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_promo_desc"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/_2dp"-->
-<!--            android:fontFamily="@font/inter_regular"-->
-<!--            android:text="Get unlimited translations"-->
-<!--            android:textColor="@color/lang_text_subtitle"-->
-<!--            android:textSize="@dimen/_10ssp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/tv_promo_title"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/tv_promo_title"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/tv_promo_title" />-->
-
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:id="@+id/btn_upgrade"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="@dimen/_32sdp"-->
-<!--            android:background="@drawable/bg_button_upgrade"-->
-<!--            android:fontFamily="@font/inter_bold"-->
-<!--            android:paddingStart="@dimen/_16sdp"-->
-<!--            android:paddingEnd="@dimen/_16sdp"-->
-<!--            android:text="Upgrade"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textColor="@android:color/white"-->
-<!--            android:textSize="@dimen/_11ssp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/badge_promo"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/bg_badge_pill"-->
-<!--            android:layout_marginBottom="@dimen/_2sdp"-->
-<!--            android:paddingStart="@dimen/_6sdp"-->
-<!--            android:paddingTop="@dimen/_2dp"-->
-<!--            android:paddingEnd="@dimen/_6sdp"-->
-<!--            android:paddingBottom="@dimen/_2dp"-->
-<!--            android:text="PROMO"-->
-<!--            android:textColor="@color/lang_text_subtitle"-->
-<!--            android:textSize="@dimen/_7ssp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/btn_upgrade"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/btn_upgrade" />-->
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

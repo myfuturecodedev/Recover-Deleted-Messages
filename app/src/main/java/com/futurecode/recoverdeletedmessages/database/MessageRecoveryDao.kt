@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 //    suspend fun markMessageAsDeleted(name: String)
 //}
 
-
 @Dao
 interface MessageRecoveryDao {
 
@@ -43,4 +42,5 @@ interface MessageRecoveryDao {
 
     @Query("UPDATE messages_table SET isDeleted = 1 WHERE senderName = :name AND isDeleted = 0")
     suspend fun markMessageAsDeleted(name: String)
+
 }

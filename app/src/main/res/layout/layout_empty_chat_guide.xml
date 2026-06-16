@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="Curious about your contact’s deleted messages?"
+                    android:text="@string/curious_about_your_contact_s_deleted_messages"
                     android:textColor="@color/chat_text_name"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="Oops! Deleted a message by mistake?"
+                    android:text="@string/oops_deleted_a_message_by_mistake"
                     android:textColor="@color/chat_text_name"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="Want to check messages without opening What App?"
+                    android:text="@string/want_to_check_messages_without_opening_what_app"
                     android:textColor="@color/chat_text_name"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -200,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="No worries—just follow the guide, and you’re all set!"
+                    android:text="@string/no_worries_just_follow_the_guide_and_you_re_all_set"
                     android:textColor="@color/chat_text_name"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -234,7 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_bold"
-                        android:text="👉View the Guide"
+                        android:text="@string/view_the_guide"
                         android:textColor="@color/wa_brand_green"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold" />

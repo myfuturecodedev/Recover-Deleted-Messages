@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/chat_bg_main"
+    android:background="@color/white"
     tools:context=".ui.afterlogin.WAAudioFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,16 +29,16 @@
                 android:paddingHorizontal="@dimen/_12sdp">
 
                 <!-- Back Action Trigger Button -->
-                <ImageButton
+
+                <ImageView
                     android:id="@+id/btn_audio_back"
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
-                    android:background="@drawable/bg_circle_icon_btn"
-                    android:contentDescription="Go Back"
-                    android:scaleType="centerInside"
-                    android:padding="@dimen/_6sdp"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:contentDescription="Navigate Back"
                     android:src="@drawable/ic_back_arrow"
-                    app:tint="@color/chat_text_name" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Dynamic Audio Module Header Title String -->
                 <TextView
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="WA Audio"
+                    android:text="@string/wa_audio"
                     android:textColor="@color/chat_text_name"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />

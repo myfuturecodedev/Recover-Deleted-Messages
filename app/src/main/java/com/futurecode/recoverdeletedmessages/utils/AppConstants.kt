@@ -43,6 +43,7 @@ enum class AppConstants {
     NotificationsList,
     NOTIFICATION_KEY_INDEX,
     PromosList,
-    ISFOLDERACCESSGRANTED
+    ISFOLDERACCESSGRANTED,
+    IsUserHasPremium
 
 }

@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:fontFamily="@font/inter_bold"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textColor="@color/settings_text_title"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_24sdp">
+            android:paddingBottom="@dimen/_60sdp">
 
             <!-- ================= CATEGORY: GENERAL ================= -->
             <TextView
@@ -100,7 +100,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Share APP"
+                    android:text="@string/share_app"
                     android:textColor="@color/settings_text_item"
                     android:textSize="@dimen/_13ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -146,7 +146,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Contact Us"
+                    android:text="@string/contact_us"
                     android:textColor="@color/settings_text_item"
                     android:textSize="@dimen/_13ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -207,7 +207,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Term of Service"
+                    android:text="@string/term_of_service"
                     android:textColor="@color/settings_text_item"
                     android:textSize="@dimen/_13ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -253,7 +253,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Privacy Policy"
+                    android:text="@string/privacy_policy"
                     android:textColor="@color/settings_text_item"
                     android:textSize="@dimen/_13ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -272,6 +272,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/settings_arrow_tint" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <!-- ================= SPECIAL ACCENT BANNER ELEMENT: WA ACCOUNT SUPPORT ================= -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -314,7 +315,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="WA Account Support"
+                    android:text="@string/wa_account_support"
                     android:textColor="@color/settings_text_title"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
@@ -330,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Get help with your account"
+                    android:text="@string/get_help_with_your_account"
                     android:textColor="@color/settings_support_text_sub"
                     android:textSize="@dimen/_11ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -361,6 +362,16 @@
                         app:tint="@color/settings_support_arrow_tint" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <include
+                android:id="@+id/native_ads_3"
+                layout="@layout/native_ads_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@+id/btn_banner_support"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

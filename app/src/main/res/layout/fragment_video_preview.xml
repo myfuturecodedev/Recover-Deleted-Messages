@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Resend"
+                    android:text="@string/resend"
                     android:textColor="@color/action_footer_text"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />
@@ -217,7 +217,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Share"
+                    android:text="@string/share"
+
                     android:textColor="@color/action_footer_text"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />
@@ -246,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Delete"
+                    android:text="@string/delete"
                     android:textColor="@color/action_delete_red"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />

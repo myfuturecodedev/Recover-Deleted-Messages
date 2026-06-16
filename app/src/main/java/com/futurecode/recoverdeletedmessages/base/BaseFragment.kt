@@ -77,7 +77,6 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
             when (currentFragment) {
                 // Check if you are on IntroEarnFragment or HomeFragment
                 is BusinessWARecoveryFragment -> {
-                    Log.d("TAG", "checkAndShowInAppBanner: ${prefManager.clickCount}")
                     if (prefManager.clickCount == 0) {
                        // InAppUtils.showInAppBanner(currentActivity, true)
                     }

@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Mp3 Song"
+                android:text="@string/mp3_song"
                 android:textColor="@color/player_text_dark_green"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:fontFamily="@font/inter_regular"
-                android:text="High Quality Audio"
+                android:text="@string/high_quality_audio"
                 android:textColor="@color/figma_dark_text"
                 android:textSize="@dimen/_11ssp" />
         </LinearLayout>
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Resend"
+                    android:text="@string/resend"
                     android:textColor="@color/action_footer_text"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />
@@ -284,7 +284,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="@color/action_footer_text"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />
@@ -312,7 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Delete"
+                    android:text="@string/delete"
                     android:textColor="@color/action_delete_red"
                     android:textSize="@dimen/_9ssp"
                     android:textStyle="bold" />

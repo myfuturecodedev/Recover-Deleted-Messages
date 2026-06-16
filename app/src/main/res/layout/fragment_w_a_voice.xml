@@ -54,7 +54,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:fontFamily="@font/inter_bold"
-                        android:text="WA Massage"
+                        android:text="@string/wa_massage"
                         android:textColor="@color/chat_text_name"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />
@@ -87,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
+
             android:paddingTop="@dimen/_4sdp"
             android:paddingBottom="@dimen/_80sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -138,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Resend"
+                        android:text="@string/resend"
                         android:textColor="@color/action_footer_text"
                         android:textSize="@dimen/_9ssp"
                         android:textStyle="bold" />
@@ -167,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:fontFamily="@font/inter_bold"
-                        android:text="Delete"
+                        android:text="@string/delete"
                         android:textColor="@color/action_delete_red"
                         android:textSize="@dimen/_9ssp"
                         android:textStyle="bold" />
