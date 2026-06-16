@@ -54,7 +54,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:fontFamily="@font/inter_bold"
-                        android:text="@string/wa_massage"
+                        android:text="@string/documents"
                         android:textColor="@color/chat_text_name"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />

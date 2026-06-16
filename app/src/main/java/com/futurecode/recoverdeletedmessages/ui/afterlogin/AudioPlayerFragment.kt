@@ -21,157 +21,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.futurecode.recoverdeletedmessages.R
 
-
-
-//class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAudioPlayerBinding::inflate) {
-//
-//    private var mediaPlayer: MediaPlayer? = null
-//    private val handler = Handler(Looper.getMainLooper())
-//    private var isPlaying = false
-//    private var playbackSpeed = 1.0f
-//    private var currentPath: String = ""
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        currentPath = arguments?.getString(Constants.ARG_AUDIO_PATH) ?: return
-//        val isContentUri = currentPath.startsWith("content://")
-//
-//        val title = if (isContentUri) {
-//            Uri.parse(currentPath).lastPathSegment
-//                ?.let { Uri.decode(it).substringAfterLast('/') }
-//                ?: "audio"
-//        } else {
-//            File(currentPath).name
-//        }
-//        binding.tvAudioTitle.text = title
-//        binding.ivBack.setOnClickListener { findNavController().popBackStack() }
-//
-//        initPlayer(currentPath, isContentUri)
-//        setupControls()
-//    }
-//
-//    private fun initPlayer(path: String, isContentUri: Boolean) {
-//        mediaPlayer?.release()
-//        try {
-//            mediaPlayer = MediaPlayer().apply {
-//                if (isContentUri) {
-//                    setDataSource(requireContext(), Uri.parse(path))
-//                } else {
-//                    setDataSource(path)
-//                }
-//                prepare()
-//                setOnCompletionListener { onPlaybackComplete() }
-//            }
-//            val duration = mediaPlayer?.duration ?: 0
-//            binding.seekBar.max = duration
-//            binding.tvTotalTime.text = formatDuration(duration.toLong())
-//            binding.tvCurrentTime.text = "0:00"
-//        } catch (e: Exception) {
-//            Toast.makeText(requireContext(), "Cannot play this file: ${e.message}", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-//
-//    private fun setupControls() {
-//        binding.ivPlayPause.setOnClickListener { togglePlayback() }
-//
-//        binding.tvSpeed.setOnClickListener {
-//            playbackSpeed = 1.0f
-//            applySpeed()
-//            updateSpeedUI()
-//        }
-//        binding.tvSpeed2x.setOnClickListener {
-//            playbackSpeed = 2.0f
-//            applySpeed()
-//            updateSpeedUI()
-//        }
-//
-//        binding.ivPrevious.setOnClickListener {
-//            mediaPlayer?.seekTo(0)
-//            binding.seekBar.progress = 0
-//        }
-//
-//        binding.ivNext.setOnClickListener {
-//            val duration = mediaPlayer?.duration ?: 0
-//            mediaPlayer?.seekTo(duration)
-//        }
-//
-//        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                if (fromUser) mediaPlayer?.seekTo(progress)
-//                binding.tvCurrentTime.text = formatDuration(progress.toLong())
-//            }
-//            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-//            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-//        })
-//    }
-//
-//    private fun togglePlayback() {
-//        val player = mediaPlayer ?: return
-//        if (isPlaying) {
-//            player.pause()
-//            handler.removeCallbacks(updateSeekBar)
-//            binding.ivPlayPause.setImageResource(android.R.drawable.ic_media_play)
-//        } else {
-//            player.start()
-//            applySpeed()
-//            handler.post(updateSeekBar)
-//            binding.ivPlayPause.setImageResource(android.R.drawable.ic_media_pause)
-//        }
-//        isPlaying = !isPlaying
-//    }
-//
-//    private val updateSeekBar = object : Runnable {
-//        override fun run() {
-//            val current = mediaPlayer?.currentPosition ?: 0
-//            binding.seekBar.progress = current
-//            binding.tvCurrentTime.text = formatDuration(current.toLong())
-//            handler.postDelayed(this, 200)
-//        }
-//    }
-//
-//    private fun applySpeed() {
-//        mediaPlayer?.let {
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//                val params = it.playbackParams
-//                params.speed = playbackSpeed
-//                it.playbackParams = params
-//            }
-//        }
-//    }
-//
-//    private fun updateSpeedUI() {
-//        binding.tvSpeed.alpha = if (playbackSpeed == 1.0f) 1.0f else 0.5f
-//        binding.tvSpeed2x.alpha = if (playbackSpeed == 2.0f) 1.0f else 0.5f
-//    }
-//
-//    private fun onPlaybackComplete() {
-//        isPlaying = false
-//        binding.seekBar.progress = 0
-//        binding.tvCurrentTime.text = "0:00"
-//        binding.ivPlayPause.setImageResource(android.R.drawable.ic_media_play)
-//        handler.removeCallbacks(updateSeekBar)
-//    }
-//
-//    private fun formatDuration(ms: Long): String {
-//        val totalSeconds = ms / 1000
-//        val minutes = totalSeconds / 60
-//        val seconds = totalSeconds % 60
-//        return String.format("%d:%02d", minutes, seconds)
-//    }
-//
-//    override fun onDestroyView() {
-//        handler.removeCallbacks(updateSeekBar)
-//        mediaPlayer?.release()
-//        mediaPlayer = null
-//        super.onDestroyView()
-//    }
-//}
-
-
-
-
-
 class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAudioPlayerBinding::inflate) {
 
     private val TAG = "AudioPlayerFragment_Log"
@@ -197,6 +46,11 @@ class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAud
 
         binding.tvAudioTitle.text = title
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
+
+
+        binding.btnPlayerHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
 
         initPlayer(currentPath, isContentUri)
         setupControls()

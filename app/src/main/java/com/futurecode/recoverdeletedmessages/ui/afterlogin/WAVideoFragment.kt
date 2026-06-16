@@ -39,6 +39,14 @@ class WAVideoFragment : BaseFragment<FragmentWAVideoBinding>(FragmentWAVideoBind
         super.onViewCreated(view, savedInstanceState)
         binding.btnMediaBack.setOnClickListener { findNavController().popBackStack() }
 
+        binding.btnMediaHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnMediaSelectAll.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
         childFragmentManager.setFragmentResultListener(FolderAccessDialog.REQUEST_KEY, viewLifecycleOwner) { _, _ ->
             safLauncher.launch(SafManager.getInitialUri())
         }

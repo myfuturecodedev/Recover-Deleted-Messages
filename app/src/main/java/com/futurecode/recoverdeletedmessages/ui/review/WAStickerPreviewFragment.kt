@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
@@ -24,6 +25,15 @@ class WAStickerPreviewFragment : BaseFragment<FragmentWAStickerPreviewBinding>(F
         val type = arguments?.getString("stickerType") ?: "sticker"
 
         Log.d("PreviewSticker", "Received Path: $currentPath | Type: $type")
+
+
+        binding.btnMediaHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnMediaSelectAll.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
 
         if (currentPath.isNotEmpty()) {
             val file = File(currentPath)

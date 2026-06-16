@@ -43,13 +43,13 @@ class WAStickerFragment : BaseFragment<FragmentWAStickerBinding>(FragmentWAStick
             safLauncher.launch(SafManager.getInitialUri())
         }
 
-//        adapter = MediaGridAdapter(onItemClick = { item ->
-//            val bundle = Bundle().apply {
-//                putString(Constants.MEDIA_TYPE_STICKER, item.filePath)
-//                putString(Constants.MEDIA_TYPE_STICKER, Constants.MEDIA_TYPE_STICKER)
-//            }
-//            findNavController().navigate(R.id.action_stickers_to_viewer, bundle)
-//        })
+        binding.btnMediaHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnMediaSelectAll.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
 
 
 

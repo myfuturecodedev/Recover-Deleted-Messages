@@ -59,6 +59,14 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
             findNavController().popBackStack()
         }
 
+        binding.btnHelpGuide.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
         initializeRecyclerView()
 
     }

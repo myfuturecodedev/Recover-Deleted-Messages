@@ -44,6 +44,14 @@ class WAVoiceFragment : BaseFragment<FragmentWAVoiceBinding>(FragmentWAVoiceBind
         super.onViewCreated(view, savedInstanceState)
         binding.btnBack.setOnClickListener { findNavController().popBackStack() }
 
+        binding.btnHelpGuide.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
         childFragmentManager.setFragmentResultListener(FolderAccessDialog.REQUEST_KEY, viewLifecycleOwner) { _, _ ->
             safLauncher.launch(SafManager.getInitialUri())
         }

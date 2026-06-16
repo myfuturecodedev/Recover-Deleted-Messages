@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.SeekBar
+import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentVideoPreviewBinding
@@ -27,6 +28,15 @@ class VideoPreviewFragment : BaseFragment<FragmentVideoPreviewBinding>(FragmentV
         extractArgumentsBundle()
         initializeVideoSurfaceEngine()
         setupInterfaceClickListeners()
+
+
+        binding.btnMediaHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnMediaSelectAll.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
     }
 
     private fun extractArgumentsBundle() {

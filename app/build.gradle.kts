@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     id("androidx.room")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 val admobAppId = project.findProperty("ADMOB_APP_ID") as? String ?: ""
@@ -58,6 +60,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.crashlytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

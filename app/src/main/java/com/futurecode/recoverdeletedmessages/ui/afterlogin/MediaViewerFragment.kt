@@ -11,6 +11,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentMediaViewerBinding
 import com.futurecode.recoverdeletedmessages.utils.Constants
@@ -38,6 +39,11 @@ class MediaViewerFragment : BaseFragment<FragmentMediaViewerBinding>(FragmentMed
 
         binding.tvFileName.text = fileName
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
+
+        binding.btnMediaHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+
+        }
 
         when {
             mediaType == Constants.MEDIA_TYPE_VIDEO -> {

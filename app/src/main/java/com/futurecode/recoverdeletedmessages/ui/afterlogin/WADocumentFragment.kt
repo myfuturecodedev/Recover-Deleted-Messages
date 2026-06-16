@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.activity.MyApplication
 import com.futurecode.recoverdeletedmessages.adapter.DocumentAdapter
 import com.futurecode.recoverdeletedmessages.adapter.DocumentListAdapter
@@ -44,6 +45,16 @@ class WADocumentFragment : BaseFragment<FragmentWADocumentBinding>(FragmentWADoc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnBack.setOnClickListener { findNavController().popBackStack() }
+
+
+        binding.btnHelpGuide.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+
+        }
+
+        binding.btnSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_global_settingFragment)
+        }
 
         childFragmentManager.setFragmentResultListener(FolderAccessDialog.REQUEST_KEY, viewLifecycleOwner) { _, _ ->
             safLauncher.launch(SafManager.getInitialUri())

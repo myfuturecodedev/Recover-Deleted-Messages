@@ -9,3 +9,7 @@ open class BaseActivity : AppCompatActivity() {
         super.attachBaseContext(MyApplication.setLocale(newBase))
     }
 }
+
+
+//NotificationAccessDialog  //layout_permission_bottom_sheet.xml
+//FolderAccessDialog //layout_storage_permission_bottom_sheet.xml

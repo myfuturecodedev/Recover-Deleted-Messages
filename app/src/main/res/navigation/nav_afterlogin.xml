@@ -63,11 +63,21 @@
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+
+    <action
+        android:id="@+id/action_global_settingFragment"
+        app:destination="@id/settingFragment"/>
+
     <fragment
         android:id="@+id/guideFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.GuideFragment"
         android:label="fragment_guide"
         tools:layout="@layout/fragment_guide" />
+
+    <action
+        android:id="@+id/action_global_guideFragment"
+        app:destination="@id/guideFragment"/>
+
     <fragment
         android:id="@+id/WAImageFragment"
         android:name="com.futurecode.recoverdeletedmessages.ui.afterlogin.WAImageFragment"

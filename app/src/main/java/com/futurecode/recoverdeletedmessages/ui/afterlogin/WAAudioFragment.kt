@@ -72,7 +72,7 @@ class WAAudioFragment : BaseFragment<FragmentWAAudioBinding>(FragmentWAAudioBind
         lifecycleScope.launch {
             viewModel.audios.collectLatest { items ->
                 adapter.submitList(items)
-                binding.pbAudioLoading.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+              //  binding.pbAudioLoading.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
             }
         }
     }

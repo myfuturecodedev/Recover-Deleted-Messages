@@ -5,6 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentGuideBinding
+import com.futurecode.recoverdeletedmessages.R
 
 /**
  * Fragment responsible for showcasing directory targeting guides and media auto-download instructions.
@@ -31,7 +32,8 @@ class GuideFragment : BaseFragment<FragmentGuideBinding>(FragmentGuideBinding::i
 
         binding.btnSettings.setOnClickListener {
             // Direct route logic onto designated destination settings layer
-            // findNavController().navigate(R.id.action_guideFragment_to_settingsFragment)
+            findNavController().navigate(R.id.action_global_settingFragment)
+
         }
 
         binding.btnUseThisFolder.setOnClickListener {

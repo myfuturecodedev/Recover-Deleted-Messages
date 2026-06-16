@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentAudioPreviewBinding
@@ -19,6 +20,10 @@ class AudioPreviewFragment : BaseFragment<FragmentAudioPreviewBinding>(FragmentA
         super.onViewCreated(view, savedInstanceState)
         extractBundleArguments()
         initializeClickListeners()
+
+        binding.btnPlayerHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
     }
 
     private fun extractBundleArguments() {

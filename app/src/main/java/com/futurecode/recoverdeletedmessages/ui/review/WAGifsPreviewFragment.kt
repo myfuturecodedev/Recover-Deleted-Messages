@@ -73,6 +73,14 @@ class WAGifsPreviewFragment : BaseFragment<FragmentWAGifsPreviewBinding>(Fragmen
             shareOrResendMediaFile(shareDirectlyToWhatsApp = false)
         }
 
+        binding.btnMediaHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
+        binding.btnMediaSelectAll.setOnClickListener {
+            findNavController().navigate(R.id.action_global_guideFragment)
+        }
+
         // Footer Action: Delete Physical File Target
         binding.btnPlayerActionDelete.setOnClickListener {
             if (currentGifPath.isNotEmpty()) {

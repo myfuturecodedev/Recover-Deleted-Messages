@@ -25,13 +25,14 @@ class NotificationAccessDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(requireContext())
-            .inflate(R.layout.dialog_notification_access, null)
+            //.inflate(R.layout.dialog_notification_access, null)
+            .inflate(R.layout.layout_permission_bottom_sheet, null)
 
-        view.findViewById<ImageView>(R.id.ivClose).setOnClickListener {
+        view.findViewById<ImageView>(R.id.iv_close_sheet).setOnClickListener {
             dismiss()
         }
 
-        view.findViewById<Button>(R.id.btnAllow).setOnClickListener {
+        view.findViewById<Button>(R.id.btn_allow_permission).setOnClickListener {
             try {
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
             } catch (e: Exception) {
