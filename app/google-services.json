@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824136662613",
+    "project_id": "recover-deleted-chat-recovery",
+    "storage_bucket": "recover-deleted-chat-recovery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824136662613:android:acc8751fc6fa28e3ab1edc",
+        "android_client_info": {
+          "package_name": "com.futurecode.recoverdeletedmessages"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKQ3I4LsMEqic9QHSOGIo8teX4FmXKP8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
