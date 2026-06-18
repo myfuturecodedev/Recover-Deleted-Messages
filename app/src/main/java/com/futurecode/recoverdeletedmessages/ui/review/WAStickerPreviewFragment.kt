@@ -9,20 +9,25 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAStickerPreviewBinding
 import com.futurecode.recoverdeletedmessages.utils.Constants
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 import java.io.File
 
 class WAStickerPreviewFragment : BaseFragment<FragmentWAStickerPreviewBinding>(FragmentWAStickerPreviewBinding::inflate) {
 
     private var currentPath: String = ""
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
        // FIXED: Successfully pulled matched bundle data fields
         currentPath = arguments?.getString("stickerPath") ?: ""
         val type = arguments?.getString("stickerType") ?: "sticker"
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
 
         Log.d("PreviewSticker", "Received Path: $currentPath | Type: $type")
 
@@ -31,7 +36,7 @@ class WAStickerPreviewFragment : BaseFragment<FragmentWAStickerPreviewBinding>(F
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
-        binding.btnMediaSelectAll.setOnClickListener {
+        binding.btnMediaSelectAll.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 

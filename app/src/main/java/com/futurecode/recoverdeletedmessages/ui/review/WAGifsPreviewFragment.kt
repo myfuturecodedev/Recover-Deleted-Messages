@@ -11,8 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.activity.MyApplication
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAGifsPreviewBinding
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 import com.futurecode.recoverdeletedmessages.viewModel.MediaViewModel
 import com.futurecode.recoverdeletedmessages.viewModel.ViewModelFactory
 import java.io.File
@@ -24,9 +26,12 @@ class WAGifsPreviewFragment : BaseFragment<FragmentWAGifsPreviewBinding>(Fragmen
     private val viewModel: MediaViewModel by viewModels { ViewModelFactory(MyApplication.app.repository) }
 
     private var currentGifPath: String = ""
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
 
         // 1. Extract Navigation Bundle Arguments
         currentGifPath = arguments?.getString("gifPath") ?: ""
@@ -64,25 +69,25 @@ class WAGifsPreviewFragment : BaseFragment<FragmentWAGifsPreviewBinding>(Fragmen
         }
 
         // Footer Action: Resend / Send onto WhatsApp Directly
-        binding.btnPlayerActionResend.setOnClickListener {
+        binding.btnPlayerActionResend.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             shareOrResendMediaFile(shareDirectlyToWhatsApp = true)
         }
 
         // Footer Action: System Native Native Content Sharing Sheet
-        binding.btnPlayerActionShare.setOnClickListener {
+        binding.btnPlayerActionShare.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             shareOrResendMediaFile(shareDirectlyToWhatsApp = false)
         }
 
-        binding.btnMediaHelp.setOnClickListener {
+        binding.btnMediaHelp.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
-        binding.btnMediaSelectAll.setOnClickListener {
+        binding.btnMediaSelectAll.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
         // Footer Action: Delete Physical File Target
-        binding.btnPlayerActionDelete.setOnClickListener {
+        binding.btnPlayerActionDelete.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             if (currentGifPath.isNotEmpty()) {
                 val file = File(currentGifPath)
                 if (file.exists() && file.delete()) {

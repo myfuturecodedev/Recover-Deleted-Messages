@@ -7,7 +7,6 @@
     android:background="@color/media_bg_canvas"
     tools:context=".ui.afterlogin.WAVideoFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_media_toolbar"
         android:layout_width="match_parent"

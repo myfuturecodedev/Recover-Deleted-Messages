@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentGuideWhatsappNotoficationBinding
-
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 
 class GuideWhatsappNotificationFragment : BaseFragment<FragmentGuideWhatsappNotoficationBinding>(FragmentGuideWhatsappNotoficationBinding::inflate) {
     private val TAG = "WAGuideFragment_Log"
 
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
         initializeInterfaceListeners()
     }
 
@@ -23,13 +27,13 @@ class GuideWhatsappNotificationFragment : BaseFragment<FragmentGuideWhatsappNoto
         }
 
         // Top toolbar right icon sync anchor click handler
-        binding.btnGuideSync.setOnClickListener {
+        binding.btnGuideSync.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             Log.d(TAG, "Re-checking system configuration parameters...")
             Toast.makeText(requireContext(), "Syncing configuration status...", Toast.LENGTH_SHORT).show()
         }
 
         // Forest Green primary screen action workflow continue trigger
-        binding.btnGuideContinue.setOnClickListener {
+        binding.btnGuideContinue.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             Log.d(TAG, "User accepted guide conditions. Transitioning to next dashboard layout screen.")
             // Insert your primary fragment navigation controller transaction calls smoothly here
         }

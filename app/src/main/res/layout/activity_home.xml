@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_afterlogin" />
+        app:navGraph="@navigation/nav_afterlogin"
+        android:layout_marginBottom="@dimen/_40sdp"/>
 
 <!--    <include-->
 <!--        android:id="@+id/includeBottomNav"-->

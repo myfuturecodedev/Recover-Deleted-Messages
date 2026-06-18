@@ -6,19 +6,24 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentGuideBinding
 import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 
 /**
  * Fragment responsible for showcasing directory targeting guides and media auto-download instructions.
  * Extends BaseFragment cleanly to inherit unified binding definitions effortlessly.
  */
 class GuideFragment : BaseFragment<FragmentGuideBinding>(FragmentGuideBinding::inflate) {
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // super.onViewCreated handles checkAndShowInAppBanner() execution natively via BaseFragment core loops
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
 
         setupClickListeners()
         evaluateAccessConfigurationState()
+        
     }
 
     /**
@@ -30,19 +35,19 @@ class GuideFragment : BaseFragment<FragmentGuideBinding>(FragmentGuideBinding::i
             findNavController().navigateUp()
         }
 
-        binding.btnSettings.setOnClickListener {
+        binding.btnSettings.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             // Direct route logic onto designated destination settings layer
             findNavController().navigate(R.id.action_global_settingFragment)
 
         }
 
-        binding.btnUseThisFolder.setOnClickListener {
+        binding.btnUseThisFolder.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             // Launches standard SAF (Storage Access Framework) Document Tree Intents
             // targeting local device backup repository directory roots directly.
             triggerStorageAccessFrameworkPipeline()
         }
 
-        binding.btnManageMediaRecovery.setOnClickListener {
+        binding.btnManageMediaRecovery.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             // Forward channel route to manage media screen configurations
         }
     }

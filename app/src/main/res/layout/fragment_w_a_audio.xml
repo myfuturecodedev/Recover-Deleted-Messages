@@ -12,47 +12,103 @@
         android:layout_height="match_parent">
 
         <!-- ================= TOP TOOLBAR ACTIONS BAR ================= -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_audio_toolbar"
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/card_audio_toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardBackgroundColor="@android:color/white"-->
+<!--            app:cardCornerRadius="0dp"-->
+<!--            app:cardElevation="@dimen/_3sdp"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_56sdp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingHorizontal="@dimen/_12sdp">-->
+
+<!--                &lt;!&ndash; Back Action Trigger Button &ndash;&gt;-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/btn_audio_back"-->
+<!--                    android:layout_width="@dimen/_37sdp"-->
+<!--                    android:layout_height="@dimen/_37sdp"-->
+<!--                    android:contentDescription="Navigate Back"-->
+<!--                    android:src="@drawable/ic_back_arrow"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                &lt;!&ndash; Dynamic Audio Module Header Title String &ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_audio_toolbar_title"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/_10sdp"-->
+<!--                    android:fontFamily="@font/inter_bold"-->
+<!--                    android:text="@string/wa_audio"-->
+<!--                    android:textColor="@color/chat_text_name"-->
+<!--                    android:textSize="@dimen/_16ssp"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </LinearLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_media_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="@dimen/_3sdp"
+            android:layout_height="@dimen/_56sdp"
+            android:paddingHorizontal="@dimen/_16sdp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_56sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_12sdp">
+            <ImageView
+                android:id="@+id/btn_audio_back"
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                android:contentDescription="Navigate Back"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Back Action Trigger Button -->
+            <TextView
+                android:id="@+id/tv_audio_toolbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/figma_dark_text"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_audio_back"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/voice" />
 
-                <ImageView
-                    android:id="@+id/btn_audio_back"
-                    android:layout_width="@dimen/_37sdp"
-                    android:layout_height="@dimen/_37sdp"
-                    android:contentDescription="Navigate Back"
-                    android:src="@drawable/ic_back_arrow"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/btn_media_help"
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:src="@drawable/ic_help_question"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_media_select_all"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Dynamic Audio Module Header Title String -->
-                <TextView
-                    android:id="@+id/tv_audio_toolbar_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="@string/wa_audio"
-                    android:textColor="@color/chat_text_name"
-                    android:textSize="@dimen/_16ssp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/btn_media_select_all"
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                android:src="@drawable/ic_menu"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <!-- ================= RECYCLERVIEW RECOVERY STREAM LIST ================= -->
         <androidx.recyclerview.widget.RecyclerView
@@ -65,7 +121,7 @@
             android:paddingBottom="@dimen/_72sdp"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_audio_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/layout_media_toolbar"
             tools:listitem="@layout/item_audio_list_row" />
 
         <!-- ================= FLOATING ACTION SELECTION FOOTER MENU BAR ================= -->

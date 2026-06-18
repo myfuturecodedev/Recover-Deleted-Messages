@@ -38,11 +38,11 @@ class HomeActivity : BaseActivity() {
             // Check if the current visible screen matches the dashboard main landing fragment
             if (destination.id == R.id.WARecoveryFragment) {
                 // Hide the banner container tightly to free layout canvas pixels
-                binding.flBanner.visibility = View.GONE
+              //  binding.flBanner.visibility = View.GONE
                 Log.d("Navigation_Log", "Dashboard Detected. Banner ad wrapper collapsed (GONE).")
             } else {
                 // Restore visibility for inner secondary preview screens cleanly
-                binding.flBanner.visibility = View.VISIBLE
+               // binding.flBanner.visibility = View.VISIBLE
                 Log.d("Navigation_Log", "Secondary Viewer Active. Banner ad wrapper visible.")
             }
         }

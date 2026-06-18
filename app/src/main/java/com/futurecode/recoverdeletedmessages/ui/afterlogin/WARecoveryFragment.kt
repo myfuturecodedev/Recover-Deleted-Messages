@@ -15,6 +15,7 @@ import com.futurecode.recoverdeletedmessages.ads.native_ad.NativeAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWARecoveryBinding
 import com.futurecode.recoverdeletedmessages.utils.NotificationPermissionHelper
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 
 class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARecoveryBinding::inflate) {
 
@@ -36,10 +37,10 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupCards()
         nativeAdsHelper= NativeAdsHelper(requireActivity())
         fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
+
+        setupCards()
 
 
         val packageName: String = requireContext().packageName
@@ -56,7 +57,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
 
     private fun setupCards() {
         // Message Card
-        binding.cardMessages.setOnClickListener {
+        binding.cardMessages.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             // Retrieve the string and handle empty/null cases safely
 
             Log.d("DestinationFragment", "Selected app received: $currentSelectedApp")
@@ -67,7 +68,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
 
         }
 
-        binding.ivCrownIcon.setOnClickListener {
+        binding.ivCrownIcon.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -75,7 +76,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // Photo Card
-        binding.cardPhotos.setOnClickListener {
+        binding.cardPhotos.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -83,7 +84,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // Video Card
-        binding.cardVideos.setOnClickListener {
+        binding.cardVideos.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -91,7 +92,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // GIF Card
-        binding.cardGifs.setOnClickListener {
+        binding.cardGifs.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -99,7 +100,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // Sticker Card
-        binding.cardStickers.setOnClickListener {
+        binding.cardStickers.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
 
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
@@ -108,7 +109,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // Audio Card
-        binding.cardAudio.setOnClickListener {
+        binding.cardAudio.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -117,7 +118,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // Voice Card
-        binding.cardVoice.setOnClickListener {
+        binding.cardVoice.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -125,18 +126,18 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // Documents Card
-        binding.cardDocuments.setOnClickListener {
+        binding.cardDocuments.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
             findNavController().navigate(R.id.action_WARecoveryFragment_to_WADocumentFragment,bundle)
         }
 
-        binding.btnSettings.setOnClickListener {
+        binding.btnSettings.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_WARecoveryFragment_to_settingFragment)
         }
 
-        binding.btnLanguageSelector.setOnClickListener {
+        binding.btnLanguageSelector.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val bundle = Bundle().apply {
                 putString("isBusinessMode", currentSelectedApp.toString())
             }
@@ -145,7 +146,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // WhatsApp Recovery Tab Click Listener
-        binding.btnTabWa.setOnClickListener {
+        binding.btnTabWa.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             if (currentSelectedApp != RecoveryTargetApp.WHATSAPP) {
                 currentSelectedApp = RecoveryTargetApp.WHATSAPP
                 updateNavigationUIState()
@@ -154,7 +155,7 @@ class WARecoveryFragment : BaseFragment<FragmentWARecoveryBinding>(FragmentWARec
         }
 
         // WhatsApp Business Tab Click Listener
-        binding.btnTabBusiness.setOnClickListener {
+        binding.btnTabBusiness.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             if (currentSelectedApp != RecoveryTargetApp.BUSINESS) {
                 currentSelectedApp = RecoveryTargetApp.BUSINESS
                 updateNavigationUIState()

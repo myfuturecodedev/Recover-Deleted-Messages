@@ -568,8 +568,10 @@
         android:layout_margin="@dimen/_12sdp"
         android:background="@drawable/bg_bottom_nav_container"
         android:padding="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_100sdp"
         android:paddingHorizontal="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_tab_wa"

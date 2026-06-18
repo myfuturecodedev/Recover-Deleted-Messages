@@ -8,7 +8,7 @@ class LanguageViewModel(application: Application) : AndroidViewModel(application
 
     // Keep this reference master list private
     private var masterLanguageList = listOf(
-        LanguageModel("en_default", "English (default)", false),
+        LanguageModel("en_default", "English (default)", true),
         LanguageModel("en", "English", false),
         LanguageModel("ar", "العربية", false),
         LanguageModel("de", "Deutsch", false),

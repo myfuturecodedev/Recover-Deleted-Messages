@@ -295,5 +295,6 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorError">#F44336</color>
     <color name="colorOnError">#FFFFFF</color>
+    <color name="selectAll">#DCF8C6C7</color>
 
 </resources>

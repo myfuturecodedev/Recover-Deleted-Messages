@@ -9,19 +9,25 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentAudioPreviewBinding
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 
 class AudioPreviewFragment : BaseFragment<FragmentAudioPreviewBinding>(FragmentAudioPreviewBinding::inflate) {
     private val TAG = "AudioPlayerFragment_Log"
     private var isPlaying = false
 
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
         extractBundleArguments()
         initializeClickListeners()
 
-        binding.btnPlayerHelp.setOnClickListener {
+        binding.btnPlayerHelp.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
     }
@@ -35,12 +41,12 @@ class AudioPreviewFragment : BaseFragment<FragmentAudioPreviewBinding>(FragmentA
     }
 
     private fun initializeClickListeners() {
-        binding.btnPlayerBack.setOnClickListener {
+        binding.btnPlayerBack.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         // Center Click: Toggle Play / Pause state switches
-        binding.btnPlayerPlayPauseContainer.setOnClickListener {
+        binding.btnPlayerPlayPauseContainer.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             isPlaying = !isPlaying
             if (isPlaying) {
                 // If audio is active, set the display to show the play icon arrow segment shape
@@ -54,12 +60,12 @@ class AudioPreviewFragment : BaseFragment<FragmentAudioPreviewBinding>(FragmentA
         }
 
         // Speed Chip Modifier Toggle Clicks Matrix
-        binding.btnSpeed1x.setOnClickListener { updateSpeedSelectionState(currentSelected = 1) }
-        binding.btnSpeed15x.setOnClickListener { updateSpeedSelectionState(currentSelected = 2) }
-        binding.btnSpeed2x.setOnClickListener { updateSpeedSelectionState(currentSelected = 3) }
+        binding.btnSpeed1x.setAdClickListener(requireActivity(), fullScreenAdsHelper) { updateSpeedSelectionState(currentSelected = 1) }
+        binding.btnSpeed15x.setAdClickListener(requireActivity(), fullScreenAdsHelper) { updateSpeedSelectionState(currentSelected = 2) }
+        binding.btnSpeed2x.setAdClickListener(requireActivity(), fullScreenAdsHelper) { updateSpeedSelectionState(currentSelected = 3) }
 
         // Core Action Deck Deletion Button Click Hook
-        binding.btnActionDelete.setOnClickListener {
+        binding.btnActionDelete.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             Log.w(TAG, "Requesting backend layout engine to remove file uri path link.")
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }

@@ -20,6 +20,9 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
+import com.futurecode.recoverdeletedmessages.ads.native_ad.NativeAdsHelper
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 
 class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAudioPlayerBinding::inflate) {
 
@@ -29,9 +32,13 @@ class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAud
     private var isPlaying = false
     private var playbackSpeed = 1.0f
     private var currentPath: String = ""
+    private lateinit var nativeAdsHelper: NativeAdsHelper
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
 
         currentPath = arguments?.getString(Constants.ARG_AUDIO_PATH) ?: return
         val isContentUri = currentPath.startsWith("content://")
@@ -48,7 +55,7 @@ class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAud
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
 
 
-        binding.btnPlayerHelp.setOnClickListener {
+        binding.btnPlayerHelp.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
@@ -79,45 +86,45 @@ class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAud
 
     private fun setupControls() {
         // FIXED: Click trigger pointing onto correct XML layout ID
-        binding.btnPlayerPlayPauseContainer.setOnClickListener { togglePlayback() }
+        binding.btnPlayerPlayPauseContainer.setAdClickListener(requireActivity(), fullScreenAdsHelper) { togglePlayback() }
 
         // FIXED: Speed controller decks wired to 1x, 1.5x, and 2x buttons
-        binding.btnSpeed1x.setOnClickListener {
+        binding.btnSpeed1x.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             playbackSpeed = 1.0f
             applySpeed()
             updateSpeedUI()
         }
 
-        binding.btnSpeed15x.setOnClickListener {
+        binding.btnSpeed15x.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             playbackSpeed = 1.5f
             applySpeed()
             updateSpeedUI()
         }
 
-        binding.btnSpeed2x.setOnClickListener {
+        binding.btnSpeed2x.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             playbackSpeed = 2.0f
             applySpeed()
             updateSpeedUI()
         }
 
         // Previous button action
-        binding.btnPlayerPrev.setOnClickListener {
+        binding.btnPlayerPrev.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             mediaPlayer?.seekTo(0)
             binding.seekBar.progress = 0
             binding.tvCurrentTime.text = "0:00"
         }
 
         // Next button action (Fast-forwards to end bounds)
-        binding.btnPlayerNext.setOnClickListener {
+        binding.btnPlayerNext.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val duration = mediaPlayer?.duration ?: 0
             mediaPlayer?.seekTo(duration)
             binding.seekBar.progress = duration
         }
 
         // Footer Actions Integration Layout
-        binding.btnActionShare.setOnClickListener { shareAudioFile() }
-        binding.btnActionDelete.setOnClickListener { deleteAudioFile() }
-        binding.btnActionResend.setOnClickListener { shareAudioFile(directToWhatsApp = true) }
+        binding.btnActionShare.setAdClickListener(requireActivity(), fullScreenAdsHelper) { shareAudioFile() }
+        binding.btnActionDelete.setAdClickListener(requireActivity(), fullScreenAdsHelper) { deleteAudioFile() }
+        binding.btnActionResend.setAdClickListener(requireActivity(), fullScreenAdsHelper) { shareAudioFile(directToWhatsApp = true) }
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -134,7 +141,7 @@ class AudioPlayerFragment : BaseFragment<FragmentAudioPlayerBinding>(FragmentAud
         if (isPlaying) {
             player.pause()
             handler.removeCallbacks(updateSeekBar)
-            binding.btnPlayerPlayPauseContainer.setImageResource(R.drawable.ic_play_preview)
+            binding.btnPlayerPlayPauseContainer.setImageResource(R.drawable.play_songs)
         } else {
             player.start()
             applySpeed()

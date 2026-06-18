@@ -15,6 +15,9 @@ import android.Manifest
 import android.os.Build
 
 import androidx.activity.result.contract.ActivityResultContracts
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
+import com.futurecode.recoverdeletedmessages.ads.native_ad.NativeAdsHelper
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 
 
 //class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -60,11 +63,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 //    }
 //
 //    private fun setupActionClickListeners() {
-//        binding.btnBack.setOnClickListener {
+//        binding.btnBack.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
 //            findNavController().navigateUp()
 //        }
 //
-//        binding.btnDone.setOnClickListener {
+//        binding.btnDone.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
 //            // Persist the user's choice inside your BaseFragment's prefManager
 //           // prefManager.putString("selected_lang", currentlySelectedLanguageCode)
 //
@@ -72,7 +75,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 //            //findNavController().navigate(R.id.action_languageFragment_to_onboardingFragment)
 //        }
 //
-//        binding.btnUpgrade.setOnClickListener {
+//        binding.btnUpgrade.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
 //            // Triggers premium logic
 //            //findNavController().navigate(R.id.action_languageFragment_to_premiumPaywallFragment)
 //        }
@@ -155,11 +158,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 //    }
 //
 //    private fun setupClickListeners() {
-//        binding.btnBack.setOnClickListener {
+//        binding.btnBack.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
 //            requireActivity().onBackPressedDispatcher.onBackPressed()
 //        }
 //
-//        binding.btnConfirmSelection.setOnClickListener {
+//        binding.btnConfirmSelection.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
 //            val confirmedLanguage = viewModel.selectedLanguage.value
 //            confirmedLanguage?.let {
 //
@@ -191,9 +194,6 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private val viewModel: LanguageViewModel by viewModels()
     private lateinit var languageAdapter: LanguageAdapter
 
-    // =========================================================================
-    // CODE PATCH START: NOTIFICATION LAUNCHER REGISTRATION (CRASH PROOF)
-    // =========================================================================
     private val requestNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -203,7 +203,9 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             android.util.Log.w("LanguageFragment_Log", "POST_NOTIFICATIONS permission was denied by user.")
         }
     }
-    // =========================================================================
+
+    private lateinit var nativeAdsHelper: NativeAdsHelper
+    lateinit var fullScreenAdsHelper: FullScreenAdsHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -272,11 +274,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     }
 
     private fun setupClickListeners() {
-        binding.btnBack.setOnClickListener {
+        binding.btnBack.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.btnConfirmSelection.setOnClickListener {
+        binding.btnConfirmSelection.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             val confirmedLanguage = viewModel.selectedLanguage.value
             confirmedLanguage?.let {
 
@@ -297,4 +299,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             }
         }
     }
+
+
+
 }

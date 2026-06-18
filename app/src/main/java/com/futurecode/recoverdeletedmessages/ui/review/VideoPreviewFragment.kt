@@ -9,8 +9,10 @@ import android.widget.FrameLayout
 import android.widget.SeekBar
 import androidx.navigation.fragment.findNavController
 import com.futurecode.recoverdeletedmessages.R
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.databinding.FragmentVideoPreviewBinding
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 import java.io.File
 import java.util.Locale
 
@@ -22,19 +24,22 @@ class VideoPreviewFragment : BaseFragment<FragmentVideoPreviewBinding>(FragmentV
 
     // Fallback file context link path parameters
     private var targetVideoPath: String = ""
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
         extractArgumentsBundle()
         initializeVideoSurfaceEngine()
         setupInterfaceClickListeners()
 
 
-        binding.btnMediaHelp.setOnClickListener {
+        binding.btnMediaHelp.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
-        binding.btnMediaSelectAll.setOnClickListener {
+        binding.btnMediaSelectAll.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
     }
@@ -68,10 +73,10 @@ class VideoPreviewFragment : BaseFragment<FragmentVideoPreviewBinding>(FragmentV
     }
 
     private fun setupInterfaceClickListeners() {
-        binding.btnMediaBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        binding.btnMediaBack.setAdClickListener(requireActivity(), fullScreenAdsHelper) { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
         // Center Click: Play / Pause Execution State Hooks
-        binding.ivPlayerCenterToggle.setOnClickListener {
+        binding.ivPlayerCenterToggle.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             if (binding.videoSurfaceView.isPlaying) {
                 binding.videoSurfaceView.pause()
                 binding.ivPlayerCenterToggle.setImageResource(R.drawable.ic_video_play_overlay)
@@ -82,7 +87,7 @@ class VideoPreviewFragment : BaseFragment<FragmentVideoPreviewBinding>(FragmentV
         }
 
         // Top Right Expand Click: Toggle Scale layouts matching Screenshot 2026-06-09 at 2.56.21 PM.jpg
-        binding.ivPlayerCenterToggle.setOnClickListener {
+        binding.ivPlayerCenterToggle.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             isFullScreenMode = !isFullScreenMode
             val layoutParams = binding.videoSurfaceView.layoutParams as FrameLayout.LayoutParams
 

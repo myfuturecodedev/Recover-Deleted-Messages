@@ -19,6 +19,7 @@ import com.futurecode.recoverdeletedmessages.R
 import com.futurecode.recoverdeletedmessages.activity.MyApplication
 import com.futurecode.recoverdeletedmessages.adapter.ChatContact
 import com.futurecode.recoverdeletedmessages.adapter.ChatListAdapter
+import com.futurecode.recoverdeletedmessages.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.recoverdeletedmessages.base.BaseFragment
 import com.futurecode.recoverdeletedmessages.data.MessageEntity
 import com.futurecode.recoverdeletedmessages.databinding.FragmentWAMassageBinding
@@ -27,6 +28,7 @@ import com.futurecode.recoverdeletedmessages.service.WANotificationListenerServi
 import com.futurecode.recoverdeletedmessages.ui.dialogs.NotificationAccessDialog
 import com.futurecode.recoverdeletedmessages.utils.Constants
 import com.futurecode.recoverdeletedmessages.utils.UiState
+import com.futurecode.recoverdeletedmessages.utils.Utils.setAdClickListener
 import com.futurecode.recoverdeletedmessages.viewModel.MessageViewModel
 import com.futurecode.recoverdeletedmessages.viewModel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -45,9 +47,12 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
 
     private val viewModel: MessageViewModel by viewModels { ViewModelFactory(MyApplication.app.repository) }
     private lateinit var adapter: ChatListAdapter
+    private lateinit var fullScreenAdsHelper: FullScreenAdsHelper
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fullScreenAdsHelper= FullScreenAdsHelper(requireActivity())
 
         val selectedApp = arguments?.getString("isBusinessMode") ?: "false"
         isBusinessModeActive = selectedApp.toBoolean() || selectedApp == "BUSINESS"
@@ -59,11 +64,11 @@ class WAMassageFragment : BaseFragment<FragmentWAMassageBinding>(FragmentWAMassa
             findNavController().popBackStack()
         }
 
-        binding.btnHelpGuide.setOnClickListener {
+        binding.btnHelpGuide.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
-        binding.btnSettings.setOnClickListener {
+        binding.btnSettings.setAdClickListener(requireActivity(), fullScreenAdsHelper) {
             findNavController().navigate(R.id.action_global_guideFragment)
         }
 
